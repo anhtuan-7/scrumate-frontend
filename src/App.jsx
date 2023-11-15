@@ -1,12 +1,20 @@
-import Skeleton from "./components/Skeleton";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Homepage from "./pages/Homepage";
+import Auth from "./layouts/Auth";
+import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
 
 function App() {
   return (
-    <div>
-      <h1 className="text-3xl font-bold underline">Hello world! </h1>
-      <button className="btn btn-secondary">Secondary</button>
-      <Skeleton className="w-24 h-8" />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route index element={<Homepage />} />
+        <Route path="auth" element={<Auth />}>
+          <Route path="login" element={<Login />} />
+          <Route path="signup" element={<SignUp />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 export default App;
