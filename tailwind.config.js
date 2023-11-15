@@ -14,6 +14,9 @@ export default withMT({
       animation: {
         shimmer: "shimmer 1.5s infinite",
       },
+      backgroundImage: {
+        "blue-img": "url('/background.png')",
+      },
     },
   },
 });

@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { checkLogin } from "../thunks/checkLogin";
 
 const initialState = {
-  info: {},
+  data: {},
+  isLoggedIn: false,
   isLoading: false,
   error: null,
 };
@@ -13,21 +14,23 @@ const userSlice = createSlice({
   reducers: {
     setLogout(state) {
       state.user = {};
-      state.loggedIn = true;
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(checkLogin.pending, (state, action) => {
-      state.isLoading = true;
-    });
-    builder.addCase(checkLogin.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.info = action.payload;
-    });
-    builder.addCase(checkLogin.rejected, (state, action) => {
-      state.isLoading = false;
-      state.error = action.error;
-    });
+    builder
+      // eslint-disable-next-line no-unused-vars
+      .addCase(checkLogin.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(checkLogin.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.data = action.payload;
+        state.isLoggedIn = true;
+      })
+      .addCase(checkLogin.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error;
+      });
   },
 });
 
