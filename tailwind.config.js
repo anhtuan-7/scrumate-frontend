@@ -16,6 +16,7 @@ export default withMT({
       },
       backgroundImage: {
         "blue-img": "url('/background.png')",
+        "blue-grad": "url('/blue-gradient.jpg')",
       },
     },
   },

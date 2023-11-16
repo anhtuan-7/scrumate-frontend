@@ -1,21 +1,13 @@
-import { useState, useCallback } from "react";
-import { useDispatch } from "react-redux";
+import { useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 function useThunk(thunk) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-
+  const { isLoading, error } = useSelector((state) => state.currentUser);
   const dispatch = useDispatch();
 
   const runThunk = useCallback(
     (payload) => {
-      setIsLoading(true);
-      dispatch(thunk(payload))
-        .unwrap()
-        .catch((err) => setError(err))
-        .finally(() => {
-          setIsLoading(false);
-        });
+      dispatch(thunk(payload));
     },
     [dispatch, thunk]
   );

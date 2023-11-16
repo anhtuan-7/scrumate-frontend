@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { checkLogin } from "../thunks/checkLogin";
 
 const initialState = {
-  data: {},
+  data: null,
   isLoggedIn: false,
   isLoading: false,
   error: null,
