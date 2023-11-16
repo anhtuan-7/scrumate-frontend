@@ -29,7 +29,7 @@ const userSlice = createSlice({
       })
       .addCase(checkLogin.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.error;
+        state.error = action.payload;
       });
   },
 });
