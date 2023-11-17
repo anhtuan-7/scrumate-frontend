@@ -18,9 +18,9 @@ import { GoGitBranch } from "react-icons/go";
 
 const SideBar = () => {
   return (
-    <Card className="h-screen min-w-fit bg-white backdrop-saturate-200 backdrop-blur-2xl bg-opacity-80 rounded-none shadow-none border-r border-gray-300 p-3">
+    <Card className="h-screen min-w-min bg-white backdrop-saturate-200 backdrop-blur-2xl bg-opacity-80 rounded-none shadow-none border-r border-gray-300 p-3">
       <List className="grid items-center gap-3">
-        <div className="p-3">
+        <div className="p-3 w-48">
           <Typography variant="h5">Hệ thống gì đó có cái tên dài</Typography>
         </div>
         <ListItem>

@@ -1,6 +1,7 @@
-import { Typography } from "@material-tailwind/react";
+import { Button, Typography } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { Outlet } from "react-router-dom";
+import { RxGithubLogo } from "react-icons/rx";
 
 const Auth = () => {
   return (
@@ -11,9 +12,20 @@ const Auth = () => {
             <img src="/hires-logo.png" className="w-44" />
           </Link>
           <Outlet />
-          <div className="text-center">
-            <Typography color="gray">Continue with Google</Typography>
-            <Typography color="gray">Continue with Github</Typography>
+
+          <div className="w-full flex  items-center justify-center gap-2 mt-2">
+            <Typography variant="paragraph" color="gray">
+              Or continue with
+            </Typography>
+            <Button
+              size="sm"
+              variant="outlined"
+              color="blue-gray"
+              className="flex items-center justify-center gap-2"
+            >
+              <RxGithubLogo className="text-lg" />
+              Github
+            </Button>
           </div>
         </div>
       </div>
