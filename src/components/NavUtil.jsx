@@ -4,9 +4,9 @@ import { useSelector } from "react-redux";
 import Avatar from "./Avatar";
 
 const NavUtil = () => {
-  const { isLoggedIn, data } = useSelector((state) => state.currentUser);
-  console.log(isLoggedIn, data);
-  if (!data)
+  const { user } = useSelector((state) => state.currentUser);
+  //console.log(user);
+  if (!user)
     return (
       <div>
         <div className="flex items-center gap-x-1">
@@ -23,7 +23,7 @@ const NavUtil = () => {
         </div>
       </div>
     );
-  else return <Avatar user={data.user} />;
+  else return <Avatar user={user} />;
 };
 
 export default NavUtil;

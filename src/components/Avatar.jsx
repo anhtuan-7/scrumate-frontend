@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import {
   Avatar as MaterialAvatar,
@@ -11,11 +10,17 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { HiOutlineChevronDown, HiOutlinePower, HiUser } from "react-icons/hi2";
+import { logout } from "../store";
+import useThunk from "../hooks/useThunk";
 
 const Avatar = ({ user }) => {
-  const navigate = useNavigate();
+  const [doLogout, isLoading, error] = useThunk(logout);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const closeMenu = () => setIsMenuOpen(false);
+
+  const handleLogout = () => {
+    doLogout();
+  };
 
   return (
     <div className="flex items-center gap-3">
@@ -56,11 +61,11 @@ const Avatar = ({ user }) => {
           </MenuItem>
           <MenuItem
             className="flex items-center gap-2 rounded"
-            onClick={closeMenu}
+            onClick={handleLogout}
           >
             <HiOutlinePower className="h-4 w-4 text-red-500" />
             <Typography as="span" variant="small" className="text-red-500">
-              Log out
+              Logout
             </Typography>
           </MenuItem>
         </MenuList>

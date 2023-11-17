@@ -1,9 +1,11 @@
+/* eslint-disable no-unused-vars */
 import { createSlice } from "@reduxjs/toolkit";
 import { checkLogin } from "../thunks/checkLogin";
+import { login } from "../thunks/login";
+import { logout } from "../thunks/logout";
 
 const initialState = {
-  data: null,
-  isLoggedIn: false,
+  user: null,
   isLoading: false,
   error: null,
 };
@@ -11,25 +13,48 @@ const initialState = {
 const userSlice = createSlice({
   name: "currentUser",
   initialState,
-  reducers: {
-    setLogout(state) {
-      state.user = {};
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
-      // eslint-disable-next-line no-unused-vars
       .addCase(checkLogin.pending, (state, action) => {
         state.isLoading = true;
       })
       .addCase(checkLogin.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.data = action.payload;
-        state.isLoggedIn = true;
+        state.user = action.payload.data.user;
+        state.error = null;
       })
       .addCase(checkLogin.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload || "No response";
+        state.error = action.payload || 503;
+      });
+
+    builder
+      .addCase(login.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload.data.user;
+        state.error = null;
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload || 503;
+      });
+
+    builder
+      .addCase(logout.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(logout.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = null;
+        state.error = null;
+      })
+      .addCase(logout.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload || 503;
       });
   },
 });

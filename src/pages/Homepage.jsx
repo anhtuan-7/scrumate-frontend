@@ -26,14 +26,16 @@ const Homepage = () => {
         <img src="/waiting.gif" className="rounded-2xl" />
       </div>
     );
-  else if (error)
+  else if (error) {
+    // console.log(error);
     Toast.fire({
       icon: "error",
       title:
-        error === "No response"
+        error === 503
           ? "Service Unavailable"
           : "Session Expired. Please log in again",
     });
+  }
 
   return (
     <div className="w-full bg-blue-grad bg-cover">

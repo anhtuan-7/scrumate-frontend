@@ -12,10 +12,12 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route index element={<Homepage />} />
-        <Route path="app" element={<MainLayout />}>
-          <Route index element={<AppList />} />
-          <Route path="product-backlog" element={<ProductBacklog />} />
+        <Route path="app" element={<AppList />} />
+        {/* <Route path="group" element={<AppList />} /> */}
+        <Route path="project" element={<MainLayout />}>
+          <Route index path="product-backlog" element={<ProductBacklog />} />
         </Route>
+
         <Route path="auth" element={<Auth />}>
           <Route index element={<Navigate to="login" />} />
           <Route path="login" element={<Login />} />

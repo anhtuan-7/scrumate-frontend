@@ -15,3 +15,5 @@ export const store = configureStore({
 setupListeners(store.dispatch);
 
 export * from "./thunks/checkLogin";
+export * from "./thunks/login";
+export * from "./thunks/logout";
