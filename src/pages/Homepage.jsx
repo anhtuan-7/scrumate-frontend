@@ -16,21 +16,30 @@ const Homepage = () => {
 
   if (isLoading)
     return (
-      <div className="container mx-auto flex items-center justify-between">
-        <Spinner className="h-12 w-12" color="blue" />
+      <div className="mx-auto min-h-screen flex flex-col items-center justify-center">
+        <div className="flex items-center gap-3 p-6">
+          <Spinner className="h-8 w-8 inline-block" color="blue" />
+          <Typography variant="h2" color="blue" className="inline-block">
+            Just a moment
+          </Typography>
+        </div>
+        <img src="/waiting.gif" className="rounded-2xl" />
       </div>
     );
   else if (error)
     Toast.fire({
       icon: "error",
-      title: "Session Expired. Please log in again",
+      title:
+        error === "No response"
+          ? "Service Unavailable"
+          : "Session Expired. Please log in again",
     });
 
   return (
     <div className="w-full bg-blue-grad bg-cover">
       <div className="min-h-screen bg-gray-600/50 flex flex-col items-center justify-around gap-2 text-gray-200">
         <Navbar />
-        <div className="grid items-center lg:grid-cols-2 gap-12 content-center w-full my-6">
+        <div className="grid items-center lg:grid-cols-2 gap-12 content-center w-full mt-6">
           <div className="grid gap-6 p-24">
             <Typography variant="paragraph" className="text-xl">
               <span className="font-bold">

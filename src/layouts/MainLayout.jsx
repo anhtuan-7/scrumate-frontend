@@ -5,14 +5,15 @@ import SideBar from "../components/SideBar";
 
 const MainLayout = () => {
   return (
-    <div className="w-full bg-blue-grad bg-cover">
-      <div className="min-h-screen bg-gray-600/50 flex flex-col items-center justify-between text-gray-200">
+    <div className="w-full">
+      <div className="min-h-screen overflow-scroll flex flex-col items-center text-blue-gray-900">
         <Navbar />
-        <div>
-          <SideBar />
+        <div className="grid grid-cols-6 w-full">
+          <div className="cols-span-1">
+            <SideBar />
+          </div>
           <Outlet />
         </div>
-        <Footer />
       </div>
     </div>
   );
