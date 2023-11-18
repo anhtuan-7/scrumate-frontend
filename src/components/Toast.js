@@ -1,8 +1,8 @@
-import Swal from "sweetalert2";
+import Swal from 'sweetalert2';
 
 const Toast = Swal.mixin({
   toast: true,
-  position: "bottom-end",
+  position: 'bottom-end',
   showConfirmButton: false,
   showCloseButton: true,
   timer: 6000,

@@ -1,11 +1,11 @@
-import { useEffect } from "react";
-import { Button, Typography, Spinner } from "@material-tailwind/react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import useThunk from "../hooks/useThunk";
-import { checkLogin } from "../store";
-import { Link } from "react-router-dom";
-import Toast from "../components/Toast";
+import { useEffect } from 'react';
+import { Button, Typography, Spinner } from '@material-tailwind/react';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import useThunk from '../hooks/useThunk';
+import { checkLogin } from '../store';
+import { Link } from 'react-router-dom';
+import Toast from '../components/Toast';
 
 const Homepage = () => {
   const [doCheckLogin, isLoading, error] = useThunk(checkLogin);
@@ -16,9 +16,9 @@ const Homepage = () => {
 
   if (isLoading)
     return (
-      <div className="mx-auto min-h-screen flex flex-col items-center justify-center">
+      <div className="mx-auto flex min-h-screen flex-col items-center justify-center">
         <div className="flex items-center gap-3 p-6">
-          <Spinner className="h-8 w-8 inline-block" color="blue" />
+          <Spinner className="inline-block h-8 w-8" color="blue" />
           <Typography variant="h2" color="blue" className="inline-block">
             Just a moment
           </Typography>
@@ -29,19 +29,19 @@ const Homepage = () => {
   else if (error) {
     // console.log(error);
     Toast.fire({
-      icon: "error",
+      icon: 'error',
       title:
         error === 503
-          ? "Service Unavailable"
-          : "Session Expired. Please log in again",
+          ? 'Service Unavailable'
+          : 'Session Expired. Please log in again to get access',
     });
   }
 
   return (
     <div className="w-full bg-blue-grad bg-cover">
-      <div className="min-h-screen bg-gray-600/50 flex flex-col items-center justify-around gap-2 text-gray-200">
+      <div className="flex min-h-screen flex-col items-center justify-around gap-2 bg-gray-600/50 text-gray-200">
         <Navbar />
-        <div className="grid items-center lg:grid-cols-2 gap-12 content-center w-full mt-6">
+        <div className="mt-6 grid w-full content-center items-center gap-12 lg:grid-cols-2">
           <div className="grid gap-6 p-24">
             <Typography variant="paragraph" className="text-xl">
               <span className="font-bold">
@@ -56,24 +56,24 @@ const Homepage = () => {
               development and other industries. Scrum prescribes for teams to
               break work into goals to be completed within time-boxed
               iterations, called sprints. Each sprint is no longer than one
-              month and commonly lasts two weeks.{" "}
+              month and commonly lasts two weeks.{' '}
             </Typography>
             <Link to="/app">
-              <Button size="sm" className="md:w-1/2 lg:w-2/5 bg-orange-500">
-                <Typography>Get Started</Typography>{" "}
+              <Button size="sm" className="bg-orange-500 md:w-1/2 lg:w-2/5">
+                <Typography>Get Started</Typography>{' '}
               </Button>
             </Link>
           </div>
           <img src="/home-1.png" className="h-100 px-10" />
         </div>
-        <div className="grid items-center lg:grid-cols-2 gap-12 content-center w-full">
+        <div className="grid w-full content-center items-center gap-12 lg:grid-cols-2">
           <img src="/home-2.png" className="h-100 px-10" />
           <div className="grid gap-6 p-24">
             <Typography variant="h2" color="white">
-              Why <img src="/logo-white.png" className="w-60 inline" />
+              Why <img src="/logo-white.png" className="inline w-60" />
             </Typography>
             <Typography className="text-xl">
-              <span className="text-orange-500 font-bold">Scrumate</span> is
+              <span className="font-bold text-orange-500">Scrumate</span> is
               tailored for agile project management, integrating the Scrum
               methodology seamlessly. With user-friendly sprint planning,
               backlog management, and real-time collaboration features, your

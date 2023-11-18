@@ -1,8 +1,8 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-import { BASE_URL } from "../constants";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+import { BASE_URL } from '../constants';
 
-const login = createAsyncThunk("login", async (data, { rejectWithValue }) => {
+const login = createAsyncThunk('login', async (data, { rejectWithValue }) => {
   try {
     const response = await axios.post(
       `${BASE_URL}/login`,
@@ -12,8 +12,8 @@ const login = createAsyncThunk("login", async (data, { rejectWithValue }) => {
       },
       {
         withCredentials: true,
-        responseType: "json",
-      }
+        responseType: 'json',
+      },
     );
     return response.data;
   } catch (err) {

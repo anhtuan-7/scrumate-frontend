@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
-import { Button, Typography } from "@material-tailwind/react";
-import { useSelector } from "react-redux";
-import Avatar from "./Avatar";
+import { Link } from 'react-router-dom';
+import { Button, Typography } from '@material-tailwind/react';
+import { useSelector } from 'react-redux';
+import Avatar from './Avatar';
 
 const NavUtil = () => {
   const { user } = useSelector((state) => state.currentUser);

@@ -8,7 +8,7 @@ function Skeleton({ times, className }) {
     'bg-gray-200',
     'rounded',
     'mb-2.5',
-    className
+    className,
   );
   const innerClassNames = classNames(
     'animate-shimmer',
@@ -18,7 +18,7 @@ function Skeleton({ times, className }) {
     'bg-gradient-to-r',
     'from-gray-200',
     'via-white',
-    'to-gray-200'
+    'to-gray-200',
   );
 
   const boxes = Array(times)

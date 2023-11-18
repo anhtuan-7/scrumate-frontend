@@ -1,11 +1,11 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Homepage from "./pages/Homepage";
-import Auth from "./layouts/Auth";
-import Login from "./pages/Login";
-import SignUp from "./pages/SignUp";
-import MainLayout from "./layouts/MainLayout";
-import ProductBacklog from "./pages/ProductBacklog";
-import AppList from "./pages/AppList";
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import Homepage from './pages/Homepage';
+import Auth from './layouts/Auth';
+import Login from './pages/Login';
+import SignUp from './pages/SignUp';
+import MainLayout from './layouts/MainLayout';
+import ProductBacklog from './pages/ProductBacklog';
+import AppList from './pages/AppList';
 
 function App() {
   return (

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import PropTypes from "prop-types";
+import { useState } from 'react';
+import PropTypes from 'prop-types';
 import {
   Avatar as MaterialAvatar,
   Button,
@@ -8,10 +8,10 @@ import {
   MenuList,
   MenuItem,
   Typography,
-} from "@material-tailwind/react";
-import { HiOutlineChevronDown, HiOutlinePower, HiUser } from "react-icons/hi2";
-import { logout } from "../store";
-import useThunk from "../hooks/useThunk";
+} from '@material-tailwind/react';
+import { HiOutlineChevronDown, HiOutlinePower, HiUser } from 'react-icons/hi2';
+import { logout } from '../store';
+import useThunk from '../hooks/useThunk';
 
 const Avatar = ({ user }) => {
   const [doLogout, isLoading, error] = useThunk(logout);
@@ -25,14 +25,14 @@ const Avatar = ({ user }) => {
   return (
     <div className="flex items-center gap-3">
       <Typography className="text-blue-gray-900">
-        Hello, {user.name.split(" ")[0]}
+        Hello, {user.name.split(' ')[0]}
       </Typography>
       <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
         <MenuHandler>
           <Button
             variant="text"
             color="blue-gray"
-            className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto"
+            className="flex items-center gap-1 rounded-full py-0.5 pl-0.5 pr-2 lg:ml-auto"
           >
             <MaterialAvatar
               variant="circular"
@@ -44,7 +44,7 @@ const Avatar = ({ user }) => {
             <HiOutlineChevronDown
               strokeWidth={2.5}
               className={`h-3 w-3 transition-transform ${
-                isMenuOpen ? "rotate-180" : ""
+                isMenuOpen ? 'rotate-180' : ''
               }`}
             />
           </Button>

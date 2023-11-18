@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
-import { createSlice } from "@reduxjs/toolkit";
-import { checkLogin } from "../thunks/checkLogin";
-import { login } from "../thunks/login";
-import { logout } from "../thunks/logout";
+import { createSlice } from '@reduxjs/toolkit';
+import { checkLogin } from '../thunks/checkLogin';
+import { login } from '../thunks/login';
+import { logout } from '../thunks/logout';
 
 const initialState = {
   user: null,
@@ -11,7 +11,7 @@ const initialState = {
 };
 
 const userSlice = createSlice({
-  name: "currentUser",
+  name: 'currentUser',
   initialState,
   reducers: {},
   extraReducers: (builder) => {

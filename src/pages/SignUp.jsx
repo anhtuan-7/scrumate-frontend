@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
-import { Button, Typography, Input } from "@material-tailwind/react";
-import { Fragment } from "react";
+import { Link } from 'react-router-dom';
+import { Button, Typography, Input } from '@material-tailwind/react';
+import { Fragment } from 'react';
 
 const SignUp = () => {
   const error = false;
@@ -8,7 +8,7 @@ const SignUp = () => {
   let errorMessage = undefined;
   if (error)
     errorMessage = (
-      <Typography className="text-red-500 text-sm p-1">{"Error"}</Typography>
+      <Typography className="p-1 text-sm text-red-500">{'Error'}</Typography>
     );
 
   return (
@@ -16,10 +16,10 @@ const SignUp = () => {
       <Typography variant="h3" className="mt-6">
         Sign Up
       </Typography>
-      <Typography color="gray" className="mt-1 text-md">
+      <Typography color="gray" className="text-md mt-1">
         Welcome to Scrumate!
       </Typography>
-      <form className="mt-6 mb-2">
+      <form className="mb-2 mt-6">
         <div className="grid gap-4">
           <Input type="text" label="Name" required />
           <Input type="email" label="Email" required />
@@ -29,7 +29,7 @@ const SignUp = () => {
         {errorMessage}
         <Button className="mt-4 w-full">Sign Up</Button>
         <Typography color="gray" className="mt-4 text-center font-normal">
-          Already have an account?{"  "}
+          Already have an account?{'  '}
           <Link
             to="/auth/login"
             className="font-medium text-blue-500 transition-colors hover:text-blue-700"
