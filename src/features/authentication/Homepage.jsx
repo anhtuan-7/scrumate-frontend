@@ -1,19 +1,35 @@
 import { Button, Spinner, Typography } from '@material-tailwind/react';
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import Footer from '../components/general/Footer';
-import Toast from '../components/general/Toast';
-import Navbar from '../components/navbar/Navbar';
-import useUserThunk from '../hooks/useUserThunk';
-import { checkLogin } from '../store';
+import Footer from '../../components/Footer';
+import Navbar from '../../components/Navbar';
+import Toast from '../../components/Toast';
+import useThunk from './useThunk';
+import { clearError } from './userSlice';
+import { checkLogin } from './userThunks';
 
 const Homepage = () => {
-  const [doCheckLogin, isLoading, error] = useUserThunk(checkLogin);
+  const dispatch = useDispatch();
+  const [doCheckLogin, isLoading, error] = useThunk(checkLogin);
 
   useEffect(() => {
     doCheckLogin();
   }, [doCheckLogin]);
+
+  useEffect(() => {
+    if (error) {
+      Toast.fire({
+        icon: 'error',
+        title:
+          error === 503
+            ? 'Service Unavailable'
+            : 'Session Expired. Please log in again to get access',
+      });
+      dispatch(clearError());
+    }
+  }, [error, dispatch]);
 
   if (isLoading)
     return (
@@ -27,16 +43,6 @@ const Homepage = () => {
         <img src="/waiting.gif" className="rounded-2xl" />
       </div>
     );
-  else if (error) {
-    // console.log(error);
-    Toast.fire({
-      icon: 'error',
-      title:
-        error === 503
-          ? 'Service Unavailable'
-          : 'Session Expired. Please log in again to get access',
-    });
-  }
 
   return (
     <div className="w-full bg-blue-grad bg-cover">

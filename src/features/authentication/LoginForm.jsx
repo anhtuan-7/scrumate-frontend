@@ -4,16 +4,16 @@ import { GoSync } from 'react-icons/go';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
-import Toast from '../components/general/Toast';
-import useUserThunk from '../hooks/useUserThunk';
-import { login } from '../store';
+import Toast from '../../components/Toast';
+import { login } from '../authentication/userThunks';
+import useThunk from './useThunk';
 
-const Login = () => {
+const LoginForm = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.currentUser);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [doLogin, isLoading, error] = useUserThunk(login);
+  const [doLogin, isLoading, error] = useThunk(login);
 
   useEffect(() => {
     if (user) {
@@ -87,4 +87,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginForm;

@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-function useUserThunk(thunk) {
+function useThunk(thunk) {
   const { isLoading, error } = useSelector((state) => state.currentUser);
   const dispatch = useDispatch();
 
@@ -15,4 +15,4 @@ function useUserThunk(thunk) {
   return [runThunk, isLoading, error];
 }
 
-export default useUserThunk;
+export default useThunk;

@@ -1,9 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { createSlice } from '@reduxjs/toolkit';
 
-import { checkLogin } from '../thunks/checkLogin';
-import { login } from '../thunks/login';
-import { logout } from '../thunks/logout';
+import { checkLogin, login, logout } from './userThunks';
 
 const initialState = {
   user: null,
@@ -14,7 +12,11 @@ const initialState = {
 const userSlice = createSlice({
   name: 'currentUser',
   initialState,
-  reducers: {},
+  reducers: {
+    clearError: (state, action) => {
+      state.error = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(checkLogin.pending, (state, action) => {
@@ -61,3 +63,4 @@ const userSlice = createSlice({
 });
 
 export const userReducer = userSlice.reducer;
+export const { clearError } = userSlice.actions;

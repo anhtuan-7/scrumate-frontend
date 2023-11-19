@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 
-import Navbar from '../components/navbar/Navbar';
-import ProjectSidebar from '../components/sidebar/ProjectSidebar';
+import Navbar from '../components/Navbar';
+import ProjectSidebar from '../features/project/ProjectSidebar';
 
 const ProjectLayout = () => {
   return (

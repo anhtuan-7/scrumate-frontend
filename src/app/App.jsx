@@ -1,12 +1,12 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
-import Auth from './layouts/Auth';
-import ProjectLayout from './layouts/ProjectLayout';
-import AppList from './pages/AppList';
-import Homepage from './pages/Homepage';
-import Login from './pages/Login';
-import ProductBacklog from './pages/ProductBacklog';
-import SignUp from './pages/SignUp';
+import Homepage from '../features/authentication/Homepage';
+import LoginForm from '../features/authentication/LoginForm';
+import SignUpForm from '../features/authentication/SignUpForm';
+import AppList from '../features/group/AppList';
+import ProductBacklog from '../features/project/ProductBacklog';
+import Auth from '../layouts/Auth';
+import ProjectLayout from '../layouts/ProjectLayout';
 
 function App() {
   return (
@@ -20,8 +20,8 @@ function App() {
         </Route>
         <Route path="auth" element={<Auth />}>
           <Route index element={<Navigate to="login" />} />
-          <Route path="login" element={<Login />} />
-          <Route path="signup" element={<SignUp />} />
+          <Route path="login" element={<LoginForm />} />
+          <Route path="signup" element={<SignUpForm />} />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

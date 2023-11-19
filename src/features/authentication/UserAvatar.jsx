@@ -12,19 +12,31 @@ import { useState } from 'react';
 import { HiOutlineChevronDown, HiOutlinePower, HiUser } from 'react-icons/hi2';
 import { useNavigate } from 'react-router-dom';
 
-import useUserThunk from '../../hooks/useUserThunk';
-import { logout } from '../../store';
+import Toast from '../../components/Toast';
+import useThunk from './useThunk';
+import { logout } from './userThunks';
 
 const Avatar = ({ user }) => {
   const navigate = useNavigate();
-  // eslint-disable-next-line no-unused-vars
-  const [doLogout, isLoading, error] = useUserThunk(logout);
+  const [doLogout, , error] = useThunk(logout);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const closeMenu = () => setIsMenuOpen(false);
 
   const handleLogout = async () => {
     await doLogout();
-    navigate('/');
+    if (error)
+      Toast.fire({
+        icon: 'error',
+        text: `${error.message}`,
+      });
+    else {
+      Toast.fire({
+        title: 'Logout Successfully',
+        icon: 'success',
+        timer: '2000',
+      });
+      navigate('/');
+    }
   };
 
   return (

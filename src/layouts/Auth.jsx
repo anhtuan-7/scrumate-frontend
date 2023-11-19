@@ -11,6 +11,7 @@ const Auth = () => {
           <Link to="/">
             <img src="/hires-logo.png" className="w-44" />
           </Link>
+          {/* Form */}
           <Outlet />
           <div className="mt-2 flex w-full items-center justify-center gap-2 ">
             <Typography variant="paragraph" color="gray">
