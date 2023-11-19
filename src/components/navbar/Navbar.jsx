@@ -1,6 +1,7 @@
 import { Navbar as MaterialNavbar } from '@material-tailwind/react';
-import NavUtil from './NavUtil';
 import { Link } from 'react-router-dom';
+
+import NavUtil from './NavUtil';
 
 const Navbar = () => {
   return (

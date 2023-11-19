@@ -1,14 +1,15 @@
 import { Outlet } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import SideBar from '../components/SideBar';
 
-const MainLayout = () => {
+import Navbar from '../components/navbar/Navbar';
+import ProjectSidebar from '../components/sidebar/ProjectSidebar';
+
+const ProjectLayout = () => {
   return (
     <div className="w-full">
       <div className="flex min-h-screen flex-col items-center overflow-x-scroll text-blue-gray-900">
         <Navbar />
         <div className="flex w-full">
-          <SideBar />
+          <ProjectSidebar />
           <Outlet />
         </div>
       </div>
@@ -16,4 +17,4 @@ const MainLayout = () => {
   );
 };
 
-export default MainLayout;
+export default ProjectLayout;

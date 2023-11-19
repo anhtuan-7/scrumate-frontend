@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { createSlice } from '@reduxjs/toolkit';
+
 import { checkLogin } from '../thunks/checkLogin';
 import { login } from '../thunks/login';
 import { logout } from '../thunks/logout';

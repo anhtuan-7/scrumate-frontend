@@ -1,25 +1,30 @@
-import { useState } from 'react';
-import PropTypes from 'prop-types';
 import {
-  Avatar as MaterialAvatar,
   Button,
-  MenuHandler,
+  Avatar as MaterialAvatar,
   Menu,
-  MenuList,
+  MenuHandler,
   MenuItem,
+  MenuList,
   Typography,
 } from '@material-tailwind/react';
+import PropTypes from 'prop-types';
+import { useState } from 'react';
 import { HiOutlineChevronDown, HiOutlinePower, HiUser } from 'react-icons/hi2';
-import { logout } from '../store';
-import useThunk from '../hooks/useThunk';
+import { useNavigate } from 'react-router-dom';
+
+import useUserThunk from '../../hooks/useUserThunk';
+import { logout } from '../../store';
 
 const Avatar = ({ user }) => {
-  const [doLogout, isLoading, error] = useThunk(logout);
+  const navigate = useNavigate();
+  // eslint-disable-next-line no-unused-vars
+  const [doLogout, isLoading, error] = useUserThunk(logout);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const closeMenu = () => setIsMenuOpen(false);
 
-  const handleLogout = () => {
-    doLogout();
+  const handleLogout = async () => {
+    await doLogout();
+    navigate('/');
   };
 
   return (

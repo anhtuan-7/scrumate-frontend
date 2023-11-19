@@ -1,22 +1,22 @@
 import {
   Card,
-  Typography,
+  Chip,
   List,
   ListItem,
   ListItemPrefix,
   ListItemSuffix,
-  Chip,
+  Typography,
 } from '@material-tailwind/react';
+import { GoGitBranch } from 'react-icons/go';
 import {
-  HiOutlinePresentationChartBar,
   HiBars3,
   HiInbox,
+  HiOutlinePresentationChartBar,
 } from 'react-icons/hi2';
-import { TfiDashboard } from 'react-icons/tfi';
 import { PiKanban } from 'react-icons/pi';
-import { GoGitBranch } from 'react-icons/go';
+import { TfiDashboard } from 'react-icons/tfi';
 
-const SideBar = () => {
+const ProjectSidebar = () => {
   return (
     <Card className="h-screen min-w-min rounded-none border-r border-gray-300 bg-white bg-opacity-80 p-3 shadow-none backdrop-blur-2xl backdrop-saturate-200">
       <List className="grid items-center gap-3">
@@ -73,4 +73,4 @@ const SideBar = () => {
   );
 };
 
-export default SideBar;
+export default ProjectSidebar;

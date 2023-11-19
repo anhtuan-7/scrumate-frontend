@@ -1,18 +1,18 @@
-import { useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-function useThunk(thunk) {
+function useUserThunk(thunk) {
   const { isLoading, error } = useSelector((state) => state.currentUser);
   const dispatch = useDispatch();
 
   const runThunk = useCallback(
-    (payload) => {
+    async (payload) => {
       dispatch(thunk(payload));
     },
-    [dispatch, thunk]
+    [dispatch, thunk],
   );
 
   return [runThunk, isLoading, error];
 }
 
-export default useThunk;
+export default useUserThunk;

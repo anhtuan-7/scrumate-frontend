@@ -1,10 +1,11 @@
-import { useState, useEffect, Fragment } from 'react';
+import { Button, Input, Typography } from '@material-tailwind/react';
+import { Fragment, useEffect, useState } from 'react';
+import { GoSync } from 'react-icons/go';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button, Typography, Input } from '@material-tailwind/react';
-import Toast from '../components/Toast';
-import { GoSync } from 'react-icons/go';
-import useThunk from '../hooks/useThunk';
+
+import Toast from '../components/general/Toast';
+import useUserThunk from '../hooks/useUserThunk';
 import { login } from '../store';
 
 const Login = () => {
@@ -12,7 +13,7 @@ const Login = () => {
   const { user } = useSelector((state) => state.currentUser);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [doLogin, isLoading, error] = useThunk(login);
+  const [doLogin, isLoading, error] = useUserThunk(login);
 
   useEffect(() => {
     if (user) {

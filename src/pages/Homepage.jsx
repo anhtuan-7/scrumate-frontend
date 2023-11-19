@@ -1,14 +1,15 @@
+import { Button, Spinner, Typography } from '@material-tailwind/react';
 import { useEffect } from 'react';
-import { Button, Typography, Spinner } from '@material-tailwind/react';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import useThunk from '../hooks/useThunk';
-import { checkLogin } from '../store';
 import { Link } from 'react-router-dom';
-import Toast from '../components/Toast';
+
+import Footer from '../components/general/Footer';
+import Toast from '../components/general/Toast';
+import Navbar from '../components/navbar/Navbar';
+import useUserThunk from '../hooks/useUserThunk';
+import { checkLogin } from '../store';
 
 const Homepage = () => {
-  const [doCheckLogin, isLoading, error] = useThunk(checkLogin);
+  const [doCheckLogin, isLoading, error] = useUserThunk(checkLogin);
 
   useEffect(() => {
     doCheckLogin();
@@ -56,11 +57,11 @@ const Homepage = () => {
               development and other industries. Scrum prescribes for teams to
               break work into goals to be completed within time-boxed
               iterations, called sprints. Each sprint is no longer than one
-              month and commonly lasts two weeks.{' '}
+              month and commonly lasts two weeks.
             </Typography>
             <Link to="/app">
               <Button size="sm" className="bg-orange-500 md:w-1/2 lg:w-2/5">
-                <Typography>Get Started</Typography>{' '}
+                <Typography>Get Started</Typography>
               </Button>
             </Link>
           </div>

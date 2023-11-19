@@ -1,7 +1,7 @@
 import { Button, Typography } from '@material-tailwind/react';
+import { RxGithubLogo } from 'react-icons/rx';
 import { Link } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
-import { RxGithubLogo } from 'react-icons/rx';
 
 const Auth = () => {
   return (
