@@ -8,36 +8,38 @@ import {
   Typography,
 } from '@material-tailwind/react';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { HiOutlineChevronDown, HiOutlinePower, HiUser } from 'react-icons/hi2';
 import { useNavigate } from 'react-router-dom';
 
 import Toast from '../../components/Toast';
-import useThunk from './useThunk';
-import { logout } from './userThunks';
+import { useLogoutMutation } from './authApi';
 
 const Avatar = ({ user }) => {
   const navigate = useNavigate();
-  const [doLogout, , error] = useThunk(logout);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const closeMenu = () => setIsMenuOpen(false);
 
-  const handleLogout = async () => {
-    await doLogout();
-    if (error)
-      Toast.fire({
-        icon: 'error',
-        text: `${error.message}`,
-      });
-    else {
+  const [logout, { isSuccess, error }] = useLogoutMutation();
+  const handleLogout = () => logout();
+
+  useEffect(() => {
+    if (isSuccess) {
       Toast.fire({
         title: 'Logout Successfully',
         icon: 'success',
         timer: '2000',
       });
       navigate('/');
+      localStorage.removeItem('user');
     }
-  };
+  });
+
+  if (error)
+    Toast.fire({
+      icon: 'error',
+      text: `${error.data.message}`,
+    });
 
   return (
     <div className="flex items-center gap-3">

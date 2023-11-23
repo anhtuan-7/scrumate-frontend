@@ -1,33 +1,33 @@
 import { Button, Input, Typography } from '@material-tailwind/react';
 import { Fragment, useEffect, useState } from 'react';
 import { GoSync } from 'react-icons/go';
-import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Toast from '../../components/Toast';
-import { login } from '../authentication/userThunks';
-import useThunk from './useThunk';
+import { useLoginMutation } from './authApi';
 
 const LoginForm = () => {
   const navigate = useNavigate();
-  const { user } = useSelector((state) => state.currentUser);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [doLogin, isLoading, error] = useThunk(login);
+
+  const [login, { data, error, isLoading }] = useLoginMutation();
 
   useEffect(() => {
-    if (user) {
+    if (data) {
+      const { user } = data.data;
+      localStorage.setItem('user', JSON.stringify(user));
       Toast.fire({
         title: 'Login Successfully',
         icon: 'success',
         timer: '2000',
       });
-      navigate('/');
+      navigate('/app');
     }
-  }, [user, navigate]);
+  }, [data, navigate]);
 
   const handleLogin = () => {
-    doLogin({ email, password });
+    login({ email, password });
   };
 
   return (
@@ -57,7 +57,7 @@ const LoginForm = () => {
         </div>
         {error && (
           <Typography className="p-1 text-sm text-red-500">
-            {error.message}
+            {error.data.message}
           </Typography>
         )}
         <div className="mt-2 flex flex-col items-end p-1">

@@ -1,14 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 
-import { userReducer } from '../features/authentication/userSlice';
+import { authApi } from '../features/authentication/authApi';
+import { groupApi } from '../features/group/groupApi';
 
 export const store = configureStore({
   reducer: {
-    currentUser: userReducer,
+    [authApi.reducerPath]: authApi.reducer,
+    [groupApi.reducerPath]: groupApi.reducer,
   },
   middleware: (getDefaultMiddleware) => {
-    return getDefaultMiddleware();
+    return getDefaultMiddleware()
+      .concat(authApi.middleware)
+      .concat(groupApi.middleware);
   },
 });
 
