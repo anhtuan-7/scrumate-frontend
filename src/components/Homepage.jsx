@@ -1,40 +1,10 @@
-import { Button, Spinner, Typography } from '@material-tailwind/react';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { Button, Typography } from '@material-tailwind/react';
 import { Link } from 'react-router-dom';
 
-import Footer from '../../components/Footer';
-import Navbar from '../../components/Navbar';
-import { doLogin, verify } from './statusSlice';
+import Footer from './Footer';
+import Navbar from './Navbar';
 
 const Homepage = () => {
-  const dispatch = useDispatch();
-  const { isLoading } = useSelector((state) => state.status);
-
-  useEffect(() => {
-    dispatch(verify())
-      .unwrap()
-      .then((response) => {
-        const { user } = response.data;
-        sessionStorage.setItem('user', JSON.stringify(user));
-        dispatch(doLogin());
-      })
-      .catch(() => sessionStorage.removeItem('user'));
-  }, [dispatch]);
-
-  if (isLoading)
-    return (
-      <div className="mx-auto flex min-h-screen flex-col items-center justify-center">
-        <div className="flex items-center gap-3 p-6">
-          <Spinner className="inline-block h-8 w-8" color="blue" />
-          <Typography variant="h2" color="blue" className="inline-block">
-            Just a moment
-          </Typography>
-        </div>
-        <img src="/waiting.gif" className="rounded-2xl" />
-      </div>
-    );
-
   return (
     <div className="w-full bg-blue-grad bg-cover">
       <div className="flex min-h-screen flex-col items-center justify-around gap-2 bg-gray-600/50 text-gray-200">

@@ -17,7 +17,7 @@ const Modal = ({ children, actionBar, classes }) => {
 
   return ReactDOM.createPortal(
     <div>
-      <div className="fixed inset-0 z-10 bg-gray-300 opacity-80"></div>
+      <div className="fixed inset-0 z-10 bg-gray-300 opacity-60"></div>
       <div className={modalClasses}>
         <div className="flex h-full flex-col justify-between">
           {children}

@@ -10,11 +10,6 @@ const authApi = createApi({
   }),
   endpoints: (builder) => {
     return {
-      verify: builder.query({
-        query: () => {
-          return { url: '/verify', method: 'GET' };
-        },
-      }),
       signUp: builder.mutation({
         query: (payload) => {
           return {
@@ -53,10 +48,6 @@ const authApi = createApi({
   },
 });
 
-export const {
-  useVerifyQuery,
-  useLoginMutation,
-  useLogoutMutation,
-  useSignUpMutation,
-} = authApi;
+export const { useLoginMutation, useLogoutMutation, useSignUpMutation } =
+  authApi;
 export { authApi };

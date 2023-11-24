@@ -1,21 +1,28 @@
 import { Button, Input, Typography } from '@material-tailwind/react';
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { GoSync } from 'react-icons/go';
 
 import Modal from '../../components/Modal';
+import Toast from '../../components/Toast';
 import { useCreateGroupMutation } from './groupApi';
 
 const GroupCreateForm = ({ onClose }) => {
   const [name, setName] = useState('');
   const [message, setMessage] = useState();
   const [description, setDescription] = useState('');
-  const [createGroup, { isSuccess, error, isLoading }] =
-    useCreateGroupMutation();
+  const [createGroup, { isLoading }] = useCreateGroupMutation();
 
   const handleCreateForm = () => {
     createGroup({ name, description })
       .unwrap()
-      .then(() => onClose())
+      .then(() => {
+        onClose();
+        Toast.fire({
+          title: 'Create New Group Successfully',
+          icon: 'success',
+        });
+      })
       .catch((e) => setMessage(e.data.message));
   };
 
@@ -61,6 +68,10 @@ const GroupCreateForm = ({ onClose }) => {
   );
 
   return modal;
+};
+
+GroupCreateForm.propTypes = {
+  onClose: PropTypes.func.isRequired,
 };
 
 export default GroupCreateForm;

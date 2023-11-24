@@ -1,12 +1,12 @@
+import { Spinner } from '@material-tailwind/react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
 const ProtectedRoute = ({ children }) => {
-  const { isLoggedIn } = useSelector((state) => state.status);
-  if (!isLoggedIn) {
-    return <Navigate to="/auth/login" replace />;
-  }
+  const { isLoggedIn, isLoading } = useSelector((state) => state.status);
+  if (isLoading) return <Spinner />;
+  if (!isLoggedIn) return <Navigate to="/auth/login" replace />;
   return children;
 };
 

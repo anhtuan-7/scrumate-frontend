@@ -19,16 +19,18 @@ const statusSlice = createSlice({
   name: 'status',
   initialState: {
     user: null,
-    isLoading: false,
+    isLoading: true,
     error: null,
     isLoggedIn: JSON.parse(sessionStorage.getItem('user')) != null,
   },
   reducers: {
     doLogout: (state) => {
       state.isLoggedIn = false;
+      state.isLoading = false;
     },
     doLogin: (state) => {
       state.isLoggedIn = true;
+      state.isLoading = false;
     },
   },
   extraReducers: (builder) => {
@@ -37,11 +39,12 @@ const statusSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(verify.fulfilled, (state, action) => {
-        state.isLoading = false;
         state.user = action.payload.data.user;
+        // save user to sessionStorage then dispatch doLogin() to finish
         state.error = null;
       })
       .addCase(verify.rejected, (state, action) => {
+        state.user = null;
         state.isLoading = false;
         state.error = action.payload;
       });

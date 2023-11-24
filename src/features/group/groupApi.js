@@ -17,12 +17,12 @@ const groupApi = createApi({
             method: 'GET',
           };
         },
-        providesTags: (result, error, arg) => {
+        providesTags: (result, error, user) => {
           const { groups } = result.data;
           const tags = groups.map((group) => {
             return { type: 'Group', id: group.id };
           });
-          return [{ type: 'CreateGroup', id: arg.id }, ...tags];
+          return [{ type: 'CreateGroup', id: user.id }, ...tags];
         },
       }),
       createGroup: builder.mutation({
