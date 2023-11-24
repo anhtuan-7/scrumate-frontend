@@ -1,12 +1,15 @@
 import { Button, Input, Typography } from '@material-tailwind/react';
 import { Fragment, useEffect, useState } from 'react';
 import { GoSync } from 'react-icons/go';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Toast from '../../components/Toast';
 import { useLoginMutation } from './authApi';
+import { doLogin } from './statusSlice';
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -16,15 +19,16 @@ const LoginForm = () => {
   useEffect(() => {
     if (data) {
       const { user } = data.data;
-      localStorage.setItem('user', JSON.stringify(user));
+      sessionStorage.setItem('user', JSON.stringify(user));
       Toast.fire({
         title: 'Login Successfully',
         icon: 'success',
         timer: '2000',
       });
+      dispatch(doLogin());
       navigate('/app');
     }
-  }, [data, navigate]);
+  }, [data, navigate, dispatch]);
 
   const handleLogin = () => {
     login({ email, password });

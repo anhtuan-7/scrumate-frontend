@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import AppList from '../app/AppList';
+import ProtectedRoute from '../components/ProtectedRoute';
 import Homepage from '../features/authentication/Homepage';
 import LoginForm from '../features/authentication/LoginForm';
 import SignUpForm from '../features/authentication/SignUpForm';
@@ -15,7 +16,14 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route index element={<Homepage />} />
-        <Route path="app" element={<AppList />}>
+        <Route
+          path="app"
+          element={
+            <ProtectedRoute>
+              <AppList />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<Navigate to="groups" />} />
           <Route path="groups" element={<GroupList />} />
           <Route path="projects" element={<ProjectList />} />

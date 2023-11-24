@@ -2,12 +2,15 @@ import { Button, Input, Typography } from '@material-tailwind/react';
 import { Fragment } from 'react';
 import { useEffect, useState } from 'react';
 import { GoSync } from 'react-icons/go';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Toast from '../../components/Toast';
 import { useSignUpMutation } from './authApi';
+import { doLogin } from './statusSlice';
 
 const SignUp = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -25,9 +28,10 @@ const SignUp = () => {
         icon: 'success',
         timer: '2000',
       });
+      dispatch(doLogin());
       navigate('/app');
     }
-  }, [data, navigate]);
+  }, [data, navigate, dispatch]);
 
   const handleSignUp = () => {
     signUp({ name, email, password, confirmPassword });

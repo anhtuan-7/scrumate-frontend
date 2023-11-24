@@ -1,12 +1,26 @@
 import { Button, Spinner, Typography } from '@material-tailwind/react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import Footer from '../../components/Footer';
 import Navbar from '../../components/Navbar';
-import { useVerifyQuery } from './authApi';
+import { doLogin, verify } from './statusSlice';
 
 const Homepage = () => {
-  const { data, isError, isLoading } = useVerifyQuery({});
+  const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.status);
+
+  useEffect(() => {
+    dispatch(verify())
+      .unwrap()
+      .then((response) => {
+        const { user } = response.data;
+        sessionStorage.setItem('user', JSON.stringify(user));
+        dispatch(doLogin());
+      })
+      .catch(() => sessionStorage.removeItem('user'));
+  }, [dispatch]);
 
   if (isLoading)
     return (
@@ -20,13 +34,6 @@ const Homepage = () => {
         <img src="/waiting.gif" className="rounded-2xl" />
       </div>
     );
-
-  if (data) {
-    const { user } = data.data;
-    localStorage.setItem('user', JSON.stringify(user));
-
-    if (isError) localStorage.removeItem('user');
-  }
 
   return (
     <div className="w-full bg-blue-grad bg-cover">

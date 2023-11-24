@@ -36,6 +36,7 @@ const groupApi = createApi({
             },
           };
         },
+        invalidatesTags: [{ type: 'CreateGroup' }],
       }),
       getGroup: builder.query({
         query: (group) => {

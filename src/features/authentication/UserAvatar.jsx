@@ -7,39 +7,44 @@ import {
   MenuList,
   Typography,
 } from '@material-tailwind/react';
-import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { HiOutlineChevronDown, HiOutlinePower, HiUser } from 'react-icons/hi2';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import Toast from '../../components/Toast';
 import { useLogoutMutation } from './authApi';
+import { doLogout } from './statusSlice';
 
-const Avatar = ({ user }) => {
+const Avatar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const closeMenu = () => setIsMenuOpen(false);
 
   const [logout, { isSuccess, error }] = useLogoutMutation();
   const handleLogout = () => logout();
+  const user = JSON.parse(sessionStorage.getItem('user'));
 
   useEffect(() => {
     if (isSuccess) {
+      sessionStorage.removeItem('user');
+      dispatch(doLogout());
       Toast.fire({
         title: 'Logout Successfully',
         icon: 'success',
         timer: '2000',
       });
-      navigate('/');
-      localStorage.removeItem('user');
     }
-  });
+  }, [isSuccess, navigate, dispatch]);
 
-  if (error)
+  if (error) {
+    console.log(error);
     Toast.fire({
       icon: 'error',
-      text: `${error.data.message}`,
+      title: error.data ? `${error.data.message}` : 'Service Unavailable',
     });
+  }
 
   return (
     <div className="flex items-center gap-3">
@@ -91,10 +96,6 @@ const Avatar = ({ user }) => {
       </Menu>
     </div>
   );
-};
-
-Avatar.propTypes = {
-  user: PropTypes.object.isRequired,
 };
 
 export default Avatar;
