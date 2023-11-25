@@ -4,6 +4,7 @@ import { HiOutlinePlusCircle } from 'react-icons/hi2';
 
 import Skeleton from '../../components/Skeleton';
 import GroupCreateForm from './GroupCreateForm';
+import GroupItem from './GroupItem';
 import { useGetGroupListQuery } from './groupApi';
 
 const GroupList = () => {
@@ -11,28 +12,26 @@ const GroupList = () => {
   const { data, isFetching } = useGetGroupListQuery({ id: user.id });
   const [showCreateForm, setShowCreateForm] = useState(false);
 
-  const closeForm = () => setShowCreateForm(false);
+  const clickHandler = () => setShowCreateForm(!showCreateForm);
 
   let content;
-  if (isFetching) content = <Skeleton times={5} className="h-8 w-full" />;
-  else if (data)
-    content = (
-      <div>
-        <p>{data.data.groups[0].name}</p>
-        <p>{data.data.groups.length}</p>
-      </div>
-    );
+  if (isFetching) content = <Skeleton times={10} className="h-8 w-full" />;
+  else if (data) {
+    const { groups } = data.data;
+    content = groups.map((group) => <GroupItem group={group} key={group.id} />);
+  }
+
   return (
-    <div>
-      {showCreateForm && <GroupCreateForm onClose={closeForm} />}
+    <div className="flex flex-col items-center">
+      <GroupCreateForm open={showCreateForm} handler={clickHandler} />
       <Button
         color="blue"
         className="flex items-center gap-2 p-3"
-        onClick={() => setShowCreateForm(true)}
+        onClick={clickHandler}
       >
         <HiOutlinePlusCircle className="text-xl" /> NEW GROUP
       </Button>
-      {content}
+      <div className="w-full">{content}</div>
     </div>
   );
 };

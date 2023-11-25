@@ -7,9 +7,9 @@ import Modal from '../../components/Modal';
 import Toast from '../../components/Toast';
 import { useCreateGroupMutation } from './groupApi';
 
-const GroupCreateForm = ({ onClose }) => {
+const GroupCreateForm = ({ open, handler }) => {
   const [name, setName] = useState('');
-  const [message, setMessage] = useState();
+  const [message, setMessage] = useState('');
   const [description, setDescription] = useState('');
   const [createGroup, { isLoading }] = useCreateGroupMutation();
 
@@ -17,7 +17,7 @@ const GroupCreateForm = ({ onClose }) => {
     createGroup({ name, description })
       .unwrap()
       .then(() => {
-        onClose();
+        handler();
         Toast.fire({
           title: 'Create New Group Successfully',
           icon: 'success',
@@ -27,25 +27,25 @@ const GroupCreateForm = ({ onClose }) => {
   };
 
   const actionBar = (
-    <div className="flex gap-3">
-      <Button onClick={handleCreateForm} color="blue">
+    <div className="flex gap-3 p-0">
+      <Button variant="text" color="blue-gray" onClick={handler}>
+        Cancel
+      </Button>
+      <Button variant="gradient" color="blue" onClick={handleCreateForm}>
         <div className="flex justify-center">
           {isLoading ? <GoSync className="animate-spin" /> : 'Create'}
         </div>
       </Button>
-      <Button onClick={onClose} color="blue-gray">
-        Cancel
-      </Button>
     </div>
   );
 
-  const modal = (
-    <Modal actionBar={actionBar} classes="lg:inset-x-1/4 xl:inset-x-1/3">
+  return (
+    <Modal actionBar={actionBar} open={open} handler={handler}>
       <div>
         <Typography variant="h4" color="blue" className="py-3">
           Create a new Group
         </Typography>
-        <form className="grid gap-4">
+        <form className="grid gap-4 ">
           <Input
             type="text"
             label="Group Name"
@@ -62,16 +62,17 @@ const GroupCreateForm = ({ onClose }) => {
             color="blue"
           />
         </form>
-        <Typography color="red">{message}</Typography>
+        <Typography color="red" className="p-1" variant="small">
+          {message}
+        </Typography>
       </div>
     </Modal>
   );
-
-  return modal;
 };
 
 GroupCreateForm.propTypes = {
-  onClose: PropTypes.func.isRequired,
+  handler: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
 };
 
 export default GroupCreateForm;
