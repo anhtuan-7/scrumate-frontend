@@ -35,6 +35,7 @@ const Avatar = () => {
         icon: 'success',
         timer: '2000',
       });
+      navigate('/');
     }
   }, [isSuccess, navigate, dispatch]);
 

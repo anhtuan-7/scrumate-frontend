@@ -8,7 +8,11 @@ import Homepage from '../components/Homepage';
 import ProtectedRoute from '../components/ProtectedRoute';
 import LoginForm from '../features/authentication/LoginForm';
 import SignUpForm from '../features/authentication/SignUpForm';
-import { doLogin, verify } from '../features/authentication/statusSlice';
+import {
+  doLogin,
+  doLogout,
+  verify,
+} from '../features/authentication/statusSlice';
 import GroupList from '../features/group/GroupList';
 import ProductBacklog from '../features/issue/ProductBacklog';
 import ProjectList from '../features/project/ProjectList';
@@ -27,7 +31,10 @@ function App() {
         sessionStorage.setItem('user', JSON.stringify(user));
         dispatch(doLogin());
       })
-      .catch(() => sessionStorage.removeItem('user'));
+      .catch(() => {
+        sessionStorage.removeItem('user');
+        dispatch(doLogout());
+      });
   }, [dispatch]);
 
   if (isLoading)

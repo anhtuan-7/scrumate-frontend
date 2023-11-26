@@ -20,13 +20,13 @@ const LoginForm = () => {
     if (data) {
       const { user } = data.data;
       sessionStorage.setItem('user', JSON.stringify(user));
+      dispatch(doLogin());
       Toast.fire({
         title: 'Login Successfully',
         icon: 'success',
         timer: '2000',
       });
-      dispatch(doLogin());
-      navigate('/app');
+      navigate('/app/groups');
     }
   }, [data, navigate, dispatch]);
 

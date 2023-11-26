@@ -22,14 +22,14 @@ const SignUp = () => {
   useEffect(() => {
     if (data) {
       const { user } = data.data;
-      localStorage.setItem('user', JSON.stringify(user));
+      sessionStorage.setItem('user', JSON.stringify(user));
+      dispatch(doLogin());
       Toast.fire({
         title: 'Sign Up Successfully',
         icon: 'success',
         timer: '2000',
       });
-      dispatch(doLogin());
-      navigate('/app');
+      navigate('/app/groups');
     }
   }, [data, navigate, dispatch]);
 

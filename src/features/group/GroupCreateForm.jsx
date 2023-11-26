@@ -23,7 +23,11 @@ const GroupCreateForm = ({ open, handler }) => {
           icon: 'success',
         });
       })
-      .catch((e) => setMessage(e.data.message));
+      .catch((e) => setMessage(e.data.message))
+      .finally(() => {
+        setDescription('');
+        setName('');
+      });
   };
 
   const actionBar = (
