@@ -13,8 +13,8 @@ import {
   doLogout,
   verify,
 } from '../features/authentication/statusSlice';
+import GroupDetail from '../features/group/GroupDetail';
 import GroupList from '../features/group/GroupList';
-import ProductBacklog from '../features/issue/ProductBacklog';
 import ProjectList from '../features/project/ProjectList';
 import Auth from '../layouts/Auth';
 import ProjectLayout from '../layouts/ProjectLayout';
@@ -29,7 +29,7 @@ function App() {
       .then((response) => {
         const { user } = response.data;
         sessionStorage.setItem('user', JSON.stringify(user));
-        dispatch(doLogin());
+        dispatch(doLogin()); // Stop loading
       })
       .catch(() => {
         sessionStorage.removeItem('user');
@@ -66,9 +66,15 @@ function App() {
           <Route path="groups" element={<GroupList />} />
           <Route path="projects" element={<ProjectList />} />
         </Route>
-        <Route path="project/:id" element={<ProjectLayout />}>
-          <Route index element={<Navigate to="product-backlog" />} />
-          <Route index path="product-backlog" element={<ProductBacklog />} />
+        <Route
+          path="groups/:id"
+          element={
+            <ProtectedRoute>
+              <GroupDetail />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="projects/:id" element={<ProjectLayout />}></Route>
         </Route>
         <Route path="auth" element={<Auth />}>
           <Route index element={<Navigate to="login" />} />
