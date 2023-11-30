@@ -13,11 +13,11 @@ import {
   doLogout,
   verify,
 } from '../features/authentication/statusSlice';
-import GroupDetail from '../features/group/GroupDetail';
 import GroupList from '../features/group/GroupList';
+import GroupProjectList from '../features/project/GroupProjectList';
 import ProjectList from '../features/project/ProjectList';
 import Auth from '../layouts/Auth';
-import ProjectLayout from '../layouts/ProjectLayout';
+import GroupLayout from '../layouts/GroupLayout';
 
 function App() {
   const dispatch = useDispatch();
@@ -54,6 +54,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route index element={<Homepage />} />
+
         <Route
           path="app"
           element={
@@ -66,16 +67,19 @@ function App() {
           <Route path="groups" element={<GroupList />} />
           <Route path="projects" element={<ProjectList />} />
         </Route>
+
         <Route
           path="groups/:id"
           element={
             <ProtectedRoute>
-              <GroupDetail />
+              <GroupLayout />
             </ProtectedRoute>
           }
         >
-          <Route path="projects/:id" element={<ProjectLayout />}></Route>
+          <Route index element={<Navigate to="projects" />} />
+          <Route path="projects" element={<GroupProjectList />} />
         </Route>
+
         <Route path="auth" element={<Auth />}>
           <Route index element={<Navigate to="login" />} />
           <Route path="login" element={<LoginForm />} />
