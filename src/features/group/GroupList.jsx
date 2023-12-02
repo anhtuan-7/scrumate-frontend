@@ -1,6 +1,7 @@
-import { Button, Option, Select } from '@material-tailwind/react';
+import { Button, Option, Select, Typography } from '@material-tailwind/react';
 import { useState } from 'react';
 import { HiOutlinePlusCircle } from 'react-icons/hi2';
+import { useSelector } from 'react-redux';
 
 import Skeleton from '../../components/Skeleton';
 import GroupCreateForm from './GroupCreateForm';
@@ -9,7 +10,7 @@ import { useGetGroupListQuery } from './groupApi';
 
 const GroupList = () => {
   const [sort, setSort] = useState('lastAccessed');
-  const user = JSON.parse(sessionStorage.getItem('user'));
+  const { user } = useSelector((state) => state.status);
   const { data, isFetching } = useGetGroupListQuery({
     userId: user.id,
     sort: sort,
@@ -19,10 +20,15 @@ const GroupList = () => {
   const clickHandler = () => setShowCreateForm(!showCreateForm);
 
   let content;
-  if (isFetching) content = <Skeleton times={10} className="h-8 w-full" />;
+  if (isFetching) content = <Skeleton times={6} className="h-10 w-full" />;
   else if (data) {
     const { groups } = data.data;
-    content = groups.map((group) => <GroupItem group={group} key={group.id} />);
+    if (groups.length === 0)
+      content = <Typography>You are not a member of any groups yet</Typography>;
+    else
+      content = groups.map((group) => (
+        <GroupItem group={group} key={group.id} />
+      ));
   }
 
   return (

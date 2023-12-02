@@ -21,7 +21,7 @@ const statusSlice = createSlice({
     user: null,
     isLoading: true,
     error: null,
-    isLoggedIn: JSON.parse(sessionStorage.getItem('user')) != null,
+    isLoggedIn: false,
   },
   reducers: {
     doLogout: (state) => {

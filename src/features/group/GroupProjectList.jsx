@@ -1,4 +1,5 @@
 import { Fragment } from 'react';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import Skeleton from '../../components/Skeleton';
@@ -8,7 +9,7 @@ import { useGetGroupQuery } from './groupApi';
 
 const GroupProjectList = () => {
   const { groupId } = useParams();
-  const user = JSON.parse(sessionStorage.getItem('user'));
+  const { user } = useSelector((state) => state.status);
   const { data, isFetching, error } = useGetGroupQuery({
     userId: user.id,
     groupId: groupId,

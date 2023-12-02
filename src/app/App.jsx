@@ -32,6 +32,7 @@ function App() {
       })
       .catch(() => {
         dispatch(doLogout());
+        window.history.pushState({}, '/');
       });
   }, [dispatch]);
 
