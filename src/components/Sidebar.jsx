@@ -1,14 +1,15 @@
 import { Card, List, Typography } from '@material-tailwind/react';
 import PropTypes from 'prop-types';
+import { Fragment } from 'react';
 
 const Sidebar = ({ children, title }) => {
   return (
     <Card className="h-screen min-w-max rounded-none border-r border-gray-300 bg-white shadow-none">
-      <List className="grid min-w-max items-center gap-3 pr-10 md:pr-24">
+      <List className="mr-5 grid min-w-max items-center gap-3">
         <div className="py-4">
           <Typography variant="h4">{title}</Typography>
         </div>
-        <>{children}</>
+        <Fragment>{children}</Fragment>
       </List>
     </Card>
   );

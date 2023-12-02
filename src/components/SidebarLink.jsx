@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 const SidebarLink = ({ icon, text, url }) => {
   return (
     <NavLink to={url}>
-      <ListItem className="focus:text-blue-500">
+      <ListItem className="pr-10 focus:text-blue-500 md:pr-24">
         <ListItemPrefix>{icon}</ListItemPrefix>
         {text}
       </ListItem>

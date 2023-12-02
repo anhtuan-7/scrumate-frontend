@@ -17,31 +17,33 @@ const groupApi = createApi({
             method: 'GET',
           };
         },
-        providesTags: (result, error, user) => {
+        providesTags: (result, error, args) => {
           const { groups } = result.data;
           const tags = groups.map((group) => {
             return { type: 'Group', id: group.id };
           });
-          return [{ type: 'CreateGroup', id: user.id }, ...tags];
+          return [{ type: 'CreateGroup', id: args.userId }, ...tags];
         },
       }),
       createGroup: builder.mutation({
-        query: (payload) => {
+        query: (args) => {
           return {
             url: '/groups',
             method: 'POST',
             body: {
-              name: payload.name,
-              description: payload.description,
+              name: args.name,
+              description: args.description,
             },
           };
         },
-        invalidatesTags: [{ type: 'CreateGroup' }],
+        invalidatesTags: (result, error, args) => [
+          { type: 'CreateGroup', id: args.userId },
+        ],
       }),
       getGroup: builder.query({
-        query: (group) => {
+        query: (args) => {
           return {
-            url: `/groups/${group.id}`,
+            url: `/groups/${args.groupId}`,
             method: 'GET',
           };
         },
@@ -51,5 +53,9 @@ const groupApi = createApi({
   },
 });
 
-export const { useGetGroupListQuery, useCreateGroupMutation } = groupApi;
+export const {
+  useGetGroupListQuery,
+  useGetGroupQuery,
+  useCreateGroupMutation,
+} = groupApi;
 export { groupApi };

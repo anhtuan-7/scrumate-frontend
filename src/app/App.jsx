@@ -14,7 +14,8 @@ import {
   verify,
 } from '../features/authentication/statusSlice';
 import GroupList from '../features/group/GroupList';
-import GroupProjectList from '../features/project/GroupProjectList';
+import GroupMember from '../features/group/GroupMember';
+import GroupProjectList from '../features/group/GroupProjectList';
 import ProjectList from '../features/project/ProjectList';
 import Auth from '../layouts/Auth';
 import GroupLayout from '../layouts/GroupLayout';
@@ -26,13 +27,10 @@ function App() {
   useEffect(() => {
     dispatch(verify())
       .unwrap()
-      .then((response) => {
-        const { user } = response.data;
-        sessionStorage.setItem('user', JSON.stringify(user));
+      .then(() => {
         dispatch(doLogin()); // Stop loading
       })
       .catch(() => {
-        sessionStorage.removeItem('user');
         dispatch(doLogout());
       });
   }, [dispatch]);
@@ -54,7 +52,6 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route index element={<Homepage />} />
-
         <Route
           path="app"
           element={
@@ -67,9 +64,8 @@ function App() {
           <Route path="groups" element={<GroupList />} />
           <Route path="projects" element={<ProjectList />} />
         </Route>
-
         <Route
-          path="groups/:id"
+          path="groups/:groupId"
           element={
             <ProtectedRoute>
               <GroupLayout />
@@ -78,8 +74,8 @@ function App() {
         >
           <Route index element={<Navigate to="projects" />} />
           <Route path="projects" element={<GroupProjectList />} />
+          <Route path="members" element={<GroupMember />} />
         </Route>
-
         <Route path="auth" element={<Auth />}>
           <Route index element={<Navigate to="login" />} />
           <Route path="login" element={<LoginForm />} />

@@ -10,7 +10,10 @@ import { useGetGroupListQuery } from './groupApi';
 const GroupList = () => {
   const [sort, setSort] = useState('lastAccessed');
   const user = JSON.parse(sessionStorage.getItem('user'));
-  const { data, isFetching } = useGetGroupListQuery({ id: user.id });
+  const { data, isFetching } = useGetGroupListQuery({
+    userId: user.id,
+    sort: sort,
+  });
   const [showCreateForm, setShowCreateForm] = useState(false);
 
   const clickHandler = () => setShowCreateForm(!showCreateForm);
@@ -48,7 +51,6 @@ const GroupList = () => {
             <HiOutlinePlusCircle className="text-xl" /> NEW GROUP
           </Button>
         </div>
-
         <div className="grid w-full grid-cols-1 gap-3">{content}</div>
       </div>
     </div>

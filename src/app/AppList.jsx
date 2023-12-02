@@ -8,7 +8,7 @@ import MainLayout from '../layouts/MainLayout';
 const AppList = () => {
   return (
     <MainLayout>
-      <Sidebar title="Index">
+      <Sidebar title="Your work">
         <SidebarLink
           url="/app/groups"
           icon={<GrGroup className="h-5 w-5" />}
