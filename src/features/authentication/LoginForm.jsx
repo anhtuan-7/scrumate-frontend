@@ -18,8 +18,6 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (data) {
-      const { user } = data.data;
-      sessionStorage.setItem('user', JSON.stringify(user));
       dispatch(doLogin());
       Toast.fire({
         title: 'Login Successfully',

@@ -40,7 +40,6 @@ const statusSlice = createSlice({
       })
       .addCase(verify.fulfilled, (state, action) => {
         state.user = action.payload.data.user;
-        // save user to sessionStorage then dispatch doLogin() to finish
         state.error = null;
       })
       .addCase(verify.rejected, (state, action) => {

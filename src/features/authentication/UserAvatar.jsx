@@ -9,7 +9,7 @@ import {
 } from '@material-tailwind/react';
 import { useEffect, useState } from 'react';
 import { HiOutlineChevronDown, HiOutlinePower, HiUser } from 'react-icons/hi2';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import Toast from '../../components/Toast';
@@ -19,16 +19,16 @@ import { doLogout } from './statusSlice';
 const Avatar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.status);
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const closeMenu = () => setIsMenuOpen(false);
 
   const [logout, { isSuccess, error }] = useLogoutMutation();
   const handleLogout = () => logout();
-  const user = JSON.parse(sessionStorage.getItem('user'));
 
   useEffect(() => {
     if (isSuccess) {
-      sessionStorage.removeItem('user');
       dispatch(doLogout());
       Toast.fire({
         title: 'Logout Successfully',
