@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import Toast from '../../components/Toast';
+import api from '../api';
 import { useLogoutMutation } from './authApi';
 import { doLogout } from './statusSlice';
 
@@ -29,6 +30,7 @@ const Avatar = () => {
 
   useEffect(() => {
     if (isSuccess) {
+      dispatch(api.util.resetApiState());
       dispatch(doLogout());
       Toast.fire({
         title: 'Logout Successfully',

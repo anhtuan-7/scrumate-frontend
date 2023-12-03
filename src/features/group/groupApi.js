@@ -1,13 +1,8 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+/* eslint-disable no-unused-vars */
+import api from '../api';
 
-import { BASE_URL } from '../../utils/constants';
-
-const groupApi = createApi({
-  reducerPath: 'group',
-  baseQuery: fetchBaseQuery({
-    baseUrl: BASE_URL,
-    credentials: 'include',
-  }),
+const groupApi = api.injectEndpoints({
+  overrideExisting: false,
   endpoints: (builder) => {
     return {
       getGroupList: builder.query({
@@ -22,7 +17,7 @@ const groupApi = createApi({
           const tags = groups.map((group) => {
             return { type: 'Group', id: group.id };
           });
-          return [{ type: 'CreateGroup', id: args.userId }, ...tags];
+          return ['Group', ...tags];
         },
       }),
       createGroup: builder.mutation({
@@ -36,9 +31,7 @@ const groupApi = createApi({
             },
           };
         },
-        invalidatesTags: (result, error, args) => [
-          { type: 'CreateGroup', id: args.userId },
-        ],
+        invalidatesTags: ['Group'],
       }),
       getGroup: builder.query({
         query: (args) => {
@@ -47,8 +40,12 @@ const groupApi = createApi({
             method: 'GET',
           };
         },
-        providesTags: ['Group'],
+        providesTags: (result, error, arg) => [
+          { type: 'Post', id: arg.userId },
+        ],
       }),
+      updateGroup: builder.mutation({}),
+      deleteGroup: builder.mutation({}),
     };
   },
 });

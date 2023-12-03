@@ -11,7 +11,10 @@ const verify = createAsyncThunk('check', async (_, { rejectWithValue }) => {
     });
     return response.data;
   } catch (err) {
-    return rejectWithValue(err.response.data);
+    if (err.response) return rejectWithValue(err.response.data);
+    return rejectWithValue({
+      message: err.message,
+    });
   }
 });
 
@@ -28,9 +31,12 @@ const statusSlice = createSlice({
       state.isLoggedIn = false;
       state.isLoading = false;
     },
-    doLogin: (state) => {
+    doLogin: (state, action) => {
       state.isLoggedIn = true;
       state.isLoading = false;
+    },
+    setUser: (state, action) => {
+      state.user = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -51,5 +57,5 @@ const statusSlice = createSlice({
 });
 
 export { verify };
-export const { doLogin, doLogout } = statusSlice.actions;
+export const { doLogin, doLogout, setUser } = statusSlice.actions;
 export default statusSlice.reducer;

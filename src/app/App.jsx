@@ -6,6 +6,8 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import AppList from '../app/AppList';
 import Homepage from '../components/Homepage';
 import ProtectedRoute from '../components/ProtectedRoute';
+import { FireErrorToast } from '../components/Toast';
+import api from '../features/api';
 import LoginForm from '../features/authentication/LoginForm';
 import SignUpForm from '../features/authentication/SignUpForm';
 import {
@@ -13,12 +15,12 @@ import {
   doLogout,
   verify,
 } from '../features/authentication/statusSlice';
+import GroupLayout from '../features/group/GroupLayout';
 import GroupList from '../features/group/GroupList';
 import GroupMember from '../features/group/GroupMember';
 import GroupProjectList from '../features/group/GroupProjectList';
 import ProjectList from '../features/project/ProjectList';
 import Auth from '../layouts/Auth';
-import GroupLayout from '../layouts/GroupLayout';
 
 function App() {
   const dispatch = useDispatch();
@@ -30,8 +32,10 @@ function App() {
       .then(() => {
         dispatch(doLogin()); // Stop loading
       })
-      .catch(() => {
+      .catch((error) => {
+        dispatch(api.util.resetApiState());
         dispatch(doLogout());
+        FireErrorToast(error);
         window.history.pushState({}, '/');
       });
   }, [dispatch]);

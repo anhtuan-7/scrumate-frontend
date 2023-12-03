@@ -1,13 +1,7 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import api from '../api';
 
-import { BASE_URL } from '../../utils/constants';
-
-const authApi = createApi({
-  reducerPath: 'auth',
-  baseQuery: fetchBaseQuery({
-    baseUrl: BASE_URL,
-    credentials: 'include',
-  }),
+const authApi = api.injectEndpoints({
+  overrideExisting: false,
   endpoints: (builder) => {
     return {
       signUp: builder.mutation({
@@ -15,12 +9,7 @@ const authApi = createApi({
           return {
             url: '/signUp',
             method: 'POST',
-            body: {
-              name: payload.name,
-              email: payload.email,
-              password: payload.password,
-              confirmPassword: payload.confirmPassword,
-            },
+            body: payload,
           };
         },
       }),
@@ -29,10 +18,7 @@ const authApi = createApi({
           return {
             url: '/login',
             method: 'POST',
-            body: {
-              email: payload.email,
-              password: payload.password,
-            },
+            body: payload,
           };
         },
       }),

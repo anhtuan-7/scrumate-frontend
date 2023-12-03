@@ -11,7 +11,6 @@ import { Link } from 'react-router-dom';
 import formatISODate from '../../utils/dateFormat';
 
 const ProjectItem = ({ project }) => {
-  console.log(project);
   return (
     <Card className="border-2 border-blue-100 bg-blue-100/30">
       <CardBody className="grid grid-cols-1 gap-2 p-3">

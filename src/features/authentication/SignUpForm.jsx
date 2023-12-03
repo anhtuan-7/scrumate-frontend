@@ -7,7 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import Toast from '../../components/Toast';
 import { useSignUpMutation } from './authApi';
-import { doLogin } from './statusSlice';
+import { doLogin, setUser } from './statusSlice';
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -21,6 +21,7 @@ const SignUp = () => {
 
   useEffect(() => {
     if (data) {
+      dispatch(setUser(data.data.user));
       dispatch(doLogin());
       Toast.fire({
         title: 'Sign Up Successfully',
@@ -76,7 +77,7 @@ const SignUp = () => {
         </div>
         {error && (
           <Typography className="p-1 text-sm text-red-500">
-            {error.data.message}
+            {error.data ? error.data.message : error.error}
           </Typography>
         )}
         <Button className="mt-3 w-full" onClick={handleSignUp}>

@@ -3,7 +3,7 @@ import { Fragment } from 'react';
 import { useSelector } from 'react-redux';
 
 import Skeleton from '../../components/Skeleton';
-import Toast from '../../components/Toast';
+import { FireErrorToast } from '../../components/Toast';
 import { useGetProjectListQuery } from './projectApi';
 import ProjectItem from './projectItem';
 
@@ -23,12 +23,8 @@ const ProjectList = () => {
         <Skeleton times={1} className="h-64 w-full" />
       </Fragment>
     );
-  else if (error) {
-    Toast.fire({
-      icon: 'error',
-      title: error.data.message,
-    });
-  } else if (data) {
+  else if (error) FireErrorToast(error);
+  else {
     const { projects } = data.data;
     if (projects.length === 0)
       content = (

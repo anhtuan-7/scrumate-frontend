@@ -1,19 +1,15 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+/* eslint-disable no-unused-vars */
+import api from '../api';
 
-import { BASE_URL } from '../../utils/constants';
-
-const projectApi = createApi({
-  reducerPath: 'project',
-  baseQuery: fetchBaseQuery({
-    baseUrl: BASE_URL,
-    credentials: 'include',
-  }),
+const projectApi = api.injectEndpoints({
   endpoints: (builder) => {
     return {
       getProjectList: builder.query({
-        query: () => {
+        query: (args) => {
           return {
-            url: 'projects',
+            url: args.groupId
+              ? `/groups/${args.groupId}/projects`
+              : '/projects',
             method: 'GET',
             params: { order: 'desc' },
           };
@@ -23,13 +19,13 @@ const projectApi = createApi({
           const tags = projects.map((project) => {
             return { type: 'Project', id: project.id };
           });
-          return [{ type: 'CreateProject', id: user.id }, ...tags];
+          return ['Project', ...tags];
         },
       }),
       createProject: builder.mutation({
         query: (payload) => {
           return {
-            url: '/projects',
+            url: '/',
             method: 'POST',
             body: {
               name: payload.name,
@@ -39,7 +35,7 @@ const projectApi = createApi({
             },
           };
         },
-        invalidatesTags: [{ type: 'CreateProject' }],
+        invalidatesTags: ['Project'],
       }),
     };
   },
