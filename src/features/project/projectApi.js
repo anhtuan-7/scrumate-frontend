@@ -25,14 +25,9 @@ const projectApi = api.injectEndpoints({
       createProject: builder.mutation({
         query: (payload) => {
           return {
-            url: '/',
+            url: `/groups/${payload.groupId}/projects`,
             method: 'POST',
-            body: {
-              name: payload.name,
-              key: payload.key,
-              description: payload.description,
-              repository: payload.repository,
-            },
+            body: payload,
           };
         },
         invalidatesTags: ['Project'],

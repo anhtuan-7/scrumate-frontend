@@ -5,16 +5,18 @@ import { GoSync } from 'react-icons/go';
 
 import Modal from '../../components/Modal';
 import Toast from '../../components/Toast';
-import { useCreateGroupMutation } from './groupApi';
+import { useCreateProjectMutation } from './projectApi';
 
-const GroupCreateForm = ({ open, handler }) => {
+const ProjectCreateForm = ({ groupId, open, handler }) => {
   const [message, setMessage] = useState('');
   const [name, setName] = useState('');
+  const [key, setKey] = useState('');
   const [description, setDescription] = useState('');
-  const [createGroup, { isLoading }] = useCreateGroupMutation();
+  const [repository, setRepository] = useState('');
+  const [createProject, { isLoading }] = useCreateProjectMutation();
 
   const handleCreateForm = () => {
-    createGroup({ name, description })
+    createProject({ name, key, description, repository, groupId })
       .unwrap()
       .then(() => {
         handler();
@@ -27,6 +29,8 @@ const GroupCreateForm = ({ open, handler }) => {
       .finally(() => {
         setDescription('');
         setName('');
+        setKey('');
+        setRepository('');
       });
   };
 
@@ -52,9 +56,17 @@ const GroupCreateForm = ({ open, handler }) => {
         <form className="grid gap-4 ">
           <Input
             type="text"
-            label="Group Name"
+            label="Project Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            color="blue"
+            required
+          />
+          <Input
+            type="text"
+            label="Key"
+            value={key}
+            onChange={(e) => setKey(e.target.value)}
             color="blue"
             required
           />
@@ -65,6 +77,13 @@ const GroupCreateForm = ({ open, handler }) => {
             onChange={(e) => setDescription(e.target.value)}
             color="blue"
           />
+          <Input
+            type="url"
+            label="Repository URL"
+            value={repository}
+            onChange={(e) => setRepository(e.target.value)}
+            color="blue"
+          />
         </form>
         <Typography color="red" className="p-1" variant="small">
           {message}
@@ -73,10 +92,10 @@ const GroupCreateForm = ({ open, handler }) => {
     </Modal>
   );
 };
-
-GroupCreateForm.propTypes = {
+ProjectCreateForm.propTypes = {
   handler: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
+  groupId: PropTypes.string.isRequired,
 };
 
-export default GroupCreateForm;
+export default ProjectCreateForm;

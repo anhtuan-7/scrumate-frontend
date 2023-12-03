@@ -50,7 +50,7 @@ const GroupLayout = () => {
               text="Setting"
             />
           </Sidebar>
-          <div className="ml-4 grid h-fit w-full min-w-max grid-cols-1 gap-6 p-4 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="ml-4 flex w-full min-w-max flex-col items-center p-4">
             <Outlet />
           </div>
         </Fragment>
