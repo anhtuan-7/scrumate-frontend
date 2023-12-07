@@ -34,8 +34,8 @@ const GroupList = () => {
   return (
     <div className="ml-4 flex w-full min-w-max flex-col items-center p-4">
       <GroupCreateForm open={showCreateForm} handler={clickHandler} />
-      <div className="grid w-full grid-cols-1 gap-4">
-        <div className="flex items-center justify-between">
+      <div className="w-full">
+        <div className="mb-6 flex items-center justify-between">
           <div className="mr-6">
             <Select
               variant="outlined"

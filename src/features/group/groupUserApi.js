@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import api from '../api';
 
 const groupUserApi = api.injectEndpoints({
@@ -14,7 +15,7 @@ const groupUserApi = api.injectEndpoints({
         const tags = members.map((member) => {
           return { type: 'GroupUser', id: member.id };
         });
-        return [{ type: 'AddMember', id: args.userId }, ...tags];
+        return ['GroupUser', ...tags];
       },
     }),
     addMember: builder.mutation({
@@ -28,9 +29,7 @@ const groupUserApi = api.injectEndpoints({
           },
         };
       },
-      invalidatesTags: (result, error, args) => [
-        { type: 'AddMember', id: args.userId },
-      ],
+      invalidatesTags: ['GroupUser'],
     }),
     changeRole: builder.mutation({}),
   }),

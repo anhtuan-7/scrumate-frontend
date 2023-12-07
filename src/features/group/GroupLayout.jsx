@@ -25,7 +25,7 @@ const GroupLayout = () => {
   else if (error) {
     FireErrorToast(error);
     navigate('/');
-  } else {
+  } else if (data) {
     const { group } = data.data;
     return (
       <MainLayout>

@@ -8,9 +8,10 @@ import {
   Typography,
 } from '@material-tailwind/react';
 import { useEffect, useState } from 'react';
+import { GrGroup } from 'react-icons/gr';
 import { HiOutlineChevronDown, HiOutlinePower, HiUser } from 'react-icons/hi2';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Toast from '../../components/Toast';
 import api from '../api';
@@ -76,7 +77,7 @@ const Avatar = () => {
             />
           </Button>
         </MenuHandler>
-        <MenuList className="p-1">
+        <MenuList className="p-3">
           <MenuItem
             className="flex items-center gap-2 rounded "
             onClick={closeMenu}
@@ -86,6 +87,17 @@ const Avatar = () => {
               Profile
             </Typography>
           </MenuItem>
+          <Link to="/app/groups">
+            <MenuItem
+              className="flex items-center gap-2 rounded "
+              onClick={closeMenu}
+            >
+              <GrGroup className="h-4 w-4" />
+              <Typography as="span" variant="small">
+                Group
+              </Typography>
+            </MenuItem>
+          </Link>
           <MenuItem
             className="flex items-center gap-2 rounded"
             onClick={handleLogout}

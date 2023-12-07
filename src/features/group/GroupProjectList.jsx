@@ -59,32 +59,30 @@ const GroupProjectList = () => {
         handler={clickHandler}
         groupId={groupId}
       />
-      <div className="grid w-full grid-cols-1 gap-4">
-        <div className="flex w-full items-center justify-between">
-          <div className="mr-6">
-            <Select
-              variant="outlined"
-              label="Sort by"
-              value={sort}
-              onChange={(value) => {
-                setSort(value);
-              }}
-            >
-              <Option value="lastAccessed">Last accessed</Option>
-              <Option value="joinedAt">Last joined</Option>
-            </Select>
-          </div>
-          <Button
-            color="blue"
-            className="flex w-36 items-center justify-center gap-2 p-3"
-            onClick={clickHandler}
+      <div className="mb-6 flex w-full items-center justify-between">
+        <div className="mr-6">
+          <Select
+            variant="outlined"
+            label="Sort by"
+            value={sort}
+            onChange={(value) => {
+              setSort(value);
+            }}
           >
-            <HiOutlinePlusCircle className="text-xl" /> New Project
-          </Button>
+            <Option value="lastAccessed">Last accessed</Option>
+            <Option value="joinedAt">Last joined</Option>
+          </Select>
         </div>
-        <div className="grid w-full grid-cols-1 gap-6 lg:grid-cols-3 xl:grid-cols-4">
-          {content}
-        </div>
+        <Button
+          color="blue"
+          className="flex w-36 items-center justify-center gap-2 p-3"
+          onClick={clickHandler}
+        >
+          <HiOutlinePlusCircle className="text-xl" /> New Project
+        </Button>
+      </div>
+      <div className="grid w-full grid-cols-1 gap-6 lg:grid-cols-3 xl:grid-cols-4">
+        {content}
       </div>
     </Fragment>
   );

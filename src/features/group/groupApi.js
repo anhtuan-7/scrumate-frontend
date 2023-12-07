@@ -40,9 +40,7 @@ const groupApi = api.injectEndpoints({
             method: 'GET',
           };
         },
-        providesTags: (result, error, arg) => [
-          { type: 'Post', id: arg.userId },
-        ],
+        providesTags: ['Group'],
       }),
       updateGroup: builder.mutation({}),
       deleteGroup: builder.mutation({}),
