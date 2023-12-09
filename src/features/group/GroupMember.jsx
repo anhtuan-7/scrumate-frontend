@@ -5,30 +5,37 @@ import {
   Spinner,
   Typography,
 } from '@material-tailwind/react';
+import { useState } from 'react';
 import { FiSearch, FiUserPlus } from 'react-icons/fi';
-import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useOutletContext } from 'react-router-dom';
 
+import Pagination from '../../components/Pagination';
 import Table from '../../components/Table';
 import formatISODate from '../../utils/dateFormat';
+import GroupUserAction from './GroupUserAction';
+import GroupUserAddForm from './GroupUserAddForm';
 import { useGetGroupMemberQuery } from './groupUserApi';
 
 const GroupMember = () => {
-  const { groupId } = useParams();
-  const { user } = useSelector((state) => state.status);
-  const { data, isFetching } = useGetGroupMemberQuery({ groupId });
+  const group = useOutletContext();
+  const [page, setPage] = useState(1);
+  const { data, isFetching } = useGetGroupMemberQuery({
+    groupId: group.id,
+    page,
+  });
+  const [showCreateForm, setShowCreateForm] = useState(false);
+  const clickHandler = () => setShowCreateForm(!showCreateForm);
 
   let content;
   if (isFetching)
     content = <Spinner className="inline-block h-8 w-8" color="blue" />;
   else if (data) {
     const { members } = data.data;
-    console.log(members);
     const tableConfig = [
       {
         label: 'Name',
         render: (member) => (
-          <Typography color="blue-gray" className="font-normal">
+          <Typography variant="small" color="blue-gray" className="font-normal">
             {member.name}
           </Typography>
         ),
@@ -36,7 +43,7 @@ const GroupMember = () => {
       {
         label: 'Email',
         render: (member) => (
-          <Typography color="blue-gray" className="font-normal">
+          <Typography variant="small" color="blue-gray" className="font-normal">
             {member.email}
           </Typography>
         ),
@@ -45,17 +52,17 @@ const GroupMember = () => {
         label: 'Role',
         render: (member) => (
           <Chip
-            size="small"
             color="blue-gray"
             value={member.group.role}
             className="inline"
+            size="sm"
           />
         ),
       },
       {
         label: 'Joined at',
         render: (member) => (
-          <Typography color="blue-gray" className="font-normal">
+          <Typography variant="small" color="blue-gray" className="font-normal">
             {formatISODate(member.group.joinedAt)}
           </Typography>
         ),
@@ -63,51 +70,45 @@ const GroupMember = () => {
       {
         label: 'Last accessed',
         render: (member) => (
-          <Typography color="blue-gray" className="font-normal">
+          <Typography variant="small" color="blue-gray" className="font-normal">
             {formatISODate(member.group.lastAccessed)}
           </Typography>
         ),
       },
       {
         label: '',
-        render: (member) => (
-          <Typography
-            variant="small"
-            color="blue-gray"
-            className="flex justify-end"
-          >
-            <Button
-              variant="text"
-              size="sm"
-              color="blue"
-              disabled={member.id === user.id}
-            >
-              Edit
-            </Button>
-            <Button variant="text" size="sm" color="red">
-              Inactivate
-            </Button>
-          </Typography>
-        ),
+        render: (member) => {
+          if (group.groupUser.role !== 'group-admin') return '';
+          return <GroupUserAction member={member} group={group} />;
+        },
       },
     ];
     content = (
-      <Table
-        config={tableConfig}
-        data={members}
-        keyFn={(member) => member.label || member.id}
-      />
+      <div className="flex flex-col items-center gap-9">
+        <Table config={tableConfig} data={members} />
+        <Pagination
+          currentPage={page}
+          setCurrentPage={setPage}
+          lastPage={Math.ceil(data.total / 10)}
+        />
+      </div>
     );
   }
   return (
     <div className="w-full">
+      <GroupUserAddForm
+        open={showCreateForm}
+        handler={clickHandler}
+        groupId={group.id}
+      />
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <Input label="Search" icon={<FiSearch />} />
+          <Input color="blue" label="Search" icon={<FiSearch />} />
         </div>
         <Button
           color="blue"
           className="flex w-36 items-center justify-center gap-2 p-3"
+          onClick={clickHandler}
         >
           <FiUserPlus className="text-lg" />
           New Member

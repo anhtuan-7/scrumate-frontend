@@ -6,10 +6,11 @@ const groupApi = api.injectEndpoints({
   endpoints: (builder) => {
     return {
       getGroupList: builder.query({
-        query: () => {
+        query: (args) => {
           return {
             url: '/groups',
             method: 'GET',
+            params: { sort: args.sort },
           };
         },
         providesTags: (result, error, args) => {

@@ -20,6 +20,8 @@ import GroupList from '../features/group/GroupList';
 import GroupMember from '../features/group/GroupMember';
 import GroupProjectList from '../features/group/GroupProjectList';
 import GroupSetting from '../features/group/GroupSetting';
+import Backlog from '../features/project/Backlog';
+import ProjectLayout from '../features/project/ProjectLayout';
 import ProjectList from '../features/project/ProjectList';
 import Auth from '../layouts/Auth';
 
@@ -82,6 +84,17 @@ function App() {
           <Route path="projects" element={<GroupProjectList />} />
           <Route path="members" element={<GroupMember />} />
           <Route path="setting" element={<GroupSetting />} />
+        </Route>
+        <Route
+          path="projects/:projectId"
+          element={
+            <ProtectedRoute>
+              <ProjectLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<Navigate to="backlog" />} />
+          <Route path="backlog" element={<Backlog />} />
         </Route>
         <Route path="auth" element={<Auth />}>
           <Route index element={<Navigate to="login" />} />

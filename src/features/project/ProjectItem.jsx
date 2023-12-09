@@ -16,7 +16,7 @@ const ProjectItem = ({ project }) => {
       <CardBody className="grid grid-cols-1 gap-2 p-3">
         {project.group && <Typography>Group: {project.group.name}</Typography>}
         <Link
-          to={`/groups/${project.id}`}
+          to={`/projects/${project.id}`}
           className="flex items-center justify-between"
         >
           <div className="mr-6 flex gap-3 hover:cursor-pointer hover:text-blue-500">

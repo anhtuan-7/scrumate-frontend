@@ -4,11 +4,9 @@ import Navbar from '../components/Navbar';
 
 const MainLayout = ({ children }) => {
   return (
-    <div className="min-h-screen w-full overflow-x-scroll">
-      <div className="flex flex-col items-center text-blue-gray-900">
-        <Navbar />
-        <div className="flex w-full overflow-auto px-6">{children}</div>
-      </div>
+    <div className="flex h-screen w-full flex-col items-center text-blue-gray-900">
+      <Navbar />
+      <div className="flex h-full w-full overflow-auto px-6">{children}</div>
     </div>
   );
 };

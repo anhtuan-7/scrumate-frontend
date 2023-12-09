@@ -1,7 +1,6 @@
 import { Button, Option, Select, Typography } from '@material-tailwind/react';
 import { useState } from 'react';
 import { HiOutlinePlusCircle } from 'react-icons/hi2';
-import { useSelector } from 'react-redux';
 
 import Skeleton from '../../components/Skeleton';
 import GroupCreateForm from './GroupCreateForm';
@@ -10,11 +9,7 @@ import { useGetGroupListQuery } from './groupApi';
 
 const GroupList = () => {
   const [sort, setSort] = useState('lastAccessed');
-  const { user } = useSelector((state) => state.status);
-  const { data, isFetching } = useGetGroupListQuery({
-    userId: user.id,
-    sort: sort,
-  });
+  const { data, isFetching } = useGetGroupListQuery({ sort });
   const [showCreateForm, setShowCreateForm] = useState(false);
 
   const clickHandler = () => setShowCreateForm(!showCreateForm);

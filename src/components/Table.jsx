@@ -8,7 +8,7 @@ const Table = ({ data, config }) => {
       className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
     >
       <Typography
-        ariant="small"
+        variant="small"
         color="blue-gray"
         className="font-normal leading-none opacity-70"
       >
@@ -46,7 +46,6 @@ const Table = ({ data, config }) => {
 Table.propTypes = {
   config: PropTypes.array.isRequired,
   data: PropTypes.array.isRequired,
-  keyFn: PropTypes.func.isRequired,
 };
 
 export default Table;
