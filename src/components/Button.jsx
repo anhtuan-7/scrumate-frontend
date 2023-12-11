@@ -14,7 +14,7 @@ const Button = ({ children, isLoading, ...rest }) => {
 
 Button.propTypes = {
   children: PropTypes.any,
-  isLoading: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool,
   rest: PropTypes.any,
 };
 

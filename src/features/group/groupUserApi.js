@@ -19,6 +19,17 @@ const groupUserApi = api.injectEndpoints({
         return ['GroupUser', ...tags];
       },
     }),
+    getMemberDetail: builder.query({
+      query: (args) => {
+        return {
+          url: `/groups/${args.groupId}/members/${args.memberId}`,
+          method: 'GET',
+        };
+      },
+      providesTags: (result, error, args) => {
+        return [{ type: 'GroupUser', id: args.memberId }];
+      },
+    }),
     addGroupMember: builder.mutation({
       query: (args) => {
         return {
@@ -41,5 +52,6 @@ export const {
   useGetGroupMemberQuery,
   useAddGroupMemberMutation,
   useChangeGroupMemberRoleMutation,
+  useLazyGetMemberDetailQuery,
 } = groupUserApi;
 export { groupUserApi };

@@ -1,12 +1,7 @@
-import {
-  Button,
-  Chip,
-  Input,
-  Spinner,
-  Typography,
-} from '@material-tailwind/react';
+import { Button, Input, Spinner, Typography } from '@material-tailwind/react';
 import { useState } from 'react';
 import { FiSearch, FiUserPlus } from 'react-icons/fi';
+import { useSelector } from 'react-redux';
 import { useOutletContext } from 'react-router-dom';
 
 import Pagination from '../../components/Pagination';
@@ -14,11 +9,14 @@ import Table from '../../components/Table';
 import formatISODate from '../../utils/dateFormat';
 import GroupUserAction from './GroupUserAction';
 import GroupUserAddForm from './GroupUserAddForm';
+import GroupUserRole from './GroupUserRole';
 import { useGetGroupMemberQuery } from './groupUserApi';
 
 const GroupMember = () => {
+  const { user } = useSelector((state) => state.status);
   const group = useOutletContext();
   const [page, setPage] = useState(1);
+
   const { data, isFetching } = useGetGroupMemberQuery({
     groupId: group.id,
     page,
@@ -50,14 +48,13 @@ const GroupMember = () => {
       },
       {
         label: 'Role',
-        render: (member) => (
-          <Chip
-            color="blue-gray"
-            value={member.group.role}
-            className="inline"
-            size="sm"
-          />
-        ),
+        render: (member) => {
+          const disable =
+            member.id === user.id || group.groupUser.role !== 'group-admin';
+          return (
+            <GroupUserRole currentRole={member.group.role} disable={disable} />
+          );
+        },
       },
       {
         label: 'Joined at',

@@ -4,19 +4,20 @@ import { useSelector } from 'react-redux';
 
 const GroupUserAction = ({ member, group }) => {
   const { user } = useSelector((state) => state.status);
+
   if (group.groupUser.role === 'group-admin')
     return (
       <div className="flex justify-end">
+        <Button variant="text" size="sm" color="blue">
+          Detail
+        </Button>
         <Button
           variant="text"
           size="sm"
-          color="blue"
+          color="red"
           disabled={member.id === user.id}
         >
-          Edit
-        </Button>
-        <Button variant="text" size="sm" color="blue-gray">
-          Detail
+          Deactivate
         </Button>
       </div>
     );

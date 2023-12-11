@@ -4,6 +4,7 @@ import { GrUserAdmin } from 'react-icons/gr';
 import { HiBars3, HiOutlinePresentationChartBar } from 'react-icons/hi2';
 import { PiKanban } from 'react-icons/pi';
 import { TfiDashboard } from 'react-icons/tfi';
+import { Outlet } from 'react-router-dom';
 
 import Sidebar from '../../components/Sidebar';
 import SidebarLink from '../../components/SidebarLink';
@@ -49,6 +50,7 @@ const ProjectLayout = () => {
           text="Member"
         />
       </Sidebar>
+      <Outlet />
     </MainLayout>
   );
 };

@@ -33,14 +33,16 @@ const Table = ({ data, config }) => {
   });
 
   return (
-    <Card className="h-full w-full overflow-auto">
-      <table className="w-full min-w-max table-auto text-left">
-        <thead>
-          <tr>{renderedHeader}</tr>
-        </thead>
-        <tbody>{renderedRows}</tbody>
-      </table>
-    </Card>
+    <div className="w-full overflow-visible">
+      <Card className="min-w-max">
+        <table className="w-full min-w-max table-auto text-left">
+          <thead>
+            <tr>{renderedHeader}</tr>
+          </thead>
+          <tbody>{renderedRows}</tbody>
+        </table>
+      </Card>
+    </div>
   );
 };
 Table.propTypes = {

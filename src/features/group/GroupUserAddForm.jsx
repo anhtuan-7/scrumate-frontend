@@ -1,5 +1,5 @@
 import {
-  Button,
+  Avatar,
   Card,
   CardBody,
   Input,
@@ -9,18 +9,20 @@ import {
 } from '@material-tailwind/react';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { GoSync } from 'react-icons/go';
 
+import Button from '../../components/Button';
 import Modal from '../../components/Modal';
 import Toast from '../../components/Toast';
+import { useLazyGetUserQuery } from '../user/userApi';
 import { useAddGroupMemberMutation } from './groupUserApi';
 
 const GroupUserAddForm = ({ open, handler, groupId }) => {
   const [message, setMessage] = useState('');
-  const [user, setUser] = useState(undefined);
+  const [user, setUser] = useState(null);
   const [email, setEmail] = useState('');
   const [role, setRole] = useState('member');
   const [addGroupMember, { isLoading }] = useAddGroupMemberMutation();
+  const [trigger, { isLoading: isSearching }] = useLazyGetUserQuery();
 
   const handleCreateForm = () => {
     addGroupMember({ email, role, groupId })
@@ -38,8 +40,16 @@ const GroupUserAddForm = ({ open, handler, groupId }) => {
   };
 
   const handleFindUser = () => {
-    setMessage('');
-    setUser('User found!');
+    trigger({ email })
+      .unwrap()
+      .then((response) => {
+        setMessage('');
+        setUser(response.data.user);
+      })
+      .catch((error) => {
+        setUser(null);
+        setMessage(error.data.message);
+      });
   };
 
   const onCancel = () => {
@@ -53,10 +63,13 @@ const GroupUserAddForm = ({ open, handler, groupId }) => {
       <Button variant="text" color="blue-gray" onClick={onCancel}>
         Cancel
       </Button>
-      <Button variant="gradient" color="blue" onClick={handleCreateForm}>
-        <div className="flex justify-center">
-          {isLoading ? <GoSync className="animate-spin" /> : 'Create'}
-        </div>
+      <Button
+        variant="gradient"
+        color="blue"
+        onClick={handleCreateForm}
+        isLoading={isLoading}
+      >
+        Create
       </Button>
     </div>
   );
@@ -87,6 +100,7 @@ const GroupUserAddForm = ({ open, handler, groupId }) => {
               disabled={!email}
               className="!absolute right-1 top-1 rounded"
               onClick={handleFindUser}
+              isLoading={isSearching}
             >
               Find
             </Button>
@@ -104,9 +118,19 @@ const GroupUserAddForm = ({ open, handler, groupId }) => {
             <Option value="group-admin">Group Admin</Option>
           </Select>
           {user && (
-            <Card>
-              <CardBody className="px-2">
-                <Typography variant="small">User Found!</Typography>
+            <Card className="mt-3 p-2">
+              <Typography variant="small">Search result:</Typography>
+              <CardBody className="flex gap-3 p-2">
+                <Avatar
+                  variant="circular"
+                  size="md"
+                  alt="avatar"
+                  src="/profile/profile-1.png"
+                />
+                <div>
+                  <Typography variant="h6">{user.name}</Typography>
+                  <Typography variant="small">{user.email}</Typography>
+                </div>
               </CardBody>
             </Card>
           )}

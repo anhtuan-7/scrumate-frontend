@@ -1,4 +1,5 @@
 import { Dialog } from '@material-tailwind/react';
+import PropTypes from 'prop-types';
 
 const Modal = ({ children, actionBar, open, handler }) => {
   return (
@@ -15,6 +16,13 @@ const Modal = ({ children, actionBar, open, handler }) => {
       </div>
     </Dialog>
   );
+};
+
+Modal.propTypes = {
+  children: PropTypes.any,
+  actionBar: PropTypes.any,
+  open: PropTypes.bool,
+  handler: PropTypes.func,
 };
 
 export default Modal;
