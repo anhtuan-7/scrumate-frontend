@@ -1,10 +1,10 @@
-import { Button, Input, Typography } from '@material-tailwind/react';
+import { Input, Typography } from '@material-tailwind/react';
 import { Fragment } from 'react';
 import { useEffect, useState } from 'react';
-import { GoSync } from 'react-icons/go';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
+import Button from '../../components/Button';
 import Toast from '../../components/Toast';
 import { useSignUpMutation } from './authApi';
 import { doLogin, setUser } from './statusSlice';
@@ -80,10 +80,12 @@ const SignUp = () => {
             {error.data ? error.data.message : error.error}
           </Typography>
         )}
-        <Button className="mt-3 w-full" onClick={handleSignUp}>
-          <div className="flex justify-center">
-            {isLoading ? <GoSync className="animate-spin" /> : 'Sign Up'}
-          </div>
+        <Button
+          className="mt-3 w-full"
+          onClick={handleSignUp}
+          isLoading={isLoading}
+        >
+          Sign Up
         </Button>
         <Typography color="gray" className="mt-4 text-center font-normal">
           Already have an account?{'  '}
