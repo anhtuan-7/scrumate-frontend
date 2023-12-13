@@ -24,7 +24,7 @@ const ProjectList = () => {
       </Fragment>
     );
   else if (error) FireErrorToast(error);
-  else {
+  else if (data) {
     const { projects } = data.data;
     if (projects.length === 0)
       content = (
@@ -36,7 +36,7 @@ const ProjectList = () => {
       ));
   }
   return (
-    <div className="ml-4 grid h-fit w-full min-w-max grid-cols-1 gap-6 p-4 lg:grid-cols-3 xl:grid-cols-4">
+    <div className="ml-4 grid h-fit grid-cols-1 gap-6 p-4 lg:grid-cols-3 xl:grid-cols-4">
       {content}
     </div>
   );

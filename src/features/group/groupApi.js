@@ -10,7 +10,7 @@ const groupApi = api.injectEndpoints({
           return {
             url: '/groups',
             method: 'GET',
-            params: { sort: args.sort },
+            params: { sort: args.sort, order: 'desc' },
           };
         },
         providesTags: (result, error, args) => {

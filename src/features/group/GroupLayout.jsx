@@ -1,6 +1,6 @@
 import { Chip } from '@material-tailwind/react';
-import { GrProjects, GrUserAdmin } from 'react-icons/gr';
-import { IoSettingsOutline } from 'react-icons/io5';
+import { GrProjects } from 'react-icons/gr';
+import { IoPeopleOutline, IoSettingsOutline } from 'react-icons/io5';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 
 import LoadingScreen from '../../components/LoadingScreen';
@@ -34,7 +34,7 @@ const GroupLayout = () => {
           />
           <SidebarLink
             url={`/groups/${group.id}/members`}
-            icon={<GrUserAdmin className="h-5 w-5" />}
+            icon={<IoPeopleOutline className="h-5 w-5" />}
             text="Member"
           />
           <SidebarLink

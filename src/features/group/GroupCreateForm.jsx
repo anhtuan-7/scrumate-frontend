@@ -1,8 +1,8 @@
-import { Button, Input, Typography } from '@material-tailwind/react';
+import { Input, Typography } from '@material-tailwind/react';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { GoSync } from 'react-icons/go';
 
+import Button from '../../components/Button';
 import Modal from '../../components/Modal';
 import Toast from '../../components/Toast';
 import { useCreateGroupMutation } from './groupApi';
@@ -35,10 +35,13 @@ const GroupCreateForm = ({ open, handler }) => {
       <Button variant="text" color="blue-gray" onClick={handler}>
         Cancel
       </Button>
-      <Button variant="gradient" color="blue" onClick={handleCreateForm}>
-        <div className="flex justify-center">
-          {isLoading ? <GoSync className="animate-spin" /> : 'Create'}
-        </div>
+      <Button
+        variant="gradient"
+        color="blue"
+        onClick={handleCreateForm}
+        isLoading={isLoading}
+      >
+        Create
       </Button>
     </div>
   );

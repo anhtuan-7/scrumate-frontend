@@ -12,8 +12,8 @@ import formatISODate from '../../utils/dateFormat';
 
 const ProjectItem = ({ project }) => {
   return (
-    <Card className="border-2 border-blue-100 bg-blue-100/30">
-      <CardBody className="grid grid-cols-1 gap-2 p-3">
+    <Card className="flex justify-between border-2 border-blue-100 bg-blue-100/30">
+      <CardBody className="flex flex-col gap-2 p-3">
         {project.group && <Typography>Group: {project.group.name}</Typography>}
         <Link
           to={`/projects/${project.id}`}
@@ -29,7 +29,7 @@ const ProjectItem = ({ project }) => {
           <Chip
             size="sm"
             color="blue"
-            value={`${project.projectUser[0].role}`}
+            value={`${project.projectUser.role}`}
             className="ml-2 inline"
           />
         </div>
@@ -38,11 +38,10 @@ const ProjectItem = ({ project }) => {
         {project.projectUser && (
           <div>
             <Typography variant="small">
-              Last accessed:{' '}
-              {formatISODate(project.projectUser[0].lastAccessed)}
+              Last accessed: {formatISODate(project.projectUser.lastAccessed)}
             </Typography>
             <Typography variant="small">
-              Joined at: {formatISODate(project.projectUser[0].joinedAt)}
+              Joined at: {formatISODate(project.projectUser.joinedAt)}
             </Typography>
           </div>
         )}

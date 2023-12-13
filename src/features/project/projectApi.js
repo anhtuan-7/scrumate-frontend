@@ -32,9 +32,22 @@ const projectApi = api.injectEndpoints({
         },
         invalidatesTags: ['Project'],
       }),
+      getProject: builder.query({
+        query: (args) => {
+          return {
+            url: `/projects/${args.projectId}`,
+            method: 'GET',
+          };
+        },
+        providesTags: ['Project'],
+      }),
     };
   },
 });
 
-export const { useGetProjectListQuery, useCreateProjectMutation } = projectApi;
+export const {
+  useGetProjectListQuery,
+  useCreateProjectMutation,
+  useGetProjectQuery,
+} = projectApi;
 export { projectApi };
