@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { GoChevronDown, GoChevronLeft } from 'react-icons/go';
 
-function ExpandablePanel({ header, children }) {
-  const [isOpen, setIsOpen] = useState(false);
+function ExpandablePanel({ header, children, defaultOpen = false }) {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
 
   return (
     <div className="mb-2 rounded-lg border-2 border-blue-100">
@@ -21,6 +21,7 @@ function ExpandablePanel({ header, children }) {
 ExpandablePanel.propTypes = {
   header: PropTypes.object,
   children: PropTypes.any,
+  defaultOpen: PropTypes.bool,
 };
 
 export default ExpandablePanel;

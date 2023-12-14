@@ -40,7 +40,7 @@ const GroupUserAddForm = ({ open, handler, groupId }) => {
   };
 
   const handleFindUser = () => {
-    trigger({ email })
+    trigger({ email }, true) // preferCacheValue = true
       .unwrap()
       .then((response) => {
         setMessage('');

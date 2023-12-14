@@ -12,6 +12,7 @@ const userApi = api.injectEndpoints({
           },
         };
       },
+      providesTags: (result, error, args) => [{ type: 'User', id: args.email }],
     }),
   }),
   overrideExisting: false,

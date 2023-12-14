@@ -43,14 +43,14 @@ const ProjectLayout = () => {
             text="Board"
           />
           <SidebarLink
-            url={`/projects/${project.id}/dashboard`}
-            icon={<TfiDashboard className="h-5 w-5" />}
-            text="Dashboard"
-          />
-          <SidebarLink
             url={`/projects/${project.id}/members`}
             icon={<IoPeopleOutline className="h-5 w-5" />}
             text="Member"
+          />
+          <SidebarLink
+            url={`/projects/${project.id}/dashboard`}
+            icon={<TfiDashboard className="h-5 w-5" />}
+            text="Dashboard"
           />
           <SidebarLink
             url={`/projects/${project.id}/setting`}

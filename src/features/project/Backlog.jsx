@@ -24,17 +24,19 @@ const Backlog = () => {
   else if (error) FireErrorToast(error);
   else if (response) {
     const { issues } = response.data;
-    const issuseList = issues.map((issue) => <IssueItem key={issue.id} />);
+    const issuseList = issues.map((issue) => (
+      <IssueItem key={issue.id} issue={issue} />
+    ));
     content = (
       <Fragment>
-        {issuseList}
+        <div className="mb-4 flex flex-col gap-3">{issuseList}</div>
         <Button
           className="w-full border-2 border-dashed border-blue-gray-200 p-2 text-blue-gray-500 hover:bg-blue-gray-100/20"
           variant="text"
         >
           <div className="flex items-center gap-2">
             <IoIosAddCircleOutline className="text-lg" />
-            <Typography variant="small">New issue</Typography>
+            <Typography variant="small">Create issue</Typography>
           </div>
         </Button>
       </Fragment>
@@ -42,11 +44,14 @@ const Backlog = () => {
   }
 
   return (
-    <div className="flex w-full flex-col p-6">
-      <ExpandablePanel header={<Typography>Product Backlog</Typography>}>
+    <div className="max-w-srceen flex w-full min-w-max flex-col gap-6 p-6">
+      <SprintList />
+      <ExpandablePanel
+        header={<Typography>Product Backlog</Typography>}
+        defaultOpen={true}
+      >
         {content}
       </ExpandablePanel>
-      <SprintList />
     </div>
   );
 };

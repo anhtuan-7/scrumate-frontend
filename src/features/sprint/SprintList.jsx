@@ -1,7 +1,18 @@
-import PropTypes from 'prop-types';
+import { Button } from '@material-tailwind/react';
 
 const SprintList = () => {
-  return <div>Sprint List</div>;
+  const sprints = <div>Sprint List</div>;
+
+  return (
+    <div className="w-full">
+      <div>
+        <Button color="blue" size="sm">
+          Create Sprint
+        </Button>
+      </div>
+      {sprints}
+    </div>
+  );
 };
 SprintList.propTypes = {};
 

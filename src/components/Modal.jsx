@@ -6,6 +6,7 @@ const Modal = ({ children, actionBar, open, handler }) => {
     <Dialog
       open={open}
       handler={handler}
+      size="sm"
       className="lg:rounded-xlg fixed inset-y-0 lg:inset-y-20"
     >
       <div className="h-full p-2">
