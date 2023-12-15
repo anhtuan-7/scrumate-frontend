@@ -13,9 +13,8 @@ const ProjectList = () => {
     userId: user.id,
   });
 
-  let content;
   if (isFetching)
-    content = (
+    return (
       <Fragment>
         <Skeleton times={1} className="h-64 w-full" />
         <Skeleton times={1} className="h-64 w-full" />
@@ -27,19 +26,22 @@ const ProjectList = () => {
   else if (data) {
     const { projects } = data.data;
     if (projects.length === 0)
-      content = (
-        <Typography>You are not a member of any projects yet</Typography>
+      return (
+        <Typography className="p-3">
+          You are not a member of any projects yet
+        </Typography>
       );
-    else
-      content = projects.map((project) => (
+    else {
+      const rederedProjects = projects.map((project) => (
         <ProjectItem key={project.id} project={project} />
       ));
+      return (
+        <div className="ml-4 grid h-fit grid-cols-1 gap-6 p-4 lg:grid-cols-3 xl:grid-cols-4">
+          {rederedProjects}
+        </div>
+      );
+    }
   }
-  return (
-    <div className="ml-4 grid h-fit grid-cols-1 gap-6 p-4 lg:grid-cols-3 xl:grid-cols-4">
-      {content}
-    </div>
-  );
 };
 
 export default ProjectList;

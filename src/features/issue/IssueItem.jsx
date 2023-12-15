@@ -1,30 +1,43 @@
 import { Card, CardBody, Chip, IconButton } from '@material-tailwind/react';
 import PropTypes from 'prop-types';
+import { Fragment, useState } from 'react';
 import { CiBookmarkCheck } from 'react-icons/ci';
 import { GiBugNet } from 'react-icons/gi';
 import { PiCodeLight } from 'react-icons/pi';
 import { RiDraggable, RiMoreLine } from 'react-icons/ri';
 
+import Drawer from '../../components/Drawer';
+
 const IssueItem = ({ issue }) => {
+  const [openForm, setOpenForm] = useState(false);
+
   return (
-    <Card className="rounded-lg border-2 border-blue-200">
-      <CardBody className="p-1">
-        <div className="grid grid-cols-2 items-center gap-3">
-          <div className="flex items-center gap-3">
-            <RiDraggable className="mr- text-lg" />
-            {formatType(issue.type)}
-            {issue.title}
+    <Fragment>
+      <Drawer open={openForm} handler={setOpenForm}></Drawer>
+      <Card className="rounded-lg border-2 border-blue-200">
+        <CardBody className="p-1">
+          <div className="grid grid-cols-2 items-center gap-3">
+            <div className="flex items-center gap-3">
+              <RiDraggable className="mr-1 text-lg" />
+              {formatType(issue.type)}
+              {issue.title}
+            </div>
+            <div className="flex items-center gap-3 justify-self-end">
+              {formatPriority(issue.priority)}
+              {formatStatus(issue.status)}
+              {/* TO-DO: Assignee */}
+              <IconButton
+                variant="text"
+                size="sm"
+                onClick={() => setOpenForm(true)}
+              >
+                <RiMoreLine className="text-lg" />
+              </IconButton>
+            </div>
           </div>
-          <div className="flex items-center gap-3 justify-self-end">
-            {formatPriority(issue.priority)}
-            {formatStatus(issue.status)}
-            <IconButton variant="text" size="sm">
-              <RiMoreLine className="text-lg" />
-            </IconButton>
-          </div>
-        </div>
-      </CardBody>
-    </Card>
+        </CardBody>
+      </Card>
+    </Fragment>
   );
 };
 IssueItem.propTypes = {

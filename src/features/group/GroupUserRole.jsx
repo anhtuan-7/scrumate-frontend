@@ -1,19 +1,46 @@
 import { Chip, IconButton, Option, Select } from '@material-tailwind/react';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import { GoSync } from 'react-icons/go';
 import { IoIosCheckmark, IoMdClose } from 'react-icons/io';
 import { TbEdit } from 'react-icons/tb';
+import { useParams } from 'react-router-dom';
 
-const GroupUserRole = ({ currentRole, disable }) => {
+import FireErrorToast from '../../components/Toast';
+import Toast from '../../components/Toast';
+import { useChangeGroupMemberRoleMutation } from './groupUserApi';
+
+const GroupUserRole = ({ member, disable }) => {
+  const { groupId } = useParams();
   const [showForm, setShowForm] = useState(false);
-  const [role, setRole] = useState(currentRole);
+  const [role, setRole] = useState(member.group.role);
+  const [changeGroupMemberRole, { isLoading }] =
+    useChangeGroupMemberRoleMutation();
+
+  const handleSubmit = () => {
+    changeGroupMemberRole({ memberId: member.id, groupId, role })
+      .unwrap()
+      .then((response) => {
+        const affectedRow = response.data.affectedRow[0];
+        if (affectedRow == 1) {
+          Toast.fire({
+            icon: 'success',
+            title: 'Change Member Role Successfully',
+          });
+        }
+      })
+      .catch((error) => FireErrorToast(error))
+      .finally(() => {
+        setShowForm(false);
+      });
+  };
 
   if (!showForm)
     return (
       <div>
         <Chip
-          color="blue-gray"
-          value={currentRole}
+          color={member.group.role === 'inactive' ? 'blue-gray' : 'blue'}
+          value={member.group.role}
           className="inline"
           size="sm"
         />
@@ -45,8 +72,12 @@ const GroupUserRole = ({ currentRole, disable }) => {
             <span className="text-red-500">Inactive</span>
           </Option>
         </Select>
-        <IconButton size="sm" color="blue" onClick={() => setShowForm(false)}>
-          <IoIosCheckmark className="text-lg" />
+        <IconButton size="sm" color="blue" onClick={handleSubmit}>
+          {isLoading ? (
+            <GoSync className="animate-spin" />
+          ) : (
+            <IoIosCheckmark className="text-lg" />
+          )}
         </IconButton>
         <IconButton size="sm" color="red" onClick={() => setShowForm(false)}>
           <IoMdClose />
@@ -55,7 +86,7 @@ const GroupUserRole = ({ currentRole, disable }) => {
     );
 };
 GroupUserRole.propTypes = {
-  currentRole: PropTypes.string,
+  member: PropTypes.object,
   disable: PropTypes.bool,
 };
 

@@ -43,7 +43,20 @@ const groupUserApi = api.injectEndpoints({
       },
       invalidatesTags: ['GroupUser'],
     }),
-    changeGroupMemberRole: builder.mutation({}),
+    changeGroupMemberRole: builder.mutation({
+      query: (args) => {
+        return {
+          url: `/groups/${args.groupId}/members/${args.memberId}`,
+          method: 'PATCH',
+          body: {
+            role: args.role,
+          },
+        };
+      },
+      invalidatesTags: (result, error, args) => [
+        { type: 'GroupUser', id: args.memberId },
+      ],
+    }),
   }),
   overrideExisting: false,
 });

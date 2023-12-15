@@ -51,9 +51,7 @@ const GroupMember = () => {
         render: (member) => {
           const disable =
             member.id === user.id || group.groupUser.role !== 'group-admin';
-          return (
-            <GroupUserRole currentRole={member.group.role} disable={disable} />
-          );
+          return <GroupUserRole member={member} disable={disable} />;
         },
       },
       {

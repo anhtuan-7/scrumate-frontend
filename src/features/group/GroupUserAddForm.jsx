@@ -69,7 +69,7 @@ const GroupUserAddForm = ({ open, handler, groupId }) => {
         onClick={handleCreateForm}
         isLoading={isLoading}
       >
-        Create
+        Add
       </Button>
     </div>
   );
