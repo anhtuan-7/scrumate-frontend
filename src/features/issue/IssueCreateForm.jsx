@@ -20,7 +20,6 @@ const IssueCreateForm = ({ projectId, handler }) => {
   const [createIssue, { isLoading }] = useCreateIssueMutation();
 
   const handleSubmit = () => {
-    console.log(projectId, title);
     createIssue({ projectId, title })
       .unwrap()
       .then(() => {
@@ -49,6 +48,7 @@ const IssueCreateForm = ({ projectId, handler }) => {
                 containerProps={{ className: 'h-8' }}
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
+                placeholder="New Issue"
               />
               <IconButton size="sm" color="blue" onClick={handleSubmit}>
                 {isLoading ? (

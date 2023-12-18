@@ -30,10 +30,25 @@ const issueApi = api.injectEndpoints({
       },
       invalidatesTags: ['Issue'],
     }),
+    getIssue: builder.query({
+      query: (args) => {
+        return {
+          url: `/projects/${args.projectId}/issues/${args.issueId}`,
+          method: 'GET',
+        };
+      },
+      providesTags: (result, error, args) => [
+        { type: 'Issue', id: args.issueId },
+      ],
+    }),
     updateIssue: builder.mutation({}),
   }),
   overrideExisting: false,
 });
 
-export const { useGetBacklogQuery, useCreateIssueMutation } = issueApi;
+export const {
+  useGetBacklogQuery,
+  useCreateIssueMutation,
+  useLazyGetIssueQuery,
+} = issueApi;
 export { issueApi };

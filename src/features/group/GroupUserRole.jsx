@@ -21,11 +21,11 @@ const GroupUserRole = ({ member, disable }) => {
     changeGroupMemberRole({ memberId: member.id, groupId, role })
       .unwrap()
       .then((response) => {
-        const affectedRow = response.data.affectedRow[0];
-        if (affectedRow == 1) {
+        const { affectedCount } = response.data;
+        if (affectedCount == 1) {
           Toast.fire({
             icon: 'success',
-            title: 'Change Member Role Successfully',
+            title: 'Update Member Role Successfully',
           });
         }
       })

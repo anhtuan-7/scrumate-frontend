@@ -1,4 +1,10 @@
-import { Card, CardBody, Chip, IconButton } from '@material-tailwind/react';
+import {
+  Avatar,
+  Card,
+  CardBody,
+  Chip,
+  IconButton,
+} from '@material-tailwind/react';
 import PropTypes from 'prop-types';
 import { Fragment, useState } from 'react';
 import { CiBookmarkCheck } from 'react-icons/ci';
@@ -7,13 +13,16 @@ import { PiCodeLight } from 'react-icons/pi';
 import { RiDraggable, RiMoreLine } from 'react-icons/ri';
 
 import Drawer from '../../components/Drawer';
+import IssueUpdateForm from './IssueUpdateForm';
 
 const IssueItem = ({ issue }) => {
   const [openForm, setOpenForm] = useState(false);
 
   return (
     <Fragment>
-      <Drawer open={openForm} handler={setOpenForm}></Drawer>
+      <Drawer open={openForm} handler={setOpenForm}>
+        <IssueUpdateForm issue={issue} />
+      </Drawer>
       <Card className="rounded-lg border-2 border-blue-200">
         <CardBody className="p-1">
           <div className="grid grid-cols-2 items-center gap-3">
@@ -25,7 +34,13 @@ const IssueItem = ({ issue }) => {
             <div className="flex items-center gap-3 justify-self-end">
               {formatPriority(issue.priority)}
               {formatStatus(issue.status)}
-              {/* TO-DO: Assignee */}
+              <Avatar
+                variant="circular"
+                size="xs"
+                alt="avatar"
+                src={issue.assignee?.avatar || '/profile/profile.png'}
+                title={issue.assignee?.name || 'Not assign yet'}
+              />
               <IconButton
                 variant="text"
                 size="sm"
