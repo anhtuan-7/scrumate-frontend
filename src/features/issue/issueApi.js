@@ -7,8 +7,8 @@ const issueApi = api.injectEndpoints({
       query: (args) => {
         return {
           url: args.sprintId
-            ? `/projects/${args.projectId}/sprints/${args.sprintId}`
-            : `/projects/${args.projectId}/issues`,
+            ? `/projects/${args.projectId}/sprints/${args.sprintId}` // Sprint Backlog
+            : `/projects/${args.projectId}/issues`, // Product Backlog
           method: 'GET',
         };
       },

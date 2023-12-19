@@ -8,19 +8,31 @@ import { Input, Select } from '../../components';
 const IssueUpdateForm = ({ issue }) => {
   const [disableForm, setDisableForm] = useState(true);
   const [title, setTitle] = useState(issue.title);
+  const [description, setDescription] = useState(issue.description || '');
+  const [status, setStatus] = useState(issue.status);
+  const [type, setType] = useState(issue.type);
+  const [priority, setPriority] = useState(issue.priority);
+  const [assignee, setAssignee] = useState(
+    issue.assigneeId?.toString() || 'None',
+  );
 
   return (
     <div className="flex flex-col gap-6">
-      <Input value={title} size="lg" disabled={disableForm} />
+      <Input value={title} size="lg" disabled={disableForm} setFn={setTitle} />
       <Textarea
-        value={issue.description}
+        disabled={disableForm}
+        value={description}
         label="Description"
         color="blue-gray"
+        className="!border !border-gray-500"
+        onChange={(e) => {
+          setDescription(e.target.value);
+        }}
       ></Textarea>
       <div className="grid grid-cols-3 items-center gap-4">
         <Typography>Status</Typography>
         <div className="col-span-2">
-          <Select disabled={disableForm} value={issue.status}>
+          <Select disabled={disableForm} value={status} setFn={setStatus}>
             <Option value="to-do">To do</Option>
             <Option value="in-progress">In Progress</Option>
             <Option value="done">Done</Option>
@@ -28,7 +40,7 @@ const IssueUpdateForm = ({ issue }) => {
         </div>
         <Typography>Type</Typography>
         <div className="col-span-2">
-          <Select disabled={disableForm} value={issue.type}>
+          <Select disabled={disableForm} value={type} setFn={setType}>
             <Option value="task">Task</Option>
             <Option value="bug">Bug</Option>
             <Option value="story">Story</Option>
@@ -36,7 +48,7 @@ const IssueUpdateForm = ({ issue }) => {
         </div>
         <Typography>Priority</Typography>
         <div className="col-span-2">
-          <Select disabled={disableForm} value={issue.priority}>
+          <Select disabled={disableForm} value={priority} setFn={setPriority}>
             <Option value="high">
               <Typography color="pink" variant="small">
                 High
@@ -48,7 +60,7 @@ const IssueUpdateForm = ({ issue }) => {
               </Typography>
             </Option>
             <Option value="low" variant="small">
-              <Typography color="gray-blue">Low</Typography>
+              <Typography color="blue-gray">Low</Typography>
             </Option>
             <Option value="best-effort">
               <Typography color="red" variant="small">
@@ -60,19 +72,13 @@ const IssueUpdateForm = ({ issue }) => {
         <Typography>Assignee</Typography>
         <div className="col-span-2">
           <Select
-            value={issue.assigneeId || 'None'}
+            value={assignee}
             size="lg"
             disabled={disableForm}
+            setFn={setAssignee}
           >
-            <Option value={issue.reporterId}>
-              <div className="flex items-center gap-1">
-                <Avatar
-                  variant="circular"
-                  size="sm"
-                  src={issue.reporter?.avatar || '/profile/profile-1.png'}
-                />
-                <Typography>{issue.reporter.name}</Typography>
-              </div>
+            <Option value={issue.reporterId.toString()}>
+              <Typography>{issue.reporter.name}</Typography>
             </Option>
             <Option value="None">
               <Typography>None</Typography>
@@ -84,6 +90,7 @@ const IssueUpdateForm = ({ issue }) => {
           <Avatar
             variant="circular"
             alt="avatar"
+            className="mr-3 h-8 w-8 border-2 border-gray-500"
             src={issue.reporter?.avatar || '/profile/profile-1.png'}
           />
           <Typography>{issue.reporter.name}</Typography>

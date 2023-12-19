@@ -1,7 +1,6 @@
 import api from '../api';
 
 const authApi = api.injectEndpoints({
-  overrideExisting: false,
   endpoints: (builder) => {
     return {
       signUp: builder.mutation({
@@ -32,6 +31,7 @@ const authApi = api.injectEndpoints({
       }),
     };
   },
+  overrideExisting: false,
 });
 
 export const { useLoginMutation, useLogoutMutation, useSignUpMutation } =

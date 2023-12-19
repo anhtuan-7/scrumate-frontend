@@ -8,10 +8,9 @@ const projectApi = api.injectEndpoints({
         query: (args) => {
           return {
             url: args.groupId
-              ? `/groups/${args.groupId}/projects`
-              : '/projects',
+              ? `/groups/${args.groupId}/projects` // Group Project
+              : '/projects', // All Projects
             method: 'GET',
-            params: { order: 'desc' },
           };
         },
         providesTags: (result, error, user) => {

@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { cloneElement } from 'react';
 
-const Select = ({ children, ...rest }) => {
+const Select = ({ children, setFn, ...rest }) => {
   let inputClass = '!border !border-gray-500';
   if (rest.className) {
     inputClass = classNames(inputClass, rest.className);
@@ -13,7 +13,8 @@ const Select = ({ children, ...rest }) => {
   return (
     <MaterialSelect
       labelProps={{ className: 'hidden' }}
-      containerProps={{ className: 'max-w-fit' }}
+      // containerProps={{ className: 'max-w-fit' }}
+      onChange={(value) => setFn(value)}
       selected={(element) =>
         element &&
         cloneElement(element, {
@@ -31,6 +32,7 @@ const Select = ({ children, ...rest }) => {
 };
 Select.propTypes = {
   children: PropTypes.any,
+  setFn: PropTypes.func,
 };
 
 export default Select;

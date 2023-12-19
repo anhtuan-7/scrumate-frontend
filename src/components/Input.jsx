@@ -2,7 +2,7 @@ import { Input as MaterialInput } from '@material-tailwind/react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
-const Input = ({ value, setFn, ...rest }) => {
+const Input = ({ setFn, ...rest }) => {
   let inputClass = '!border !border-gray-500';
   if (rest.className) {
     inputClass = classNames(inputClass, rest.className);
@@ -11,7 +11,6 @@ const Input = ({ value, setFn, ...rest }) => {
 
   return (
     <MaterialInput
-      value={value}
       onChange={(event) => setFn(event.target.value)}
       labelProps={{ className: 'hidden' }}
       className={inputClass}
@@ -20,7 +19,6 @@ const Input = ({ value, setFn, ...rest }) => {
   );
 };
 Input.propTypes = {
-  value: PropTypes.any,
   setFn: PropTypes.func,
 };
 
