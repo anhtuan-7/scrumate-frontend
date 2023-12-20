@@ -36,8 +36,8 @@ const issueApi = api.injectEndpoints({
       query: (args) => {
         return {
           url: args.sprintId
-            ? `/projects/${args.projectId}/sprints/${args.sprintId}/issues`
-            : `/projects/${args.projectId}/issues`,
+            ? `/projects/${args.projectId}/sprints/${args.sprintId}/issues/${args.issueId}`
+            : `/projects/${args.projectId}/issues/${args.issueId}`,
           method: 'PATCH',
           body: {
             ...args,

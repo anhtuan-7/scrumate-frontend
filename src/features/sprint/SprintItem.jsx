@@ -1,7 +1,8 @@
-import { Typography } from '@material-tailwind/react';
+import { IconButton, Typography } from '@material-tailwind/react';
 import PropTypes from 'prop-types';
 import { Fragment, useState } from 'react';
 import { IoIosAddCircleOutline } from 'react-icons/io';
+import { TbEdit } from 'react-icons/tb';
 import { useParams } from 'react-router-dom';
 
 import { Button, ExpandablePanel, Skeleton } from '../../components';
@@ -56,11 +57,20 @@ const SprintItem = ({ sprint }) => {
   }
 
   const header = (
-    <div>
-      <Typography color="blue-gray" variant="small">
-        {sprint.name}
+    <>
+      <div className="flex items-center gap-2">
+        <Typography color="blue-gray" variant="small">
+          {sprint.name}
+        </Typography>
+        <IconButton size="sm" variant="text" color="blue">
+          <TbEdit className="text-xs" />
+        </IconButton>
+      </div>
+
+      <Typography variant="small" color="blue-gray">
+        {sprint.startDate || 'January 01 2024 | 2 Weeks'}
       </Typography>
-    </div>
+    </>
   );
 
   return <ExpandablePanel header={header}>{content}</ExpandablePanel>;
