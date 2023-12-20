@@ -13,7 +13,7 @@ const issueApi = api.injectEndpoints({
         };
       },
       providesTags: (result, error, args) => [
-        { type: 'Issue', id: args.sprintId },
+        { type: 'Issue', id: args.sprintId || Infinity },
       ],
     }),
     createIssue: builder.mutation({
@@ -23,17 +23,21 @@ const issueApi = api.injectEndpoints({
             ? `/projects/${args.projectId}/sprints/${args.sprintId}/issues`
             : `/projects/${args.projectId}/issues`,
           method: 'POST',
-          body: { title: args.title || 'New Issue' },
+          body: {
+            title: args.title || 'New Issue',
+          },
         };
       },
       invalidatesTags: (result, error, args) => [
-        { type: 'Issue', id: args.sprintId },
+        { type: 'Issue', id: args.sprintId || Infinity },
       ],
     }),
     updateIssue: builder.mutation({
       query: (args) => {
         return {
-          url: `/projects/${args.projectId}/issues/${args.issueId}`,
+          url: args.sprintId
+            ? `/projects/${args.projectId}/sprints/${args.sprintId}/issues`
+            : `/projects/${args.projectId}/issues`,
           method: 'PATCH',
           body: {
             ...args,
@@ -43,7 +47,7 @@ const issueApi = api.injectEndpoints({
         };
       },
       invalidatesTags: (result, error, args) => [
-        { type: 'Issue', id: args.sprintId },
+        { type: 'Issue', id: args.sprintId || Infinity },
       ],
     }),
     deleteIssue: builder.mutation({

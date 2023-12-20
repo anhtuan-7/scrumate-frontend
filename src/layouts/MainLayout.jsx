@@ -6,7 +6,7 @@ const MainLayout = ({ children }) => {
   return (
     <div className="flex h-screen w-full flex-col items-center text-blue-gray-900">
       <Navbar />
-      <div className="flex h-full w-full overflow-scroll px-6">{children}</div>
+      <div className="flex h-full w-full overflow-auto px-6">{children}</div>
     </div>
   );
 };

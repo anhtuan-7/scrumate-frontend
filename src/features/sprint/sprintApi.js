@@ -19,10 +19,22 @@ const sprintApi = api.injectEndpoints({
           return ['Sprint', ...tags];
         },
       }),
+      createSprint: builder.mutation({
+        query: (args) => {
+          return {
+            url: `/projects/${args.projectId}/sprints`,
+            method: 'POST',
+            body: {
+              name: `Sprint ${args.sprintsNumber}`,
+            },
+          };
+        },
+        invalidatesTags: ['Sprint'],
+      }),
     };
   },
   overrideExisting: false,
 });
 
-export const { useGetSprintListQuery } = sprintApi;
+export const { useGetSprintListQuery, useCreateSprintMutation } = sprintApi;
 export { sprintApi };

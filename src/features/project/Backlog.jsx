@@ -33,7 +33,10 @@ const Backlog = () => {
         <div className="mb-4 flex flex-col gap-3">
           {issuseList}
           {openForm && (
-            <IssueCreateForm handler={setOpenForm} projectId={projectId} />
+            <IssueCreateForm
+              handler={setOpenForm}
+              projectId={parseInt(projectId)}
+            />
           )}
           <Button
             className="w-full border-2 border-dashed border-blue-gray-200 p-1 text-blue-gray-500 hover:bg-blue-gray-100/20"

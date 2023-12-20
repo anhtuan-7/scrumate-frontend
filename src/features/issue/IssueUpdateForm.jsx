@@ -17,6 +17,16 @@ const IssueUpdateForm = ({ issue }) => {
   const [assignee, setAssignee] = useState(issue.assigneeId?.toString() || '');
   const [updateIssue, { isLoading }] = useUpdateIssueMutation();
 
+  const handleCancle = () => {
+    setDisableForm(true);
+    setTitle(issue.title);
+    setDescription(issue.description || '');
+    setStatus(issue.status);
+    setType(issue.type);
+    setPriority(issue.priority);
+    setAssignee(issue.assigneeId?.toString() || '');
+  };
+
   const handleUpdate = () => {
     unwrapMutation(
       updateIssue,
@@ -27,21 +37,13 @@ const IssueUpdateForm = ({ issue }) => {
         type,
         priority,
         assignee,
+        sprintId: issue.sprintId,
         projectId: issue.projectId,
         issueId: issue.id,
       },
       'Update Successfully',
     );
-  };
-
-  const handleCancle = () => {
     setDisableForm(true);
-    setTitle(issue.title);
-    setDescription(issue.description || '');
-    setStatus(issue.status);
-    setType(issue.type);
-    setPriority(issue.priority);
-    setAssignee(issue.assigneeId?.toString() || '');
   };
 
   return (
