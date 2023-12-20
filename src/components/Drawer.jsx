@@ -16,7 +16,7 @@ const Drawer = ({ open, handler, children }) => {
       <IconButton variant="text" color="blue" onClick={closeDrawer}>
         <IoArrowForwardCircleOutline className="text-xl" />
       </IconButton>
-      <div className="px-6 py-3">{children}</div>
+      <div className="h-full overflow-auto px-6 py-3">{children}</div>
     </MaterialDrawer>
   );
 };

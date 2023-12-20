@@ -41,7 +41,22 @@ const issueApi = api.injectEndpoints({
         { type: 'Issue', id: args.issueId },
       ],
     }),
-    updateIssue: builder.mutation({}),
+    updateIssue: builder.mutation({
+      query: (args) => {
+        return {
+          url: `/projects/${args.projectId}/issues/${args.issueId}`,
+          method: 'PATCH',
+          body: {
+            ...args,
+            assigneeId: args.assignee ? parseInt(args.assignee) : null,
+            description: args.description || null,
+          },
+        };
+      },
+      invalidatesTags: (result, error, args) => [
+        { type: 'Issue', id: args.issueId },
+      ],
+    }),
   }),
   overrideExisting: false,
 });
@@ -49,6 +64,6 @@ const issueApi = api.injectEndpoints({
 export const {
   useGetBacklogQuery,
   useCreateIssueMutation,
-  useLazyGetIssueQuery,
+  useUpdateIssueMutation,
 } = issueApi;
 export { issueApi };

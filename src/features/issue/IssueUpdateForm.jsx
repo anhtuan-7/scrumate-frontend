@@ -3,7 +3,9 @@ import { Avatar, Option, Textarea, Typography } from '@material-tailwind/react';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 
-import { Input, Select } from '../../components';
+import { Button, Input, Select } from '../../components';
+import unwrapMutation from '../../utils/unwrapMutation';
+import { useUpdateIssueMutation } from './issueApi';
 
 const IssueUpdateForm = ({ issue }) => {
   const [disableForm, setDisableForm] = useState(true);
@@ -12,42 +14,85 @@ const IssueUpdateForm = ({ issue }) => {
   const [status, setStatus] = useState(issue.status);
   const [type, setType] = useState(issue.type);
   const [priority, setPriority] = useState(issue.priority);
-  const [assignee, setAssignee] = useState(
-    issue.assigneeId?.toString() || 'None',
-  );
+  const [assignee, setAssignee] = useState(issue.assigneeId?.toString() || '');
+  const [updateIssue, { isFetching }] = useUpdateIssueMutation();
+
+  const handleUpdate = () => {
+    unwrapMutation(
+      updateIssue,
+      {
+        title,
+        description,
+        status,
+        type,
+        priority,
+        assignee,
+        projectId: issue.projectId,
+        issueId: issue.id,
+      },
+      'Update Successfully',
+    );
+  };
+
+  const handleCancle = () => {
+    setDisableForm(true);
+    setTitle(issue.title);
+    setDescription(issue.description || '');
+    setStatus(issue.status);
+    setType(issue.type);
+    setPriority(issue.priority);
+    setAssignee(issue.assigneeId?.toString() || '');
+  };
 
   return (
-    <div className="flex flex-col gap-6">
+    <form className="flex h-full flex-col gap-4">
       <Input value={title} size="lg" disabled={disableForm} setFn={setTitle} />
       <Textarea
         disabled={disableForm}
         value={description}
         label="Description"
         color="blue-gray"
-        className="!border !border-gray-500"
         onChange={(e) => {
           setDescription(e.target.value);
         }}
       ></Textarea>
-      <div className="grid grid-cols-3 items-center gap-4">
-        <Typography>Status</Typography>
-        <div className="col-span-2">
-          <Select disabled={disableForm} value={status} setFn={setStatus}>
-            <Option value="to-do">To do</Option>
-            <Option value="in-progress">In Progress</Option>
-            <Option value="done">Done</Option>
+      <div className="grid grid-cols-4 items-center gap-4">
+        <Typography>Type</Typography>
+        <div className="col-span-3">
+          <Select disabled={disableForm} value={type} setFn={setType}>
+            <Option value="task">
+              <Typography variant="small">Task</Typography>
+            </Option>
+            <Option value="bug">
+              <Typography variant="small">Bug</Typography>
+            </Option>
+            <Option value="story">
+              <Typography variant="small">Story</Typography>
+            </Option>
           </Select>
         </div>
-        <Typography>Type</Typography>
-        <div className="col-span-2">
-          <Select disabled={disableForm} value={type} setFn={setType}>
-            <Option value="task">Task</Option>
-            <Option value="bug">Bug</Option>
-            <Option value="story">Story</Option>
+        <Typography>Status</Typography>
+        <div className="col-span-3">
+          <Select disabled={disableForm} value={status} setFn={setStatus}>
+            <Option value="to-do">
+              <Typography color="pink" variant="small">
+                To do
+              </Typography>
+            </Option>
+            <Option value="in-progress">
+              <Typography color="blue" variant="small">
+                In progress
+              </Typography>
+            </Option>
+            <Option value="done">
+              <Typography color="teal" variant="small">
+                Done
+              </Typography>
+            </Option>
           </Select>
         </div>
         <Typography>Priority</Typography>
-        <div className="col-span-2">
+        <div className="col-span-3">
           <Select disabled={disableForm} value={priority} setFn={setPriority}>
             <Option value="high">
               <Typography color="pink" variant="small">
@@ -59,8 +104,10 @@ const IssueUpdateForm = ({ issue }) => {
                 Medium
               </Typography>
             </Option>
-            <Option value="low" variant="small">
-              <Typography color="blue-gray">Low</Typography>
+            <Option value="low">
+              <Typography color="blue-gray" variant="small">
+                Low
+              </Typography>
             </Option>
             <Option value="best-effort">
               <Typography color="red" variant="small">
@@ -70,33 +117,70 @@ const IssueUpdateForm = ({ issue }) => {
           </Select>
         </div>
         <Typography>Assignee</Typography>
-        <div className="col-span-2">
+        <div className="col-span-3">
           <Select
             value={assignee}
-            size="lg"
             disabled={disableForm}
             setFn={setAssignee}
+            size="lg"
           >
             <Option value={issue.reporterId.toString()}>
-              <Typography>{issue.reporter.name}</Typography>
+              <div>
+                <Typography className="text-sm">
+                  {issue.reporter.name}
+                </Typography>
+                <Typography className="text-xs">
+                  {issue.reporter.email}
+                </Typography>
+              </div>
             </Option>
-            <Option value="None">
-              <Typography>None</Typography>
+            <Option value="">
+              <Typography variant="small">None</Typography>
             </Option>
           </Select>
         </div>
         <Typography>Reporter</Typography>
-        <div className="col-span-2 flex items-center">
+        <div className="col-span-3 flex items-center">
           <Avatar
             variant="circular"
             alt="avatar"
             className="mr-3 h-8 w-8 border-2 border-gray-500"
             src={issue.reporter?.avatar || '/profile/profile-1.png'}
           />
-          <Typography>{issue.reporter.name}</Typography>
+          <Typography variant="small">{issue.reporter.name}</Typography>
         </div>
       </div>
-    </div>
+      <div className="self-end align-bottom">
+        {disableForm ? (
+          <>
+            <Button
+              variant="text"
+              color="blue"
+              onClick={() => setDisableForm(false)}
+            >
+              Edit
+            </Button>
+            <Button variant="text" color="red">
+              Delete
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button
+              variant="text"
+              color="blue"
+              onClick={handleUpdate}
+              isLoading={isFetching}
+            >
+              Save
+            </Button>
+            <Button variant="text" color="blue-gray" onClick={handleCancle}>
+              Cancel
+            </Button>
+          </>
+        )}
+      </div>
+    </form>
   );
 };
 IssueUpdateForm.propTypes = {

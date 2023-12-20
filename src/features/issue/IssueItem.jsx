@@ -36,10 +36,14 @@ const IssueItem = ({ issue }) => {
               {formatStatus(issue.status)}
               <Avatar
                 variant="circular"
-                size="xs"
                 alt="avatar"
-                src={issue.assignee?.avatar || '/profile/profile.png'}
+                src={
+                  issue.assignee
+                    ? '/profile/profile-1.png'
+                    : '/profile/profile.png'
+                }
                 title={issue.assignee?.name || 'Not assign yet'}
+                className="h-8 w-8 border border-gray-400"
               />
               <IconButton
                 variant="text"
