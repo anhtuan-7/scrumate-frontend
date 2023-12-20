@@ -15,7 +15,7 @@ const IssueUpdateForm = ({ issue }) => {
   const [type, setType] = useState(issue.type);
   const [priority, setPriority] = useState(issue.priority);
   const [assignee, setAssignee] = useState(issue.assigneeId?.toString() || '');
-  const [updateIssue, { isFetching }] = useUpdateIssueMutation();
+  const [updateIssue, { isLoading }] = useUpdateIssueMutation();
 
   const handleUpdate = () => {
     unwrapMutation(
@@ -170,7 +170,7 @@ const IssueUpdateForm = ({ issue }) => {
               variant="text"
               color="blue"
               onClick={handleUpdate}
-              isLoading={isFetching}
+              isLoading={isLoading}
             >
               Save
             </Button>

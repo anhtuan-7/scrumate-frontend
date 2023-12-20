@@ -4,6 +4,7 @@ import {
   CardBody,
   Chip,
   IconButton,
+  Typography,
 } from '@material-tailwind/react';
 import PropTypes from 'prop-types';
 import { Fragment, useState } from 'react';
@@ -24,12 +25,12 @@ const IssueItem = ({ issue }) => {
         <IssueUpdateForm issue={issue} />
       </Drawer>
       <Card className="rounded-lg border-2 border-blue-200">
-        <CardBody className="p-1">
+        <CardBody className="p-0">
           <div className="grid grid-cols-2 items-center gap-3">
             <div className="flex items-center gap-3">
               <RiDraggable className="mr-1 text-lg" />
               {formatType(issue.type)}
-              {issue.title}
+              <Typography variant="small">{issue.title}</Typography>
             </div>
             <div className="flex items-center gap-3 justify-self-end">
               {formatPriority(issue.priority)}
@@ -43,7 +44,7 @@ const IssueItem = ({ issue }) => {
                     : '/profile/profile.png'
                 }
                 title={issue.assignee?.name || 'Not assign yet'}
-                className="h-8 w-8 border border-gray-400"
+                className="h-6 w-6 border border-gray-400"
               />
               <IconButton
                 variant="text"

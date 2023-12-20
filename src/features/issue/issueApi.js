@@ -7,38 +7,27 @@ const issueApi = api.injectEndpoints({
       query: (args) => {
         return {
           url: args.sprintId
-            ? `/projects/${args.projectId}/sprints/${args.sprintId}` // Sprint Backlog
+            ? `/projects/${args.projectId}/sprints/${args.sprintId}/issues` // Sprint Backlog
             : `/projects/${args.projectId}/issues`, // Product Backlog
           method: 'GET',
         };
       },
-      providesTags: (result, error, args) => {
-        const { issues } = result.data;
-        const tags = issues.map((issue) => {
-          return { type: 'Issue', id: issue.id };
-        });
-        return ['Issue', ...tags];
-      },
+      providesTags: (result, error, args) => [
+        { type: 'Issue', id: args.sprintId },
+      ],
     }),
     createIssue: builder.mutation({
       query: (args) => {
         return {
-          url: `/projects/${args.projectId}/issues`,
+          url: args.sprintId
+            ? `/projects/${args.projectId}/sprints/${args.sprintId}/issues`
+            : `/projects/${args.projectId}/issues`,
           method: 'POST',
           body: { title: args.title || 'New Issue' },
         };
       },
-      invalidatesTags: ['Issue'],
-    }),
-    getIssue: builder.query({
-      query: (args) => {
-        return {
-          url: `/projects/${args.projectId}/issues/${args.issueId}`,
-          method: 'GET',
-        };
-      },
-      providesTags: (result, error, args) => [
-        { type: 'Issue', id: args.issueId },
+      invalidatesTags: (result, error, args) => [
+        { type: 'Issue', id: args.sprintId },
       ],
     }),
     updateIssue: builder.mutation({
@@ -54,8 +43,17 @@ const issueApi = api.injectEndpoints({
         };
       },
       invalidatesTags: (result, error, args) => [
-        { type: 'Issue', id: args.issueId },
+        { type: 'Issue', id: args.sprintId },
       ],
+    }),
+    deleteIssue: builder.mutation({
+      query: (args) => {
+        return {
+          url: `/projects/${args.projectId}/issues/${args.issueId}`,
+          method: 'DELETE',
+        };
+      },
+      invalidatesTags: ['Issue'],
     }),
   }),
   overrideExisting: false,

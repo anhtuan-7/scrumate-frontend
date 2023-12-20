@@ -15,12 +15,12 @@ import { RiDraggable, RiMoreLine } from 'react-icons/ri';
 import Toast, { FireErrorToast } from '../../components/Toast';
 import { useCreateIssueMutation } from '../issue/issueApi';
 
-const IssueCreateForm = ({ projectId, handler }) => {
+const IssueCreateForm = ({ projectId, sprintId, handler }) => {
   const [title, setTitle] = useState(undefined);
   const [createIssue, { isLoading }] = useCreateIssueMutation();
 
   const handleSubmit = () => {
-    createIssue({ projectId, title })
+    createIssue({ projectId, title, sprintId: sprintId || null })
       .unwrap()
       .then(() => {
         Toast.fire({
@@ -86,6 +86,7 @@ const IssueCreateForm = ({ projectId, handler }) => {
 IssueCreateForm.propTypes = {
   handler: PropTypes.func.isRequired,
   projectId: PropTypes.number.isRequired,
+  sprintId: PropTypes.number,
 };
 
 export default IssueCreateForm;

@@ -6,14 +6,14 @@ function ExpandablePanel({ header, children, defaultOpen = false }) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
   return (
-    <div className="mb-2 rounded-lg border-2 border-blue-100">
-      <div className="flex items-center justify-between p-3">
+    <div className="rounded-lg border-2 border-blue-200">
+      <div className="flex items-center justify-between p-2">
         {header}
         <div className="cursor-pointer pr-2" onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? <GoChevronDown /> : <GoChevronLeft />}
         </div>
       </div>
-      {isOpen && <div className="border-t border-blue-100 p-3">{children}</div>}
+      {isOpen && <div className="border-t border-blue-100 p-2">{children}</div>}
     </div>
   );
 }
