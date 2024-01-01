@@ -57,7 +57,9 @@ const issueApi = api.injectEndpoints({
           method: 'DELETE',
         };
       },
-      invalidatesTags: ['Issue'],
+      invalidatesTags: (result, error, args) => [
+        { type: 'Issue', id: args.sprintId || Infinity },
+      ],
     }),
   }),
   overrideExisting: false,
@@ -67,5 +69,6 @@ export const {
   useGetBacklogQuery,
   useCreateIssueMutation,
   useUpdateIssueMutation,
+  useDeleteIssueMutation,
 } = issueApi;
 export { issueApi };

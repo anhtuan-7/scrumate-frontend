@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 import { Button, Input, Select } from '../../components';
 import unwrapMutation from '../../utils/unwrapMutation';
-import { useUpdateIssueMutation } from './issueApi';
+import { useDeleteIssueMutation, useUpdateIssueMutation } from './issueApi';
 
 const IssueUpdateForm = ({ issue }) => {
   const [disableForm, setDisableForm] = useState(true);
@@ -16,6 +16,7 @@ const IssueUpdateForm = ({ issue }) => {
   const [priority, setPriority] = useState(issue.priority);
   const [assignee, setAssignee] = useState(issue.assigneeId?.toString() || '');
   const [updateIssue, { isLoading }] = useUpdateIssueMutation();
+  const [deleteIssue] = useDeleteIssueMutation();
 
   const handleCancle = () => {
     setDisableForm(true);
@@ -25,6 +26,18 @@ const IssueUpdateForm = ({ issue }) => {
     setType(issue.type);
     setPriority(issue.priority);
     setAssignee(issue.assigneeId?.toString() || '');
+  };
+
+  const handleDelete = () => {
+    unwrapMutation(
+      deleteIssue,
+      {
+        projectId: issue.projectId,
+        sprintId: issue.sprintId,
+        issueId: issue.id,
+      },
+      'Delete Successfully',
+    );
   };
 
   const handleUpdate = () => {
@@ -162,7 +175,7 @@ const IssueUpdateForm = ({ issue }) => {
             >
               Edit
             </Button>
-            <Button variant="text" color="red">
+            <Button variant="text" color="red" onClick={handleDelete}>
               Delete
             </Button>
           </>

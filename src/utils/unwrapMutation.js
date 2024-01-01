@@ -4,8 +4,8 @@ const unwrapMutation = (mutationFunction, data, successTitle) => {
   return mutationFunction(data)
     .unwrap()
     .then((result) => {
-      const { affectedCount } = result.data;
-      if (affectedCount)
+      // Delete || Update
+      if (!result || result.data.affectedCount)
         Toast.fire({
           icon: 'success',
           title: successTitle,

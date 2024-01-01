@@ -2,6 +2,7 @@ import { IconButton, Typography } from '@material-tailwind/react';
 import PropTypes from 'prop-types';
 import { Fragment, useState } from 'react';
 import { IoIosAddCircleOutline } from 'react-icons/io';
+import { IoPlayOutline } from 'react-icons/io5';
 import { TbEdit } from 'react-icons/tb';
 import { useParams } from 'react-router-dom';
 
@@ -58,17 +59,26 @@ const SprintItem = ({ sprint }) => {
 
   const header = (
     <>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
         <Typography color="blue-gray" variant="small">
           {sprint.name}
         </Typography>
-        <IconButton size="sm" variant="text" color="blue">
-          <TbEdit className="text-xs" />
-        </IconButton>
+        <div className="flex">
+          <IconButton size="sm" variant="text" color="blue">
+            <TbEdit className="text-sm" />
+          </IconButton>
+          <Button size="sm" variant="text" color="blue" className="py-0">
+            <div className="flex items-center gap-1">
+              <IoPlayOutline className="text-sm" />
+              <span className="items-center text-xs font-light">
+                Start Sprint
+              </span>
+            </div>
+          </Button>
+        </div>
       </div>
-
-      <Typography variant="small" color="blue-gray">
-        {sprint.startDate || 'January 01 2024 | 2 Weeks'}
+      <Typography variant="small" color="blue-gray" className="mx-2">
+        {sprint.startDate && `${sprint.startDate} || ${sprint.duration} Weeks`}
       </Typography>
     </>
   );
