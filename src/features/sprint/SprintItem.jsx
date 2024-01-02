@@ -58,29 +58,24 @@ const SprintItem = ({ sprint }) => {
   }
 
   const header = (
-    <>
-      <div className="flex items-center gap-3">
-        <Typography color="blue-gray" variant="small">
-          {sprint.name}
-        </Typography>
-        <div className="flex">
-          <IconButton size="sm" variant="text" color="blue">
-            <TbEdit className="text-sm" />
-          </IconButton>
-          <Button size="sm" variant="text" color="blue" className="py-0">
-            <div className="flex items-center gap-1">
-              <IoPlayOutline className="text-sm" />
-              <span className="items-center text-xs font-light">
-                Start Sprint
-              </span>
-            </div>
-          </Button>
-        </div>
-      </div>
-      <Typography variant="small" color="blue-gray" className="mx-2">
-        {sprint.startDate && `${sprint.startDate} || ${sprint.duration} Weeks`}
+    <div className="flex items-center gap-3">
+      <Typography color="blue-gray" variant="small">
+        {sprint.name}
       </Typography>
-    </>
+      <div className="flex">
+        <IconButton size="sm" variant="text" color="blue">
+          <TbEdit className="text-sm" />
+        </IconButton>
+        <Button size="sm" variant="text" color="blue" className="py-0">
+          <div className="flex items-center gap-1">
+            <IoPlayOutline className="text-sm" />
+            <span className="items-center text-xs font-light">
+              Start Sprint
+            </span>
+          </div>
+        </Button>
+      </div>
+    </div>
   );
 
   return <ExpandablePanel header={header}>{content}</ExpandablePanel>;

@@ -1,4 +1,4 @@
-import { Chip, IconButton, Option, Select } from '@material-tailwind/react';
+import { Chip, IconButton } from '@material-tailwind/react';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { GoSync } from 'react-icons/go';
@@ -6,33 +6,25 @@ import { IoIosCheckmark, IoMdClose } from 'react-icons/io';
 import { TbEdit } from 'react-icons/tb';
 import { useParams } from 'react-router-dom';
 
-import FireErrorToast from '../../components/Toast';
-import Toast from '../../components/Toast';
-import { useChangeGroupMemberRoleMutation } from './groupUserApi';
+import { Select } from '../../components';
+import { groupUserRoleOptions } from '../../utils/constants';
+import unwrapMutation from '../../utils/unwrapMutation';
+import { useUpdateGroupUserRoleMutation } from './groupUserApi';
 
 const GroupUserRole = ({ member, disable }) => {
   const { groupId } = useParams();
   const [showForm, setShowForm] = useState(false);
   const [role, setRole] = useState(member.group.role);
-  const [changeGroupMemberRole, { isLoading }] =
-    useChangeGroupMemberRoleMutation();
+  const [updateGroupUserRole, { isLoading }] = useUpdateGroupUserRoleMutation();
 
   const handleSubmit = () => {
-    changeGroupMemberRole({ memberId: member.id, groupId, role })
-      .unwrap()
-      .then((response) => {
-        const { affectedCount } = response.data;
-        if (affectedCount == 1) {
-          Toast.fire({
-            icon: 'success',
-            title: 'Update Member Role Successfully',
-          });
-        }
-      })
-      .catch((error) => FireErrorToast(error))
-      .finally(() => {
-        setShowForm(false);
-      });
+    unwrapMutation(
+      updateGroupUserRole,
+      { userId: member.id, groupId, role },
+      'Update Member Role Successfully',
+    ).finally(() => {
+      setShowForm(false);
+    });
   };
 
   if (!showForm)
@@ -64,14 +56,8 @@ const GroupUserRole = ({ member, disable }) => {
           onChange={(value) => {
             setRole(value);
           }}
-        >
-          <Option value="member">Member</Option>
-          <Option value="project-admin">Project Admin</Option>
-          <Option value="group-admin">Group Admin</Option>
-          <Option value="inactive">
-            <span className="text-red-500">Inactive</span>
-          </Option>
-        </Select>
+          options={groupUserRoleOptions}
+        />
         <IconButton size="sm" color="blue" onClick={handleSubmit}>
           {isLoading ? (
             <GoSync className="animate-spin" />

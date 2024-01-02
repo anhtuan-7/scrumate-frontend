@@ -1,10 +1,16 @@
 /* eslint-disable no-unused-vars */
-import { Avatar, Option, Textarea, Typography } from '@material-tailwind/react';
+import { Avatar, Textarea, Typography } from '@material-tailwind/react';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 
 import { Button, Input, Select } from '../../components';
+import {
+  issuePriorityOptions,
+  issueStatusOptions,
+  issueTypeOptions,
+} from '../../utils/constants';
 import unwrapMutation from '../../utils/unwrapMutation';
+import IssueAssigneeForm from './IssueAssigneeForm';
 import { useDeleteIssueMutation, useUpdateIssueMutation } from './issueApi';
 
 const IssueUpdateForm = ({ issue }) => {
@@ -59,6 +65,31 @@ const IssueUpdateForm = ({ issue }) => {
     setDisableForm(true);
   };
 
+  const actionBar = disableForm ? (
+    <>
+      <Button variant="text" color="blue" onClick={() => setDisableForm(false)}>
+        Edit
+      </Button>
+      <Button variant="text" color="red" onClick={handleDelete}>
+        Delete
+      </Button>
+    </>
+  ) : (
+    <>
+      <Button
+        variant="text"
+        color="blue"
+        onClick={handleUpdate}
+        isLoading={isLoading}
+      >
+        Save
+      </Button>
+      <Button variant="text" color="blue-gray" onClick={handleCancle}>
+        Cancel
+      </Button>
+    </>
+  );
+
   return (
     <form className="flex h-full flex-col gap-4">
       <Input value={title} size="lg" disabled={disableForm} setFn={setTitle} />
@@ -74,85 +105,39 @@ const IssueUpdateForm = ({ issue }) => {
       <div className="grid grid-cols-4 items-center gap-4">
         <Typography>Type</Typography>
         <div className="col-span-3">
-          <Select disabled={disableForm} value={type} setFn={setType}>
-            <Option value="task">
-              <Typography variant="small">Task</Typography>
-            </Option>
-            <Option value="bug">
-              <Typography variant="small">Bug</Typography>
-            </Option>
-            <Option value="story">
-              <Typography variant="small">Story</Typography>
-            </Option>
-          </Select>
+          <Select
+            disabled={disableForm}
+            value={type}
+            setFn={setType}
+            options={issueTypeOptions}
+          />
         </div>
         <Typography>Status</Typography>
         <div className="col-span-3">
-          <Select disabled={disableForm} value={status} setFn={setStatus}>
-            <Option value="to-do">
-              <Typography color="pink" variant="small">
-                To do
-              </Typography>
-            </Option>
-            <Option value="in-progress">
-              <Typography color="blue" variant="small">
-                In progress
-              </Typography>
-            </Option>
-            <Option value="done">
-              <Typography color="teal" variant="small">
-                Done
-              </Typography>
-            </Option>
-          </Select>
+          <Select
+            disabled={disableForm}
+            value={status}
+            setFn={setStatus}
+            options={issueStatusOptions}
+          />
         </div>
         <Typography>Priority</Typography>
         <div className="col-span-3">
-          <Select disabled={disableForm} value={priority} setFn={setPriority}>
-            <Option value="high">
-              <Typography color="pink" variant="small">
-                High
-              </Typography>
-            </Option>
-            <Option value="medium">
-              <Typography color="orange" variant="small">
-                Medium
-              </Typography>
-            </Option>
-            <Option value="low">
-              <Typography color="blue-gray" variant="small">
-                Low
-              </Typography>
-            </Option>
-            <Option value="best-effort">
-              <Typography color="red" variant="small">
-                Best Effort
-              </Typography>
-            </Option>
-          </Select>
+          <Select
+            disabled={disableForm}
+            value={priority}
+            setFn={setPriority}
+            options={issuePriorityOptions}
+          />
         </div>
         <Typography>Assignee</Typography>
         <div className="col-span-3">
-          <Select
-            value={assignee}
+          <IssueAssigneeForm
             disabled={disableForm}
+            assignee={assignee}
             setFn={setAssignee}
-            size="lg"
-          >
-            <Option value={issue.reporterId.toString()}>
-              <div>
-                <Typography className="text-sm">
-                  {issue.reporter.name}
-                </Typography>
-                <Typography className="text-xs">
-                  {issue.reporter.email}
-                </Typography>
-              </div>
-            </Option>
-            <Option value="">
-              <Typography variant="small">None</Typography>
-            </Option>
-          </Select>
+            reporter={issue.reporter}
+          />
         </div>
         <Typography>Reporter</Typography>
         <div className="col-span-3 flex items-center">
@@ -165,36 +150,7 @@ const IssueUpdateForm = ({ issue }) => {
           <Typography variant="small">{issue.reporter.name}</Typography>
         </div>
       </div>
-      <div className="self-end align-bottom">
-        {disableForm ? (
-          <>
-            <Button
-              variant="text"
-              color="blue"
-              onClick={() => setDisableForm(false)}
-            >
-              Edit
-            </Button>
-            <Button variant="text" color="red" onClick={handleDelete}>
-              Delete
-            </Button>
-          </>
-        ) : (
-          <>
-            <Button
-              variant="text"
-              color="blue"
-              onClick={handleUpdate}
-              isLoading={isLoading}
-            >
-              Save
-            </Button>
-            <Button variant="text" color="blue-gray" onClick={handleCancle}>
-              Cancel
-            </Button>
-          </>
-        )}
-      </div>
+      <div className="self-end align-bottom">{actionBar}</div>
     </form>
   );
 };

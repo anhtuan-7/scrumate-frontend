@@ -3,32 +3,48 @@ import {
   Card,
   CardBody,
   Input,
-  Option,
-  Select,
   Typography,
 } from '@material-tailwind/react';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 
-import Button from '../../components/Button';
-import Modal from '../../components/Modal';
+import { Button, Modal, Select } from '../../components';
 import Toast from '../../components/Toast';
+import { groupUserRoleOptions } from '../../utils/constants';
 import { useLazyGetUserQuery } from '../user/userApi';
-import { useAddGroupMemberMutation } from './groupUserApi';
+import { useAddGroupUserMutation } from './groupUserApi';
 
 const GroupUserAddForm = ({ open, handler, groupId }) => {
   const [message, setMessage] = useState('');
   const [user, setUser] = useState(null);
   const [email, setEmail] = useState('');
   const [role, setRole] = useState('member');
-  const [addGroupMember, { isLoading }] = useAddGroupMemberMutation();
+  const [addGroupUser, { isLoading }] = useAddGroupUserMutation();
   const [trigger, { isLoading: isSearching }] = useLazyGetUserQuery();
 
+  const userCard = user && (
+    <Card className="mt-3 p-2">
+      <Typography variant="small">Search result:</Typography>
+      <CardBody className="flex gap-3 p-2">
+        <Avatar
+          variant="circular"
+          size="md"
+          alt="avatar"
+          src="/profile/profile-1.png"
+        />
+        <div>
+          <Typography variant="h6">{user.name}</Typography>
+          <Typography variant="small">{user.email}</Typography>
+        </div>
+      </CardBody>
+    </Card>
+  );
+
   const handleCreateForm = () => {
-    addGroupMember({ email, role, groupId })
+    addGroupUser({ email, role, groupId })
       .unwrap()
       .then(() => {
-        handler();
+        handler(); // Close form
         Toast.fire({
           title: 'New Member Added Successfully! 🚀',
           icon: 'success',
@@ -43,8 +59,8 @@ const GroupUserAddForm = ({ open, handler, groupId }) => {
     trigger({ email }, true) // preferCacheValue = true
       .unwrap()
       .then((response) => {
-        setMessage('');
         setUser(response.data.user);
+        setMessage('');
       })
       .catch((error) => {
         setUser(null);
@@ -53,8 +69,9 @@ const GroupUserAddForm = ({ open, handler, groupId }) => {
   };
 
   const onCancel = () => {
+    setUser(null);
     setMessage('');
-    setUser('');
+    setEmail('');
     handler();
   };
 
@@ -112,28 +129,9 @@ const GroupUserAddForm = ({ open, handler, groupId }) => {
             onChange={(value) => {
               setRole(value);
             }}
-          >
-            <Option value="member">Member</Option>
-            <Option value="project-admin">Project Admin</Option>
-            <Option value="group-admin">Group Admin</Option>
-          </Select>
-          {user && (
-            <Card className="mt-3 p-2">
-              <Typography variant="small">Search result:</Typography>
-              <CardBody className="flex gap-3 p-2">
-                <Avatar
-                  variant="circular"
-                  size="md"
-                  alt="avatar"
-                  src="/profile/profile-1.png"
-                />
-                <div>
-                  <Typography variant="h6">{user.name}</Typography>
-                  <Typography variant="small">{user.email}</Typography>
-                </div>
-              </CardBody>
-            </Card>
-          )}
+            options={groupUserRoleOptions}
+          />
+          {userCard}
         </form>
         <Typography color="red" className="p-1" variant="small">
           {message}

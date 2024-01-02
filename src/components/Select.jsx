@@ -1,19 +1,19 @@
-import { Select as MaterialSelect } from '@material-tailwind/react';
-import classNames from 'classnames';
+import { Select as MaterialSelect, Option } from '@material-tailwind/react';
 import PropTypes from 'prop-types';
 import { cloneElement } from 'react';
 
-const Select = ({ children, setFn, ...rest }) => {
-  let inputClass = '!border !border-gray-500';
-  if (rest.className) {
-    inputClass = classNames(inputClass, rest.className);
-    delete rest.className;
-  }
+const Select = ({ setFn, options, className, ...rest }) => {
+  let inputClass = `!border !border-gray-500 ${className || ''}`;
+
+  const rederedOptions = options.map((option) => (
+    <Option value={option.value} key={option.value}>
+      {option.label}
+    </Option>
+  ));
 
   return (
     <MaterialSelect
       labelProps={{ className: 'hidden' }}
-      // containerProps={{ className: 'max-w-fit' }}
       onChange={(value) => setFn(value)}
       selected={(element) =>
         element &&
@@ -24,15 +24,17 @@ const Select = ({ children, setFn, ...rest }) => {
         })
       }
       className={inputClass}
-      {...rest}
+      {...rest} // event handler
     >
-      {children}
+      {rederedOptions}
     </MaterialSelect>
   );
 };
 Select.propTypes = {
   children: PropTypes.any,
   setFn: PropTypes.func,
+  options: PropTypes.array,
+  className: PropTypes.string,
 };
 
 export default Select;

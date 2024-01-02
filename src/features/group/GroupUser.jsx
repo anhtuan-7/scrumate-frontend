@@ -10,14 +10,14 @@ import formatISODate from '../../utils/dateFormat';
 import GroupUserAction from './GroupUserAction';
 import GroupUserAddForm from './GroupUserAddForm';
 import GroupUserRole from './GroupUserRole';
-import { useGetGroupMemberQuery } from './groupUserApi';
+import { useGetGroupUserListQuery } from './groupUserApi';
 
-const GroupMember = () => {
+const GroupUser = () => {
   const { user } = useSelector((state) => state.status);
   const group = useOutletContext();
   const [page, setPage] = useState(1);
 
-  const { data, isFetching } = useGetGroupMemberQuery({
+  const { data, isFetching } = useGetGroupUserListQuery({
     groupId: group.id,
     page,
   });
@@ -114,4 +114,4 @@ const GroupMember = () => {
   );
 };
 
-export default GroupMember;
+export default GroupUser;

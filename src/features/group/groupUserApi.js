@@ -3,10 +3,10 @@ import api from '../api';
 
 const groupUserApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getGroupMember: builder.query({
+    getGroupUserList: builder.query({
       query: (args) => {
         return {
-          url: `/groups/${args.groupId}/members`,
+          url: `/groups/${args.groupId}/users`,
           method: 'GET',
           params: { page: args.page },
         };
@@ -19,21 +19,21 @@ const groupUserApi = api.injectEndpoints({
         return ['GroupUser', ...tags];
       },
     }),
-    getMemberDetail: builder.query({
+    getGroupUser: builder.query({
       query: (args) => {
         return {
-          url: `/groups/${args.groupId}/members/${args.memberId}`,
+          url: `/groups/${args.groupId}/users/${args.userId}`,
           method: 'GET',
         };
       },
       providesTags: (result, error, args) => {
-        return [{ type: 'GroupUser', id: args.memberId }];
+        return [{ type: 'GroupUser', id: args.userId }];
       },
     }),
-    addGroupMember: builder.mutation({
+    addGroupUser: builder.mutation({
       query: (args) => {
         return {
-          url: `/groups/${args.groupId}/members`,
+          url: `/groups/${args.groupId}/users`,
           method: 'POST',
           body: {
             email: args.email,
@@ -43,10 +43,10 @@ const groupUserApi = api.injectEndpoints({
       },
       invalidatesTags: ['GroupUser'],
     }),
-    changeGroupMemberRole: builder.mutation({
+    updateGroupUserRole: builder.mutation({
       query: (args) => {
         return {
-          url: `/groups/${args.groupId}/members/${args.memberId}`,
+          url: `/groups/${args.groupId}/users/${args.userId}`,
           method: 'PATCH',
           body: {
             role: args.role,
@@ -54,7 +54,7 @@ const groupUserApi = api.injectEndpoints({
         };
       },
       invalidatesTags: (result, error, args) => [
-        { type: 'GroupUser', id: args.memberId },
+        { type: 'GroupUser', id: args.userId },
       ],
     }),
   }),
@@ -62,9 +62,9 @@ const groupUserApi = api.injectEndpoints({
 });
 
 export const {
-  useGetGroupMemberQuery,
-  useAddGroupMemberMutation,
-  useChangeGroupMemberRoleMutation,
-  useLazyGetMemberDetailQuery,
+  useGetGroupUserListQuery,
+  useAddGroupUserMutation,
+  useUpdateGroupUserRoleMutation,
+  useLazyGetUserDetailQuery,
 } = groupUserApi;
 export { groupUserApi };

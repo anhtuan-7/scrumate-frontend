@@ -17,12 +17,13 @@ import {
 } from '../features/authentication/statusSlice';
 import GroupLayout from '../features/group/GroupLayout';
 import GroupList from '../features/group/GroupList';
-import GroupMember from '../features/group/GroupMember';
 import GroupProjectList from '../features/group/GroupProjectList';
 import GroupSetting from '../features/group/GroupSetting';
+import GroupUser from '../features/group/GroupUser';
 import Backlog from '../features/project/Backlog';
 import ProjectLayout from '../features/project/ProjectLayout';
 import ProjectList from '../features/project/ProjectList';
+import ProjectUser from '../features/project/ProjectUser';
 import Auth from '../layouts/Auth';
 
 function App() {
@@ -82,7 +83,7 @@ function App() {
         >
           <Route index element={<Navigate to="projects" />} />
           <Route path="projects" element={<GroupProjectList />} />
-          <Route path="members" element={<GroupMember />} />
+          <Route path="members" element={<GroupUser />} />
           <Route path="setting" element={<GroupSetting />} />
         </Route>
         <Route
@@ -95,6 +96,7 @@ function App() {
         >
           <Route index element={<Navigate to="backlog" />} />
           <Route path="backlog" element={<Backlog />} />
+          <Route path="members" element={<ProjectUser />} />
         </Route>
         <Route path="auth" element={<Auth />}>
           <Route index element={<Navigate to="login" />} />
