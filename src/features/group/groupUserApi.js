@@ -8,7 +8,7 @@ const groupUserApi = api.injectEndpoints({
         return {
           url: `/groups/${args.groupId}/users`,
           method: 'GET',
-          params: { page: args.page },
+          params: { page: args.page, all: args.all },
         };
       },
       providesTags: (result, error, args) => {
@@ -63,8 +63,8 @@ const groupUserApi = api.injectEndpoints({
 
 export const {
   useGetGroupUserListQuery,
+  useLazyGetGroupUserListQuery,
   useAddGroupUserMutation,
   useUpdateGroupUserRoleMutation,
-  useLazyGetUserDetailQuery,
 } = groupUserApi;
 export { groupUserApi };

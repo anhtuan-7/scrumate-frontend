@@ -58,7 +58,9 @@ const ProjectLayout = () => {
             text="Setting"
           />
         </Sidebar>
-        <Outlet context={project} />
+        <div className="ml-4 flex min-h-max w-full flex-col items-center p-4">
+          <Outlet context={project} />
+        </div>
       </MainLayout>
     );
   }

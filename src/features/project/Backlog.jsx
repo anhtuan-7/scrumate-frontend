@@ -55,7 +55,7 @@ const Backlog = () => {
   }
 
   return (
-    <div className="flex w-full min-w-max flex-col gap-3 p-6">
+    <div className="flex w-full min-w-max flex-col gap-3">
       <SprintList />
       <ExpandablePanel
         header={

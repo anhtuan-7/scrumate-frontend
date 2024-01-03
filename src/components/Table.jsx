@@ -20,7 +20,7 @@ const Table = ({ data, config }) => {
   const renderedRows = data.map((rowData) => {
     const renderedCell = config.map((column, index) => {
       return (
-        <td className="p-4" key={`${column.label}${index}`}>
+        <td className="p-3" key={`${column.label}${index}`}>
           {column.render(rowData)}
         </td>
       );

@@ -16,19 +16,19 @@ const GroupUser = () => {
   const { user } = useSelector((state) => state.status);
   const group = useOutletContext();
   const [page, setPage] = useState(1);
-
-  const { data, isFetching } = useGetGroupUserListQuery({
+  const [showCreateForm, setShowCreateForm] = useState(false);
+  const { data: response, isFetching } = useGetGroupUserListQuery({
     groupId: group.id,
     page,
   });
-  const [showCreateForm, setShowCreateForm] = useState(false);
+
   const clickHandler = () => setShowCreateForm(!showCreateForm);
 
   let content;
   if (isFetching)
     content = <Spinner className="inline-block h-8 w-8" color="blue" />;
-  else if (data) {
-    const { members } = data.data;
+  else if (response) {
+    const { members } = response.data;
     const tableConfig = [
       {
         label: 'Name',
@@ -84,7 +84,7 @@ const GroupUser = () => {
         <Pagination
           currentPage={page}
           setCurrentPage={setPage}
-          lastPage={Math.ceil(data.total / 10)}
+          lastPage={Math.ceil(response.total / 10)}
         />
       </div>
     );

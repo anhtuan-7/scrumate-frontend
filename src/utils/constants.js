@@ -26,10 +26,18 @@ const groupUserRoleOptions = [
   { value: 'inactive', label: 'Inactive' },
 ];
 
+const projectUserRoleOptions = [
+  { value: 'developer', label: 'Developer' },
+  { value: 'product-owner', label: 'Product Owner' },
+  { value: 'scrum-master', label: 'Scrum Master' },
+  { value: 'inactive', label: 'Inactive' },
+];
+
 export {
   BASE_URL,
   issueStatusOptions,
   issueTypeOptions,
   issuePriorityOptions,
   groupUserRoleOptions,
+  projectUserRoleOptions,
 };

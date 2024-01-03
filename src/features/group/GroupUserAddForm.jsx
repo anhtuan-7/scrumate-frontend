@@ -68,7 +68,7 @@ const GroupUserAddForm = ({ open, handler, groupId }) => {
       });
   };
 
-  const onCancel = () => {
+  const handleCancel = () => {
     setUser(null);
     setMessage('');
     setEmail('');
@@ -77,7 +77,7 @@ const GroupUserAddForm = ({ open, handler, groupId }) => {
 
   const actionBar = (
     <div className="flex gap-3 p-0">
-      <Button variant="text" color="blue-gray" onClick={onCancel}>
+      <Button variant="text" color="blue-gray" onClick={handleCancel}>
         Cancel
       </Button>
       <Button
