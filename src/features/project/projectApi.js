@@ -40,6 +40,15 @@ const projectApi = api.injectEndpoints({
         },
         providesTags: ['Project'],
       }),
+      getKanbanBoard: builder.query({
+        query: (args) => {
+          return {
+            url: `/projects/${args.projectId}/kanban`,
+            method: 'GET',
+          };
+        },
+        providesTags: ['Project', 'Issue', 'Sprint'],
+      }),
     };
   },
 });
@@ -48,5 +57,6 @@ export const {
   useGetProjectListQuery,
   useCreateProjectMutation,
   useGetProjectQuery,
+  useGetKanbanBoardQuery,
 } = projectApi;
 export { projectApi };

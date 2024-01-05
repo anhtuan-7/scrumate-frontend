@@ -38,7 +38,7 @@ const ProjectLayout = () => {
             text="Backlog"
           />
           <SidebarLink
-            url={`/projects/${project.id}/my-work`}
+            url={`/projects/${project.id}/kanban`}
             icon={<PiKanban className="h-5 w-5" />}
             text="Board"
           />

@@ -29,6 +29,7 @@ const issueApi = api.injectEndpoints({
         };
       },
       invalidatesTags: (result, error, args) => [
+        'Issue',
         { type: 'Issue', id: args.sprintId || Infinity },
       ],
     }),
@@ -47,6 +48,7 @@ const issueApi = api.injectEndpoints({
         };
       },
       invalidatesTags: (result, error, args) => [
+        'Issue',
         { type: 'Issue', id: args.sprintId || Infinity },
       ],
     }),
@@ -58,6 +60,7 @@ const issueApi = api.injectEndpoints({
         };
       },
       invalidatesTags: (result, error, args) => [
+        'Issue',
         { type: 'Issue', id: args.sprintId || Infinity },
       ],
     }),

@@ -21,6 +21,7 @@ import GroupProjectList from '../features/group/GroupProjectList';
 import GroupSetting from '../features/group/GroupSetting';
 import GroupUser from '../features/group/GroupUser';
 import Backlog from '../features/project/Backlog';
+import Kanban from '../features/project/Kanban';
 import ProjectLayout from '../features/project/ProjectLayout';
 import ProjectList from '../features/project/ProjectList';
 import ProjectUser from '../features/project/ProjectUser';
@@ -96,6 +97,7 @@ function App() {
         >
           <Route index element={<Navigate to="backlog" />} />
           <Route path="backlog" element={<Backlog />} />
+          <Route path="kanban" element={<Kanban />} />
           <Route path="members" element={<ProjectUser />} />
         </Route>
         <Route path="auth" element={<Auth />}>

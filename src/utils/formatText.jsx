@@ -28,15 +28,23 @@ function formatStatus(status) {
 function formatPriority(priority) {
   switch (priority) {
     case 'low':
-      return <Chip value="Low" color="blue-gray" size="sm" />;
+      return (
+        <Chip value="Low" color="blue-gray" size="sm" className="inline" />
+      );
     case 'medium':
       return (
-        <Chip value="Medium" size="sm" className="bg-yellow-900 text-white" />
+        <Chip
+          value="Medium"
+          size="sm"
+          className="inline bg-yellow-900 text-white"
+        />
       );
     case 'high':
-      return <Chip value="High" color="pink" size="sm" />;
+      return <Chip value="High" color="pink" size="sm" className="inline" />;
     case 'best-effort':
-      return <Chip value="Best Effort" color="red" size="sm" />;
+      return (
+        <Chip value="Best Effort" color="red" size="sm" className="inline" />
+      );
   }
 }
 

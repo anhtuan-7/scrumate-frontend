@@ -2,7 +2,7 @@ import { IconButton, Typography } from '@material-tailwind/react';
 import PropTypes from 'prop-types';
 import { Fragment, useState } from 'react';
 import { IoIosAddCircleOutline } from 'react-icons/io';
-import { IoPlayOutline } from 'react-icons/io5';
+import { IoPlayOutline, IoStopOutline } from 'react-icons/io5';
 import { TbEdit } from 'react-icons/tb';
 import { useParams } from 'react-router-dom';
 
@@ -59,21 +59,28 @@ const SprintItem = ({ sprint }) => {
 
   const header = (
     <div className="flex items-center gap-3">
-      <Typography color="blue-gray" variant="small">
+      <Typography color={sprint.active ? 'blue' : 'blue-gray'} variant="small">
         {sprint.name}
       </Typography>
       <div className="flex">
         <IconButton size="sm" variant="text" color="blue">
           <TbEdit className="text-sm" />
         </IconButton>
-        <Button size="sm" variant="text" color="blue" className="py-0">
-          <div className="flex items-center gap-1">
-            <IoPlayOutline className="text-sm" />
-            <span className="items-center text-xs font-light">
-              Start Sprint
-            </span>
-          </div>
-        </Button>
+        {sprint.active ? (
+          <Button size="sm" variant="text" color="pink" className="py-0">
+            <div className="flex items-center gap-1">
+              <IoStopOutline className="text-sm" />
+              <span className="items-center text-xs font-light">Complete</span>
+            </div>
+          </Button>
+        ) : (
+          <Button size="sm" variant="text" color="blue" className="py-0">
+            <div className="flex items-center gap-1">
+              <IoPlayOutline className="text-sm" />
+              <span className="items-center text-xs font-light">Start</span>
+            </div>
+          </Button>
+        )}
       </div>
     </div>
   );
