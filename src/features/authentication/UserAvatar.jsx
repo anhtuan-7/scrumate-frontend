@@ -67,7 +67,7 @@ const Avatar = () => {
               size="md"
               alt="avatar"
               className="border border-blue-500"
-              src="/profile/profile-1.png"
+              src={user.avatar}
             />
             <HiOutlineChevronDown
               strokeWidth={2.5}

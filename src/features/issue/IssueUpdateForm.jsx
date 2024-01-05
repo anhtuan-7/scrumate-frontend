@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { Avatar, Textarea, Typography } from '@material-tailwind/react';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 
 import { Button, Input, Select } from '../../components';
 import {
@@ -66,16 +66,16 @@ const IssueUpdateForm = ({ issue }) => {
   };
 
   const actionBar = disableForm ? (
-    <>
+    <Fragment>
       <Button variant="text" color="blue" onClick={() => setDisableForm(false)}>
         Edit
       </Button>
       <Button variant="text" color="red" onClick={handleDelete}>
         Delete
       </Button>
-    </>
+    </Fragment>
   ) : (
-    <>
+    <Fragment>
       <Button
         variant="text"
         color="blue"
@@ -87,7 +87,7 @@ const IssueUpdateForm = ({ issue }) => {
       <Button variant="text" color="blue-gray" onClick={handleCancle}>
         Cancel
       </Button>
-    </>
+    </Fragment>
   );
 
   return (
@@ -133,10 +133,10 @@ const IssueUpdateForm = ({ issue }) => {
         <Typography>Assignee</Typography>
         <div className="col-span-3">
           <IssueAssigneeForm
-            disabled={disableForm}
+            projectId={issue.projectId}
             assignee={assignee}
             setFn={setAssignee}
-            reporter={issue.reporter}
+            disabled={disableForm}
           />
         </div>
         <Typography>Reporter</Typography>
@@ -145,7 +145,7 @@ const IssueUpdateForm = ({ issue }) => {
             variant="circular"
             alt="avatar"
             className="mr-3 h-8 w-8 border-2 border-gray-500"
-            src={issue.reporter?.avatar || '/profile/profile-1.png'}
+            src={issue.reporter.avatar || '/profile/profile-1.png'}
           />
           <Typography variant="small">{issue.reporter.name}</Typography>
         </div>

@@ -14,7 +14,6 @@ const GroupUserList = ({ groupId, search, setFn, isOpen }) => {
   let content = <Spinner className="inline-block h-8 w-8" color="blue" />;
   if (response) {
     const { members } = response.data;
-    console.log(response);
 
     content = members.map((member) => {
       if (member.email.includes(search))
@@ -44,7 +43,7 @@ const GroupUserList = ({ groupId, search, setFn, isOpen }) => {
 
   return (
     <div className=" max-h-48 w-full overflow-y-auto rounded-lg border border-gray-500 p-2">
-      <Typography className="mb-3">User List</Typography>
+      <Typography className="mb-1">Group Members:</Typography>
       <div className="flex flex-col gap-3">{content}</div>
     </div>
   );

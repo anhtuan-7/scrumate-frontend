@@ -1,40 +1,59 @@
-import { Option, Select, Typography } from '@material-tailwind/react';
+import { Input, Option, Select, Typography } from '@material-tailwind/react';
 import PropTypes from 'prop-types';
-import { cloneElement } from 'react';
+import { Fragment } from 'react';
 
-const IssueAssigneeForm = ({ reporter, assignee, setFn, disabled }) => {
-  // TO-DO: Get user list in project
-  // TO-DO: Render user options
+import { useGetProjectUserListQuery } from '../project/projectUserApi';
+
+const IssueAssigneeForm = ({ projectId, assignee, setFn, disabled }) => {
+  const { data: response } = useGetProjectUserListQuery({
+    projectId,
+    all: true,
+  });
+
+  if (response) {
+    let assigneeOptions = [{ value: '', label: 'None' }];
+    const { members } = response.data;
+    members.forEach((member) => {
+      assigneeOptions.push({
+        value: member.id.toString(),
+        label: (
+          <Fragment>
+            <Typography variant="small">{member.name}</Typography>
+            <Typography variant="small">{member.email}</Typography>
+          </Fragment>
+        ),
+      });
+    });
+    const renderedOptions = assigneeOptions.map((option) => (
+      <Option value={option.value} key={option.value}>
+        {option.label}
+      </Option>
+    ));
+
+    return (
+      <Select
+        labelProps={{ className: 'hidden' }}
+        className="!border !border-gray-500"
+        onChange={(value) => setFn(value)}
+        size="lg"
+        disabled={disabled}
+        value={assignee}
+      >
+        {renderedOptions}
+      </Select>
+    );
+  }
   return (
-    <Select
-      labelProps={{ className: 'hidden' }}
+    <Input
+      disabled
       className="!border !border-gray-500"
-      onChange={(value) => setFn(value)}
-      selected={(element) =>
-        element &&
-        cloneElement(element, {
-          disabled: true,
-          className:
-            'flex items-center opacity-100 px-0 gap-2 pointer-events-none',
-        })
-      }
-      value={assignee}
-      disabled={disabled}
-    >
-      <Option value={reporter.id.toString()}>
-        <div>
-          <Typography className="text-xs">{reporter.name}</Typography>
-          <Typography className="text-xs">{reporter.email}</Typography>
-        </div>
-      </Option>
-      <Option value="">
-        <Typography variant="small">None</Typography>
-      </Option>
-    </Select>
+      value={'Error'}
+      color="red"
+    />
   );
 };
 IssueAssigneeForm.propTypes = {
-  reporter: PropTypes.object,
+  projectId: PropTypes.number,
   assignee: PropTypes.string,
   setFn: PropTypes.func,
   disabled: PropTypes.bool,

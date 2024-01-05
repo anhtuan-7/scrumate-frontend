@@ -26,12 +26,7 @@ const GroupUserAddForm = ({ open, handler, groupId }) => {
     <Card className="mt-3 p-2">
       <Typography variant="small">Search result:</Typography>
       <CardBody className="flex gap-3 p-2">
-        <Avatar
-          variant="circular"
-          size="md"
-          alt="avatar"
-          src="/profile/profile-1.png"
-        />
+        <Avatar variant="circular" size="md" alt="avatar" src={user.avatar} />
         <div>
           <Typography variant="h6">{user.name}</Typography>
           <Typography variant="small">{user.email}</Typography>

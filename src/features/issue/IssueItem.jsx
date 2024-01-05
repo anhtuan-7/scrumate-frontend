@@ -39,13 +39,13 @@ const IssueItem = ({ issue }) => {
               <Avatar
                 variant="circular"
                 alt="avatar"
-                src={
+                src={issue.assignee?.avatar || '/profile/profile.png'}
+                title={
                   issue.assignee
-                    ? '/profile/profile-1.png'
-                    : '/profile/profile.png'
+                    ? `${issue.assignee.name} (${issue.assignee.email})`
+                    : 'Not assign yet'
                 }
-                title={issue.assignee?.name || 'Not assign yet'}
-                className="h-6 w-6 border border-gray-400"
+                className="h-6 w-6 cursor-pointer border border-gray-400"
               />
               <IconButton
                 variant="text"

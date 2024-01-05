@@ -33,7 +33,13 @@ const SignUp = () => {
   }, [data, navigate, dispatch]);
 
   const handleSignUp = () => {
-    signUp({ name, email, password, confirmPassword });
+    signUp({
+      name,
+      email,
+      password,
+      confirmPassword,
+      avatar: `/profile/profile-${Math.ceil(Math.random() * 6)}.png`,
+    });
   };
 
   return (

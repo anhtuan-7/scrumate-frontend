@@ -52,6 +52,7 @@ const projectUserApi = api.injectEndpoints({
 
 export const {
   useGetProjectUserListQuery,
+  useLazyGetProjectUserListQuery,
   useAddProjectUserMutation,
   useUpdateProjectUserRoleMutation,
 } = projectUserApi;
