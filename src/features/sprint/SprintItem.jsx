@@ -6,12 +6,16 @@ import { IoIosAddCircleOutline } from 'react-icons/io';
 import { IoPlayOutline, IoStopOutline } from 'react-icons/io5';
 import { TbEdit } from 'react-icons/tb';
 import { useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 import { Button, ExpandablePanel, Skeleton } from '../../components';
 import { FireErrorToast } from '../../components/Toast';
+import formatISODate from '../../utils/dateFormat';
+import unwrapMutation from '../../utils/unwrapMutation';
 import IssueCreateForm from '../issue/IssueCreateForm';
 import IssueItem from '../issue/IssueItem';
 import { useGetBacklogQuery } from '../issue/issueApi';
+import { useCompleteSprintMutation, useStartSprintMutation } from './sprintApi';
 
 const SprintItem = ({ sprint }) => {
   const [openForm, setOpenForm] = useState(false);
@@ -22,6 +26,44 @@ const SprintItem = ({ sprint }) => {
     isFetching,
     error,
   } = useGetBacklogQuery({ projectId, sprintId: sprint.id });
+
+  const [startSprint] = useStartSprintMutation();
+  const [completeSprint] = useCompleteSprintMutation();
+
+  const handleStart = () => {
+    unwrapMutation(
+      startSprint,
+      {
+        projectId,
+        sprintId: sprint.id,
+        startDate: new Date(),
+        duration: 2,
+      },
+      'Start sprint successfully',
+    );
+  };
+
+  const handleComplete = () => {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Are you sure?',
+      text: 'Do you intend to finish the sprint and transfer any remaining tasks to the backlog?',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'Complete Sprint',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        unwrapMutation(
+          completeSprint,
+          {
+            projectId,
+            sprintId: sprint.id,
+          },
+          'Successfully',
+        );
+      }
+    });
+  };
 
   let content;
   if (isFetching) content = <Skeleton times={3} className="h-8 w-full" />;
@@ -36,6 +78,20 @@ const SprintItem = ({ sprint }) => {
     content = (
       <Fragment>
         <div className="flex flex-col gap-3">
+          <div>
+            {sprint.startDate && (
+              <Typography>
+                Start date: {formatISODate(sprint.startDate)}
+              </Typography>
+            )}
+            <Typography>
+              Sprint Goal:{' '}
+              {sprint.sprintGoal || (
+                <span className="text-sm text-gray-600">Not specified yet</span>
+              )}
+            </Typography>
+            <Typography></Typography>
+          </div>
           {issuseList}
           {openForm && (
             <IssueCreateForm
@@ -62,7 +118,7 @@ const SprintItem = ({ sprint }) => {
 
   const header = (
     <div className="flex items-center gap-3">
-      <Typography color={sprint.active ? 'blue' : 'blue-gray'} variant="small">
+      <Typography color={sprint.active ? 'blue' : 'blue-gray'}>
         {sprint.name}
       </Typography>
       <div className="flex">
@@ -70,14 +126,26 @@ const SprintItem = ({ sprint }) => {
           <TbEdit className="text-sm" />
         </IconButton>
         {sprint.active ? (
-          <Button size="sm" variant="text" color="pink" className="py-0">
+          <Button
+            size="sm"
+            variant="text"
+            color="pink"
+            className="py-0"
+            onClick={handleComplete}
+          >
             <div className="flex items-center gap-1">
               <IoStopOutline className="text-sm" />
               <span className="items-center text-xs font-light">Complete</span>
             </div>
           </Button>
         ) : (
-          <Button size="sm" variant="text" color="blue" className="py-0">
+          <Button
+            size="sm"
+            variant="text"
+            color="blue"
+            className="py-0"
+            onClick={handleStart}
+          >
             <div className="flex items-center gap-1">
               <IoPlayOutline className="text-sm" />
               <span className="items-center text-xs font-light">Start</span>
