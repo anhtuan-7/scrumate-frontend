@@ -30,17 +30,31 @@ const SprintItem = ({ sprint }) => {
   const [startSprint] = useStartSprintMutation();
   const [completeSprint] = useCompleteSprintMutation();
 
-  const handleStart = () => {
-    unwrapMutation(
-      startSprint,
-      {
-        projectId,
-        sprintId: sprint.id,
-        startDate: new Date(),
-        duration: 2,
+  const handleStart = async () => {
+    const { value: duration } = await Swal.fire({
+      title: 'Select sprint duration',
+      text: `Start date: ${formatISODate(new Date())}`,
+      input: 'select',
+      inputOptions: {
+        1: '1 Week',
+        2: '2 Weeks',
+        4: '4 Weeks',
       },
-      'Start sprint successfully',
-    );
+      showCancelButton: true,
+    });
+
+    if (duration) {
+      unwrapMutation(
+        startSprint,
+        {
+          projectId,
+          sprintId: sprint.id,
+          startDate: new Date(),
+          duration,
+        },
+        'Start sprint successfully',
+      );
+    }
   };
 
   const handleComplete = () => {
@@ -81,7 +95,13 @@ const SprintItem = ({ sprint }) => {
           <div>
             {sprint.startDate && (
               <Typography>
-                Start date: {formatISODate(sprint.startDate)}
+                <span className="mr-2 text-red-700">Deadline:</span>
+                {formatISODate(
+                  new Date(
+                    new Date(sprint.startDate).getTime() +
+                      sprint.duration * 604800000,
+                  ),
+                )}
               </Typography>
             )}
             <Typography>
