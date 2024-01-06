@@ -42,7 +42,6 @@ const issueApi = api.injectEndpoints({
           method: 'PATCH',
           body: {
             ...args,
-            assigneeId: args.assignee ? parseInt(args.assignee) : null,
             description: args.description || null,
           },
         };
