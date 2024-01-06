@@ -30,8 +30,6 @@ const Kanban = () => {
   };
 
   const handleDragDrop = (result) => {
-    console.log('Drag and Drop');
-    console.log(result);
     unwrapMutation(
       updateIssue,
       {
@@ -70,6 +68,7 @@ const Kanban = () => {
                 )}
               </Draggable>
             ))}
+            {provided.placeholder}
           </div>
         )}
       </Droppable>

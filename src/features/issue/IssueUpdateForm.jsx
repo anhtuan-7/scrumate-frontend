@@ -55,7 +55,7 @@ const IssueUpdateForm = ({ issue }) => {
         status,
         type,
         priority,
-        assigneeId: assignee ? assignee * 1 : null,
+        assigneeId: assignee ? parseInt(assignee, 10) : null,
         sprintId: issue.sprintId,
         projectId: issue.projectId,
         issueId: issue.id,

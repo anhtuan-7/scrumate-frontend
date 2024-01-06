@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useRef } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -7,7 +8,7 @@ import unwrapMutation from '../../utils/unwrapMutation';
 import SprintItem from './SprintItem';
 import { useCreateSprintMutation, useGetSprintListQuery } from './sprintApi';
 
-const SprintList = () => {
+const SprintList = ({ provided }) => {
   const sprintsNumber = useRef(0);
   const { projectId } = useParams();
   const [createSprint, { isLoading }] = useCreateSprintMutation();
@@ -32,8 +33,9 @@ const SprintList = () => {
   } else if (result) {
     const { sprints } = result.data;
     sprintsNumber.current = sprints.length;
+
     const renderedSprints = sprints.map((sprint) => (
-      <SprintItem key={sprint.id} sprint={sprint} />
+      <SprintItem key={sprint.id} sprint={sprint} provided={provided} />
     ));
 
     return (
@@ -51,6 +53,8 @@ const SprintList = () => {
     );
   }
 };
-SprintList.propTypes = {};
+SprintList.propTypes = {
+  provided: PropTypes.object,
+};
 
 export default SprintList;
