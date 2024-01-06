@@ -1,10 +1,5 @@
 // import PropTypes from 'prop-types';
-import {
-  Card,
-  CardBody,
-  CardHeader,
-  Typography,
-} from '@material-tailwind/react';
+import { Typography } from '@material-tailwind/react';
 import { Fragment } from 'react';
 
 import { Skeleton } from '../../components';
@@ -32,7 +27,7 @@ const Kanban = () => {
       <Typography className="w-56 p-1" variant="h5" color="blue-gray">
         {header}
       </Typography>
-      <div className="flex flex-col gap-3 border-t-2 border-blue-300 p-3">
+      <div className="flex flex-col gap-3 border-t-2 border-blue-300 py-3">
         {column.map((issue) => (
           <KanbanIssueItem key={issue.id} issue={issue} />
         ))}

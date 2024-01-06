@@ -16,13 +16,14 @@ const KanbanIssueItem = ({ issue }) => {
       </Drawer>
       <div
         key={issue.id}
-        className="flex min-w-max cursor-pointer flex-col gap-2 rounded-lg border-2 border-blue-gray-600 p-2 hover:border-blue-200"
+        className="flex min-w-max cursor-pointer flex-col gap-2 rounded-lg border-2 border-blue-gray-200 p-2 hover:border-blue-200"
       >
         <div className="flex items-center justify-between gap-2">
-          {formatType(issue.type)}
-          <div className="flex w-44 items-center break-words">
-            {issue.title}
+          <div className="flex items-center gap-2">
+            {formatType(issue.type)}
+            <div className=" w-44 break-words">{issue.title}</div>
           </div>
+
           <IconButton
             variant="text"
             size="sm"
@@ -32,7 +33,7 @@ const KanbanIssueItem = ({ issue }) => {
           </IconButton>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
           <Typography className="inline" variant="small">
             Priority:{' '}
           </Typography>
