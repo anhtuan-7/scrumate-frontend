@@ -17,7 +17,7 @@ import {
 } from '../../utils/formatText';
 import IssueUpdateForm from './IssueUpdateForm';
 
-const IssueItem = ({ issue }) => {
+const IssueItem = ({ issue, provided }) => {
   const [openForm, setOpenForm] = useState(false);
 
   return (
@@ -25,7 +25,12 @@ const IssueItem = ({ issue }) => {
       <Drawer open={openForm} handler={setOpenForm}>
         <IssueUpdateForm issue={issue} />
       </Drawer>
-      <Card className="rounded-lg border-2 border-blue-200">
+      <Card
+        className="rounded-lg border-2 border-blue-200"
+        {...provided.dragHandleProps}
+        {...provided.draggableProps}
+        ref={provided.innerRef}
+      >
         <CardBody className="p-0">
           <div className="grid grid-cols-2 items-center gap-3">
             <div className="flex items-center gap-3">
@@ -63,6 +68,7 @@ const IssueItem = ({ issue }) => {
 };
 IssueItem.propTypes = {
   issue: PropTypes.object.isRequired,
+  provided: PropTypes.object.isRequired,
 };
 
 export default IssueItem;

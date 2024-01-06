@@ -1,6 +1,7 @@
 import { IconButton, Typography } from '@material-tailwind/react';
 import PropTypes from 'prop-types';
 import { Fragment, useState } from 'react';
+import { Draggable } from 'react-beautiful-dnd';
 import { IoIosAddCircleOutline } from 'react-icons/io';
 import { IoPlayOutline, IoStopOutline } from 'react-icons/io5';
 import { TbEdit } from 'react-icons/tb';
@@ -27,8 +28,10 @@ const SprintItem = ({ sprint }) => {
   else if (error) FireErrorToast(error);
   else if (response) {
     const { issues } = response.data;
-    const issuseList = issues.map((issue) => (
-      <IssueItem key={issue.id} issue={issue} />
+    const issuseList = issues.map((issue, index) => (
+      <Draggable key={issue.id} draggableId={issue.id.toString()} index={index}>
+        {(provided) => <IssueItem issue={issue} provided={provided} />}
+      </Draggable>
     ));
     content = (
       <Fragment>
@@ -85,7 +88,11 @@ const SprintItem = ({ sprint }) => {
     </div>
   );
 
-  return <ExpandablePanel header={header}>{content}</ExpandablePanel>;
+  return (
+    <ExpandablePanel header={header} droppableId={sprint.id.toString()}>
+      {content}
+    </ExpandablePanel>
+  );
 };
 SprintItem.propTypes = {
   sprint: PropTypes.object,

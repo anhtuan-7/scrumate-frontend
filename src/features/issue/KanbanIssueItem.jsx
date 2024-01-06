@@ -7,7 +7,7 @@ import { Drawer } from '../../components';
 import { formatPriority, formatType } from '../../utils/formatText';
 import IssueUpdateForm from './IssueUpdateForm';
 
-const KanbanIssueItem = ({ issue }) => {
+const KanbanIssueItem = ({ issue, provided }) => {
   const [openForm, setOpenForm] = useState(false);
   return (
     <Fragment>
@@ -17,6 +17,9 @@ const KanbanIssueItem = ({ issue }) => {
       <div
         key={issue.id}
         className="flex min-w-max cursor-pointer flex-col gap-2 rounded-lg border-2 border-blue-gray-200 p-2 hover:border-blue-200"
+        {...provided.dragHandleProps}
+        {...provided.draggableProps}
+        ref={provided.innerRef}
       >
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
@@ -45,6 +48,7 @@ const KanbanIssueItem = ({ issue }) => {
 };
 KanbanIssueItem.propTypes = {
   issue: PropTypes.object.isRequired,
+  provided: PropTypes.object.isRequired,
 };
 
 export default KanbanIssueItem;
