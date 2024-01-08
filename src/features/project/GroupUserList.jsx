@@ -27,7 +27,7 @@ const GroupUserList = ({ groupId, search, setFn, isOpen }) => {
               variant="circular"
               size="sm"
               alt="avatar"
-              src="/profile/profile-1.png"
+              src={member.avatar}
             />
             <div>
               <Typography>

@@ -19,7 +19,7 @@ function Pagination({ currentPage, setCurrentPage, lastPage }) {
   };
 
   return (
-    <div className="flex items-center gap-8">
+    <div className="mb-6 flex items-center gap-8">
       <IconButton
         size="sm"
         variant="outlined"
