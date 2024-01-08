@@ -30,15 +30,17 @@ const Kanban = () => {
   };
 
   const handleDragDrop = (result) => {
-    unwrapMutation(
-      updateIssue,
-      {
-        status: result.destination.droppableId,
-        projectId,
-        issueId: result.draggableId * 1,
-      },
-      'Update Issue Successfully',
-    );
+    if (result.destination.droppableId !== result.source.droppableId) {
+      unwrapMutation(
+        updateIssue,
+        {
+          status: result.destination.droppableId,
+          projectId,
+          issueId: result.draggableId * 1,
+        },
+        'Update Issue Successfully',
+      );
+    }
   };
 
   const renderedColumn = (header, column, status) => (

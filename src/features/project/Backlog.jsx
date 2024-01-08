@@ -24,18 +24,19 @@ const Backlog = () => {
   } = useGetBacklogQuery({ projectId });
 
   const handleDragDrop = (result) => {
-    console.log(result);
-    unwrapMutation(
-      updateIssue,
-      {
-        projectId,
-        issueId: result.draggableId * 1,
-        sprintId: result.destination.droppableId * 1,
-      },
-      'Update Issue Successfully',
-    ).finally(() => {
-      refetch();
-    });
+    if (result.destination.droppableId !== result.source.droppableId) {
+      unwrapMutation(
+        updateIssue,
+        {
+          projectId,
+          issueId: result.draggableId * 1,
+          sprintId: result.destination.droppableId * 1,
+        },
+        'Update Issue Successfully',
+      ).finally(() => {
+        refetch();
+      });
+    }
   };
 
   let content;
